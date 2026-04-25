@@ -411,162 +411,14 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwGbkYRh5zMYmzxTix5R7iiPWlSNvrkpGsGQPhemtMIMk948B0x05SG6AQEJVQl0GzELA/exec';
-    const audio = document.getElementById('musik');
-    let isAutoScrolling = false;
-// Gantilah URL di bawah ini dengan URL Deploy terbaru yang kamu dapat dari Apps Script
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwGbkYRh5zMYmzxTix5R7iiPWlSNvrkpGsGQPhemtMIMk948B0x05SG6AQEJVQl0GzELA/exec';
-
-// Tentukan Nama Sheet untuk klien ini (Jangan pakai spasi)
-const idUndangan = 'upin-ipin'; 
-
-    
-    // 1. Fungsi Kirim Ucapan
-    function kirimKeSheets() {
-        const btn = document.getElementById('btn-kirim');
-        const nama = document.getElementById('nama-input').value;
-        const ucapan = document.getElementById('pesan-input').value;
-        const hadir = document.getElementById('hadir-input').value;
-
-        if (!nama || !ucapan) return alert("Mohon isi nama dan ucapan!");
-
-        btn.disabled = true;
-        btn.innerText = "Mengirim...";
-
-        fetch(scriptURL, {
-            method: 'POST',
-          body: JSON.stringify({ 
-    "nama": nama, 
-    "ucapan": ucapan, 
-    "kehadiran": hadir,
-    "tujuan": idUndangan // <-- Tambahan ini
-})
-
-        .then(res => {
-            alert("Terima kasih atas ucapannya!");
-            btn.disabled = false;
-            btn.innerText = "KIRIM UCAPAN";
-            document.getElementById('nama-input').value = "";
-            document.getElementById('pesan-input').value = "";
-            muatUcapan(); 
-        })
-        .catch(error => {
-            console.error('Error!', error.message);
-            alert("Gagal mengirim pesan.");
-            btn.disabled = false;
-            btn.innerText = "KIRIM UCAPAN";
-        });
-    }
-
-    // 2. Fungsi Muat Ucapan (Tanpa Double)
-    function muatUcapan() 
-    fetch(scriptURL + "?tujuan=" + idUndangan)
-
-        .then(res => res.json())
-        .then(data => {
-            const wadah = document.getElementById('daftar-ucapan');
-            wadah.innerHTML = ""; 
-            data.reverse().forEach(row => {
-                const item = `
-                    <div class="bg-stone-50 p-4 rounded-2xl border-l-4 border-amber-700 shadow-sm mb-4">
-                        <div class="flex justify-between items-start">
-                            <p class="font-bold text-stone-800 text-xs">${row[1]}</p>
-                            <span class="text-[9px] font-normal text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">${row[3]}</span>
-                        </div>
-                        <p class="text-[11px] text-stone-600 mt-1 italic">"${row[2]}"</p>
-                    </div>`;
-                wadah.innerHTML += item;
-            });
-        })
-        .catch(err => console.error("Gagal memuat:", err));
-    }
-
-    // 3. Fungsi Navigasi & Nama Tamu
-    function ambilNamaTamu() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const nama = urlParams.get('to');
-        const elemenNama = document.getElementById('nama-tamu');
-        elemenNama.innerText = nama ? decodeURIComponent(nama.replace(/\+/g, ' ')) : "Tamu Undangan";
-    }
-
-    function bukaUndangan() {
-        document.getElementById('halaman-sampul').style.display = 'none';
-        document.getElementById('konten-utama').style.display = 'block';
-        document.getElementById('nav-menu').classList.remove('hidden');
-        document.getElementById('music-btn').classList.remove('hidden');
-        audio.play();
-        window.scrollTo(0, 0);
-        isAutoScrolling = true;
-        setTimeout(autoScroll, 2000);
-    }
-
-    function toggleMusik() {
-        const btn = document.getElementById('music-btn');
-        if (audio.paused) { audio.play(); btn.classList.add('spinning'); }
-        else { audio.pause(); btn.classList.remove('spinning'); }
-    }
-
-  function salinTeks(nomor, label) {
-    // Cara Modern
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(nomor).then(() => {
-            alert("Berhasil menyalin " + label + ": " + nomor);
-        }).catch(err => {
-            fallbackSalin(nomor, label);
-        });
-    } else {
-        // Cara Lama (untuk HP/Browser jadul)
-        fallbackSalin(nomor, label);
-    }
-}
-
-function fallbackSalin(text, label) {
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.select();
-    try {
-        document.execCommand('copy');
-        alert("Berhasil menyalin " + label + ": " + text);
-    } catch (err) {
-        alert("Gagal menyalin, silakan salin manual.");
-    }
-    document.body.removeChild(textArea);
-}
-
-    // 5. Auto Scroll Logic
-    function toggleAutoScroll() {
-        isAutoScrolling = !isAutoScrolling;
-        const icon = document.getElementById('scroll-icon');
-        if (isAutoScrolling) { icon.classList.replace('fa-play', 'fa-pause'); autoScroll(); }
-        else { icon.classList.replace('fa-pause', 'fa-play'); }
-    }
-
-    function autoScroll() {
-        if (!isAutoScrolling) return;
-        window.scrollBy(0, 0.6);
-        if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
-            requestAnimationFrame(autoScroll);
-        } else {
-            isAutoScrolling = false;
-            document.getElementById('scroll-icon').classList.replace('fa-pause', 'fa-play');
-        }
-    }
-
-    window.addEventListener('touchstart', () => {
-        isAutoScrolling = false;
-        const icon = document.getElementById('scroll-icon');
-        if(icon) icon.classList.replace('fa-pause', 'fa-play');
-    });
-    <script>
     // 1. SETTING UTAMA (Ganti idUndangan setiap ada pesanan baru)
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwGbkYRh5zMYmzxTix5R7iiPWlSNvrkpGsGQPhemtMIMk948B0x05SG6AQEJVQl0GzELA/exec';
-    const idUndangan = 'rara-adi'; // <-- Ini nama tab yang akan muncul di Google Sheets
+    const idUndangan = 'upin-ipin'; // <-- Cukup ganti ini saja untuk klien baru!
     
     const audio = document.getElementById('musik');
     let isAutoScrolling = false;
 
-    // 2. Fungsi Kirim Ucapan (DIPERBARUI)
+    // 2. Fungsi Kirim Ucapan
     function kirimKeSheets() {
         const btn = document.getElementById('btn-kirim');
         const nama = document.getElementById('nama-input').value;
@@ -584,7 +436,7 @@ function fallbackSalin(text, label) {
                 "nama": nama, 
                 "ucapan": ucapan, 
                 "kehadiran": hadir,
-                "tujuan": idUndangan // <-- Menentukan target sheet
+                "tujuan": idUndangan 
             })
         })
         .then(res => {
@@ -603,9 +455,8 @@ function fallbackSalin(text, label) {
         });
     }
 
-    // 3. Fungsi Muat Ucapan (DIPERBARUI)
+    // 3. Fungsi Muat Ucapan
     function muatUcapan() {
-        // Mengambil data spesifik hanya untuk idUndangan ini
         fetch(scriptURL + "?tujuan=" + idUndangan)
         .then(res => res.json())
         .then(data => {
@@ -630,8 +481,7 @@ function fallbackSalin(text, label) {
         .catch(err => console.error("Gagal memuat:", err));
     }
 
-    // --- FUNGSI PENDUKUNG LAINNYA (Sama seperti sebelumnya) ---
-
+    // 4. Fungsi Navigasi & Nama Tamu
     function ambilNamaTamu() {
         const urlParams = new URLSearchParams(window.location.search);
         const nama = urlParams.get('to');
@@ -692,7 +542,7 @@ function fallbackSalin(text, label) {
         }
     }
 
-    // Countdown Logic
+    // 5. Countdown (Rara & Adi 15 April 2026)
     const target = new Date("April 15, 2026 08:00:00").getTime();
     setInterval(() => {
         const sisa = target - new Date().getTime();
