@@ -414,7 +414,13 @@
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwGbkYRh5zMYmzxTix5R7iiPWlSNvrkpGsGQPhemtMIMk948B0x05SG6AQEJVQl0GzELA/exec';
     const audio = document.getElementById('musik');
     let isAutoScrolling = false;
+// Gantilah URL di bawah ini dengan URL Deploy terbaru yang kamu dapat dari Apps Script
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwGbkYRh5zMYmzxTix5R7iiPWlSNvrkpGsGQPhemtMIMk948B0x05SG6AQEJVQl0GzELA/exec';
 
+// Tentukan Nama Sheet untuk klien ini (Jangan pakai spasi)
+const idUndangan = 'rara-adi'; 
+
+    
     // 1. Fungsi Kirim Ucapan
     function kirimKeSheets() {
         const btn = document.getElementById('btn-kirim');
@@ -429,8 +435,13 @@
 
         fetch(scriptURL, {
             method: 'POST',
-            body: JSON.stringify({ "nama": nama, "ucapan": ucapan, "kehadiran": hadir })
-        })
+          body: JSON.stringify({ 
+    "nama": nama, 
+    "ucapan": ucapan, 
+    "kehadiran": hadir,
+    "tujuan": idUndangan // <-- Tambahan ini
+})
+
         .then(res => {
             alert("Terima kasih atas ucapannya!");
             btn.disabled = false;
@@ -448,8 +459,9 @@
     }
 
     // 2. Fungsi Muat Ucapan (Tanpa Double)
-    function muatUcapan() {
-        fetch(scriptURL)
+    function muatUcapan() 
+    fetch(scriptURL + "?tujuan=" + idUndangan)
+
         .then(res => res.json())
         .then(data => {
             const wadah = document.getElementById('daftar-ucapan');
