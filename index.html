@@ -425,46 +425,44 @@ const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP
 const idUndangan = 'devi-ehsan'; 
 const audio = document.getElementById('musik');
 
-let isAutoScrolling = false;
-let isUserInteracting = false; // Detektor sentuhan jari
+    let isAutoScrolling = false;
+    let scrollAnim; // Variabel untuk mengontrol mesin animasi
 
-// 2. Logika Auto Scroll & Interaksi Manual
-function autoScroll() {
-    // Jika tombol pause ditekan ATAU jari sedang menyentuh layar, berhenti gerak
-    if (!isAutoScrolling || isUserInteracting) return; 
-    
-    window.scrollBy(0, 0.7); 
-    
-    if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
-        requestAnimationFrame(autoScroll);
-    } else {
+    function autoScroll() {
+        if (!isAutoScrolling) return;
+        
+        window.scrollBy(0, 0.7); // 0.7 adalah angka "sweet spot" untuk kelancaran
+        
+        if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
+            scrollAnim = requestAnimationFrame(autoScroll);
+        } else {
+            stopAutoScroll();
+        }
+    }
+
+    function stopAutoScroll() {
         isAutoScrolling = false;
+        cancelAnimationFrame(scrollAnim);
         document.getElementById('scroll-icon').classList.replace('fa-pause', 'fa-play');
     }
-}
 
-// Deteksi Jari Menempel (Scroll Manual dimulai)
-window.addEventListener('touchstart', () => { isUserInteracting = true; }, {passive: true});
+    // --- TRIK AGAR SMOOTH SAAT DISENTUH ---
+    
+    // 1. Saat jari menyentuh, kita PAUSE animasinya (bukan matikan fiturnya)
+    window.addEventListener('touchstart', () => {
+        if (isAutoScrolling) cancelAnimationFrame(scrollAnim);
+    }, {passive: true});
 
-// Deteksi Jari Dilepas (Kembali ke Auto Scroll setelah jeda singkat)
-window.addEventListener('touchend', () => { 
-    isUserInteracting = false; 
-    if (isAutoScrolling) {
-        setTimeout(autoScroll, 200); // Jeda 200ms agar transisi tidak kaget
-    }
-}, {passive: true});
+    // 2. Saat jari dilepas, kita LANJUTKAN animasinya
+    window.addEventListener('touchend', () => {
+        if (isAutoScrolling) {
+            // Jeda 50ms supaya tidak bentrok dengan sisa gerakan jari (momentum)
+            setTimeout(() => {
+                scrollAnim = requestAnimationFrame(autoScroll);
+            }, 50);
+        }
+    }, {passive: true});
 
-function toggleAutoScroll() {
-    isAutoScrolling = !isAutoScrolling;
-    const icon = document.getElementById('scroll-icon');
-    if (isAutoScrolling) { 
-        icon.classList.replace('fa-play', 'fa-pause'); 
-        isUserInteracting = false; // Reset status interaksi
-        autoScroll(); 
-    } else { 
-        icon.classList.replace('fa-pause', 'fa-play'); 
-    }
-}
 
 // 3. Fungsi Fitur Salin
 function salinTeks(nomor, label, elemen) {
