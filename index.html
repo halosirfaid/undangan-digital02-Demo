@@ -353,7 +353,7 @@
                 </p>
                 <p class="text-[10px] uppercase tracking-widest mt-2 opacity-80 italic">Penerima: Rara & Adi</p>
             </div>
-            <button onclick="salinTeks('Jl. Trans Kalimantan No. 123, Kuala Kapuas, Kapuas Murung', 'Alamat' this)" class="absolute bottom-4 right-4 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-lg text-[10px] font-bold border border-white/30 active:scale-95 transition-all">
+            <button onclick="salinTeks('Jl. Trans Kalimantan No. 123, Kuala Kapuas, Kapuas Murung', 'Alamat', this)" class="absolute bottom-4 right-4 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-lg text-[10px] font-bold border border-white/30 active:scale-95 transition-all">
                 SALIN ALAMAT
             </button>
         
@@ -420,149 +420,137 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
-    // 1. SETTING UTAMA (Ganti idUndangan setiap ada pesanan baru)
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
-    const idUndangan = 'devi-ehsan'; // <-- Cukup ganti ini saja untuk klien baru!
+    // 1. Variabel Global
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
+const idUndangan = 'devi-ehsan'; 
+const audio = document.getElementById('musik');
+
+let isAutoScrolling = false;
+let isUserInteracting = false; // Detektor sentuhan jari
+
+// 2. Logika Auto Scroll & Interaksi Manual
+function autoScroll() {
+    // Jika tombol pause ditekan ATAU jari sedang menyentuh layar, berhenti gerak
+    if (!isAutoScrolling || isUserInteracting) return; 
     
-    const audio = document.getElementById('musik');
-    let isAutoScrolling = false;
-
-    // 2. Fungsi Kirim Ucapan
-    function kirimKeSheets() {
-        const btn = document.getElementById('btn-kirim');
-        const nama = document.getElementById('nama-input').value;
-        const ucapan = document.getElementById('pesan-input').value;
-        const hadir = document.getElementById('hadir-input').value;
-
-        if (!nama || !ucapan) return alert("Mohon isi nama dan ucapan!");
-
-        btn.disabled = true;
-        btn.innerText = "Mengirim...";
-
-        fetch(scriptURL, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: JSON.stringify({ 
-                "nama": nama, 
-                "ucapan": ucapan, 
-                "kehadiran": hadir,
-                "tujuan": idUndangan
-                       
-            })
-        })
-
-        .then(res => {
-            alert("Terima kasih atas ucapannya!");
-            btn.disabled = false;
-            btn.innerText = "KIRIM UCAPAN";
-            document.getElementById('nama-input').value = "";
-            document.getElementById('pesan-input').value = "";
-            muatUcapan(); 
-        })
-        .catch(error => {
-            console.error('Error!', error.message);
-            alert("Gagal mengirim pesan.");
-            btn.disabled = false;
-            btn.innerText = "KIRIM UCAPAN";
-        });
+    window.scrollBy(0, 0.7); 
+    
+    if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
+        requestAnimationFrame(autoScroll);
+    } else {
+        isAutoScrolling = false;
+        document.getElementById('scroll-icon').classList.replace('fa-pause', 'fa-play');
     }
+}
 
-    // 3. Fungsi Muat Ucapan
-    function muatUcapan() {
-        fetch(scriptURL + "?tujuan=" + idUndangan)
-        .then(res => res.json())
-        .then(data => {
-            const wadah = document.getElementById('daftar-ucapan');
-            wadah.innerHTML = ""; 
-            if (data.length === 0) {
-                wadah.innerHTML = "<p class='text-[10px] text-center text-stone-400'>Belum ada ucapan.</p>";
-                return;
-            }
-            data.reverse().forEach(row => {
-                const item = `
-                    <div class="bg-stone-50 p-4 rounded-2xl border-l-4 border-amber-700 shadow-sm mb-4">
-                        <div class="flex justify-between items-start">
-                            <p class="font-bold text-stone-800 text-xs">${row[1]}</p>
-                            <span class="text-[9px] font-normal text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">${row[3]}</span>
-                        </div>
-                        <p class="text-[11px] text-stone-600 mt-1 italic">"${row[2]}"</p>
-                    </div>`;
-                wadah.innerHTML += item;
-            });
-        })
-        .catch(err => console.error("Gagal memuat:", err));
+// Deteksi Jari Menempel (Scroll Manual dimulai)
+window.addEventListener('touchstart', () => { isUserInteracting = true; }, {passive: true});
+
+// Deteksi Jari Dilepas (Kembali ke Auto Scroll setelah jeda singkat)
+window.addEventListener('touchend', () => { 
+    isUserInteracting = false; 
+    if (isAutoScrolling) {
+        setTimeout(autoScroll, 200); // Jeda 200ms agar transisi tidak kaget
     }
+}, {passive: true});
 
-    // 4. Fungsi Navigasi & Nama Tamu
-    function ambilNamaTamu() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const nama = urlParams.get('to');
-        const elemenNama = document.getElementById('nama-tamu');
-        elemenNama.innerText = nama ? decodeURIComponent(nama.replace(/\+/g, ' ')) : "Tamu Undangan";
+function toggleAutoScroll() {
+    isAutoScrolling = !isAutoScrolling;
+    const icon = document.getElementById('scroll-icon');
+    if (isAutoScrolling) { 
+        icon.classList.replace('fa-play', 'fa-pause'); 
+        isUserInteracting = false; // Reset status interaksi
+        autoScroll(); 
+    } else { 
+        icon.classList.replace('fa-pause', 'fa-play'); 
     }
+}
 
-    function bukaUndangan() {
-        document.getElementById('halaman-sampul').style.display = 'none';
-        document.getElementById('konten-utama').style.display = 'block';
-        document.getElementById('nav-menu').classList.remove('hidden');
-        document.getElementById('music-btn').classList.remove('hidden');
-        audio.play();
-        window.scrollTo(0, 0);
-        isAutoScrolling = true;
-        setTimeout(autoScroll, 2000);
-    }
-
-    function toggleMusik() {
-        const btn = document.getElementById('music-btn');
-        if (audio.paused) { audio.play(); btn.classList.add('spinning'); }
-        else { audio.pause(); btn.classList.remove('spinning'); }
-    }
-
-    function toggleAutoScroll() {
-        isAutoScrolling = !isAutoScrolling;
-        const icon = document.getElementById('scroll-icon');
-        if (isAutoScrolling) { icon.classList.replace('fa-play', 'fa-pause'); autoScroll(); }
-        else { icon.classList.replace('fa-pause', 'fa-play'); }
-    }
-
-    function autoScroll() {
-        if (!isAutoScrolling) return;
-        window.scrollBy(0, 0.6);
-        if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
-            requestAnimationFrame(autoScroll);
-        } else {
-            isAutoScrolling = false;
-            document.getElementById('scroll-icon').classList.replace('fa-pause', 'fa-play');
-        }
-    }
-
-    // 5. Countdown (Rara & Adi 15 April 2026)
-    const target = new Date("April 15, 2026 08:00:00").getTime();
-    setInterval(() => {
-        const sisa = target - new Date().getTime();
-        document.getElementById("days").innerText = Math.floor(sisa / (1000 * 60 * 60 * 24));
-        document.getElementById("hours").innerText = Math.floor((sisa % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        document.getElementById("minutes").innerText = Math.floor((sisa % (1000 * 60 * 60)) / (1000 * 60));
-        document.getElementById("seconds").innerText = Math.floor((sisa % (1000 * 60)) / 1000);
-    }, 1000);
-
-    function scrollReveal() {
-        const reveals = document.querySelectorAll(".reveal");
-        reveals.forEach(el => {
-            const rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight - 100 && rect.bottom > 0) el.classList.add("active");
-            else el.classList.remove("active");
-        });
-    }
-
-    window.addEventListener("scroll", scrollReveal);
-    window.addEventListener('load', () => {
-        ambilNamaTamu();
-        muatUcapan();
-        scrollReveal();
-        new LuminousGallery(document.querySelectorAll(".galeri-item"));
+// 3. Fungsi Fitur Salin
+function salinTeks(nomor, label, elemen) {
+    const teksAsli = elemen.innerText;
+    navigator.clipboard.writeText(nomor).then(() => {
+        elemen.innerText = "BERHASIL DISALIN!";
+        elemen.classList.add('bg-green-600', 'text-white');
+        setTimeout(() => {
+            elemen.innerText = teksAsli;
+            elemen.classList.remove('bg-green-600', 'text-white');
+        }, 2000);
     });
-</script>
+}
+
+// 4. Fungsi-fungsi Lain (Buka Undangan, RSVP, dll)
+function bukaUndangan() {
+    document.getElementById('halaman-sampul').style.display = 'none';
+    document.getElementById('konten-utama').style.display = 'block';
+    document.getElementById('nav-menu').classList.remove('hidden');
+    document.getElementById('music-btn').classList.remove('hidden');
+    audio.play();
+    window.scrollTo(0, 0);
+    
+    // Aktifkan auto scroll otomatis saat buka
+    isAutoScrolling = true;
+    setTimeout(autoScroll, 2000);
+}
+
+function toggleMusik() {
+    const btn = document.getElementById('music-btn');
+    if (audio.paused) { audio.play(); btn.classList.add('spinning'); }
+    else { audio.pause(); btn.classList.remove('spinning'); }
+}
+
+function kirimKeSheets() {
+    const btn = document.getElementById('btn-kirim');
+    const nama = document.getElementById('nama-input').value;
+    const ucapan = document.getElementById('pesan-input').value;
+    const hadir = document.getElementById('hadir-input').value;
+    if (!nama || !ucapan) return alert("Mohon isi nama dan ucapan!");
+    btn.disabled = true; btn.innerText = "Mengirim...";
+    fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ "nama": nama, "ucapan": ucapan, "kehadiran": hadir, "tujuan": idUndangan }) })
+    .then(() => { alert("Terima kasih!"); btn.disabled = false; btn.innerText = "KIRIM UCAPAN"; document.getElementById('nama-input').value = ""; document.getElementById('pesan-input').value = ""; muatUcapan(); })
+    .catch(() => { alert("Gagal!"); btn.disabled = false; });
+}
+
+function muatUcapan() {
+    fetch(scriptURL + "?tujuan=" + idUndangan)
+    .then(res => res.json()).then(data => {
+        const wadah = document.getElementById('daftar-ucapan'); wadah.innerHTML = "";
+        data.reverse().forEach(row => {
+            wadah.innerHTML += `<div class="bg-stone-50 p-4 rounded-2xl border-l-4 border-amber-700 shadow-sm mb-4"><div class="flex justify-between"><p class="font-bold text-xs">${row[1]}</p><span class="text-[9px] bg-amber-50 px-2 rounded-full">${row[3]}</span></div><p class="text-[11px] mt-1">"${row[2]}"</p></div>`;
+        });
+    });
+}
+
+function ambilNamaTamu() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const nama = urlParams.get('to');
+    document.getElementById('nama-tamu').innerText = nama ? decodeURIComponent(nama.replace(/\+/g, ' ')) : "Tamu Undangan";
+}
+
+const target = new Date("April 15, 2026 08:00:00").getTime();
+setInterval(() => {
+    const sisa = target - new Date().getTime();
+    document.getElementById("days").innerText = Math.floor(sisa / (1000 * 60 * 60 * 24));
+    document.getElementById("hours").innerText = Math.floor((sisa % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    document.getElementById("minutes").innerText = Math.floor((sisa % (1000 * 60 * 60)) / (1000 * 60));
+    document.getElementById("seconds").innerText = Math.floor((sisa % (1000 * 60)) / 1000);
+}, 1000);
+
+function scrollReveal() {
+    const reveals = document.querySelectorAll(".reveal");
+    reveals.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100 && rect.bottom > 0) el.classList.add("active");
+    });
+}
+
+window.addEventListener("scroll", scrollReveal);
+window.addEventListener('load', () => {
+    ambilNamaTamu(); muatUcapan(); scrollReveal();
+    new LuminousGallery(document.querySelectorAll(".galeri-item"));
+});
+
+  </script>
 
   </body>
 </html>
