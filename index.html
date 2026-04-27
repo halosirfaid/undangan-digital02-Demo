@@ -113,7 +113,7 @@
             <h3 id="nama-tamu" class="text-lg font-bold uppercase tracking-widest text-white">Tamu Undangan</h3>
         </div>
         
-        <button onclick="bukaUndangan()" class="bg-amber-200 text-stone-800 px-8 py-3 rounded-full font-bold tracking-widest text-xs flex items-center gap-2 shadow-xl active:scale-95 transition-all animate-pulse">
+        <button onclick="bukaUndangan()" class="bg-amber-200 text-stone-800 px-8 py-3 rounded-full font-bold tracking-widest text-xs flex items-center gap-2 shadow-xl active:scale-95 transition-all">
             <i class="fa-solid fa-envelope-open"></i> BUKA UNDANGAN
         </button>
     </div>
@@ -353,7 +353,7 @@
                 </p>
                 <p class="text-[10px] uppercase tracking-widest mt-2 opacity-80 italic">Penerima: Rara & Adi</p>
             </div>
-            <button onclick="salinTeks('Jl. Trans Kalimantan No. 123, Kuala Kapuas, Kapuas Murung', 'Alamat', this)" class="absolute bottom-4 right-4 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-lg text-[10px] font-bold border border-white/30 active:scale-95 transition-all">
+            <button onclick="salinTeks('Jl. Trans Kalimantan No. 123, Kuala Kapuas, Kapuas Murung', 'Alamat' this)" class="absolute bottom-4 right-4 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-lg text-[10px] font-bold border border-white/30 active:scale-95 transition-all">
                 SALIN ALAMAT
             </button>
         
@@ -545,40 +545,24 @@ function feedbackSalin(elemen, teksAsli) {
     }, 2000); // Kembali ke tulisan asli setelah 2 detik
 }
 
-let isUserInteracting = false; // Tambahkan variabel ini di bagian paling atas script
 
-function autoScroll() {
-    if (!isAutoScrolling || isUserInteracting) return; // Berhenti jika dimatikan atau jika user sedang menyentuh layar
-    
-    window.scrollBy(0, 0.6);
-    
-    if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
-        requestAnimationFrame(autoScroll);
-    } else {
-        isAutoScrolling = false;
-        document.getElementById('scroll-icon').classList.replace('fa-pause', 'fa-play');
+    function toggleAutoScroll() {
+        isAutoScrolling = !isAutoScrolling;
+        const icon = document.getElementById('scroll-icon');
+        if (isAutoScrolling) { icon.classList.replace('fa-play', 'fa-pause'); autoScroll(); }
+        else { icon.classList.replace('fa-pause', 'fa-play'); }
     }
-}
-// Deteksi saat jari menempel di layar (User mau scroll manual)
-window.addEventListener('touchstart', () => {
-    isUserInteracting = true;
-});
 
-// Deteksi saat jari dilepas (Lanjutkan auto scroll setelah jeda sedikit)
-window.addEventListener('touchend', () => {
-    isUserInteracting = false;
-    if (isAutoScrolling) {
-        setTimeout(autoScroll, 100); // Beri jeda 100ms sebelum jalan lagi agar smooth
+    function autoScroll() {
+        if (!isAutoScrolling) return;
+        window.scrollBy(0, 0.6);
+        if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
+            requestAnimationFrame(autoScroll);
+        } else {
+            isAutoScrolling = false;
+            document.getElementById('scroll-icon').classList.replace('fa-pause', 'fa-play');
+        }
     }
-});
-
-// Tambahan untuk mouse (jika buka di laptop)
-window.addEventListener('mousedown', () => { isUserInteracting = true; });
-window.addEventListener('mouseup', () => { 
-    isUserInteracting = false; 
-    if (isAutoScrolling) autoScroll(); 
-});
-
 
     // 5. Countdown (Rara & Adi 15 April 2026)
     const target = new Date("April 15, 2026 08:00:00").getTime();
