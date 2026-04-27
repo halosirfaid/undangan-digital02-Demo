@@ -16,6 +16,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        html {
+    scroll-behavior: smooth;
+}
         /* Animasi Bergerak Naik Turun Pelan */
 @keyframes float {
     0% { transform: translateY(0px); }
@@ -110,7 +113,7 @@
             <h3 id="nama-tamu" class="text-lg font-bold uppercase tracking-widest text-white">Tamu Undangan</h3>
         </div>
         
-        <button onclick="bukaUndangan()" class="bg-amber-200 text-stone-800 px-8 py-3 rounded-full font-bold tracking-widest text-xs flex items-center gap-2 shadow-xl active:scale-95 transition-all">
+        <button onclick="bukaUndangan()" class="bg-amber-200 text-stone-800 px-8 py-3 rounded-full font-bold tracking-widest text-xs flex items-center gap-2 shadow-xl active:scale-95 transition-all animate-pulse">
             <i class="fa-solid fa-envelope-open"></i> BUKA UNDANGAN
         </button>
     </div>
@@ -301,7 +304,7 @@
                    <i class="fa-solid fa-microchip text-amber-400 text-3xl mb-2 opacity-90"></i>                <p id="rek-mandiri" class="text-lg tracking-[0.2em] font-mono">1234 5678 9012</p>
                 <p class="text-[10px] uppercase tracking-widest mt-2 opacity-80">Sirajuddin</p>
             </div>
-            <button onclick="salinTeks('123456789012', 'Mandiri')" class="absolute bottom-4 right-4 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-lg text-[10px] font-bold border border-white/30 active:scale-95 transition-all">
+            <button onclick="salinTeks('123456789012', 'Mandiri',this)" class="absolute bottom-4 right-4 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-lg text-[10px] font-bold border border-white/30 active:scale-95 transition-all">
                 SALIN NOMOR
             </button>
         </div>
@@ -316,7 +319,7 @@
                 <p id="rek-bca" class="text-lg tracking-[0.2em] font-mono">0987 6543 21</p>
                 <p class="text-[10px] uppercase tracking-widest mt-2 opacity-80">Aulia Rahmah</p>
             </div>
-            <button onclick="salinTeks('0987654321', 'BCA')" class="absolute bottom-4 right-4 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-lg text-[10px] font-bold border border-white/30 active:scale-95 transition-all">
+            <button onclick="salinTeks('0987654321', 'BCA',this)" class="absolute bottom-4 right-4 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-lg text-[10px] font-bold border border-white/30 active:scale-95 transition-all">
                 SALIN NOMOR
             </button>
         </div>    <div class="relative overflow-hidden bg-gradient-to-br from-sky-400 to-blue-500 p-6 rounded-2xl shadow-xl text-left text-white h-48 border border-white/20">
@@ -334,7 +337,7 @@
         <p class="text-[10px] uppercase tracking-widest opacity-80">Sirajuddin</p>
     </div>
 
-    <button onclick="salinTeks('082149971287', 'DANA')" class="absolute bottom-4 right-4 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-lg text-[10px] font-bold border border-white/30 active:scale-95 transition-all">
+    <button onclick="salinTeks('082149971287', 'DANA', this)" class="absolute bottom-4 right-4 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-lg text-[10px] font-bold border border-white/30 active:scale-95 transition-all">
         SALIN NOMOR
     </button>
 </div>
@@ -350,7 +353,7 @@
                 </p>
                 <p class="text-[10px] uppercase tracking-widest mt-2 opacity-80 italic">Penerima: Rara & Adi</p>
             </div>
-            <button onclick="salinTeks('Jl. Trans Kalimantan No. 123, Kuala Kapuas, Kapuas Murung', 'Alamat')" class="absolute bottom-4 right-4 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-lg text-[10px] font-bold border border-white/30 active:scale-95 transition-all">
+            <button onclick="salinTeks('Jl. Trans Kalimantan No. 123, Kuala Kapuas, Kapuas Murung', 'Alamat' this)" class="absolute bottom-4 right-4 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-lg text-[10px] font-bold border border-white/30 active:scale-95 transition-all">
                 SALIN ALAMAT
             </button>
         
@@ -515,23 +518,33 @@
         else { audio.pause(); btn.classList.remove('spinning'); }
     }
 
-    function salinTeks(nomor, label) {
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(nomor).then(() => {
-                alert("Berhasil menyalin " + label + ": " + nomor);
-            }).catch(err => { fallbackSalin(nomor, label); });
-        } else { fallbackSalin(nomor, label); }
+   function salinTeks(nomor, label, elemen) {
+    const teksAsli = elemen.innerText;
+    
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(nomor).then(() => {
+            feedbackSalin(elemen, teksAsli);
+        }).catch(err => { 
+            fallbackSalin(nomor); 
+            feedbackSalin(elemen, teksAsli);
+        });
+    } else { 
+        fallbackSalin(nomor); 
+        feedbackSalin(elemen, teksAsli);
     }
+}
 
-    function fallbackSalin(text, label) {
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        alert("Berhasil menyalin " + label + ": " + text);
-        document.body.removeChild(textArea);
-    }
+// Fungsi untuk memberi efek tulisan berubah
+function feedbackSalin(elemen, teksAsli) {
+    elemen.innerText = "BERHASIL DISALIN!";
+    elemen.classList.add('bg-green-600', 'text-white');
+    
+    setTimeout(() => {
+        elemen.innerText = teksAsli;
+        elemen.classList.remove('bg-green-600', 'text-white');
+    }, 2000); // Kembali ke tulisan asli setelah 2 detik
+}
+
 
     function toggleAutoScroll() {
         isAutoScrolling = !isAutoScrolling;
