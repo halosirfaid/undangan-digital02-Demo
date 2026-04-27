@@ -545,24 +545,40 @@ function feedbackSalin(elemen, teksAsli) {
     }, 2000); // Kembali ke tulisan asli setelah 2 detik
 }
 
+let isUserInteracting = false; // Tambahkan variabel ini di bagian paling atas script
 
-    function toggleAutoScroll() {
-        isAutoScrolling = !isAutoScrolling;
-        const icon = document.getElementById('scroll-icon');
-        if (isAutoScrolling) { icon.classList.replace('fa-play', 'fa-pause'); autoScroll(); }
-        else { icon.classList.replace('fa-pause', 'fa-play'); }
+function autoScroll() {
+    if (!isAutoScrolling || isUserInteracting) return; // Berhenti jika dimatikan atau jika user sedang menyentuh layar
+    
+    window.scrollBy(0, 0.6);
+    
+    if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
+        requestAnimationFrame(autoScroll);
+    } else {
+        isAutoScrolling = false;
+        document.getElementById('scroll-icon').classList.replace('fa-pause', 'fa-play');
     }
+}
+// Deteksi saat jari menempel di layar (User mau scroll manual)
+window.addEventListener('touchstart', () => {
+    isUserInteracting = true;
+});
 
-    function autoScroll() {
-        if (!isAutoScrolling) return;
-        window.scrollBy(0, 0.6);
-        if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
-            requestAnimationFrame(autoScroll);
-        } else {
-            isAutoScrolling = false;
-            document.getElementById('scroll-icon').classList.replace('fa-pause', 'fa-play');
-        }
+// Deteksi saat jari dilepas (Lanjutkan auto scroll setelah jeda sedikit)
+window.addEventListener('touchend', () => {
+    isUserInteracting = false;
+    if (isAutoScrolling) {
+        setTimeout(autoScroll, 100); // Beri jeda 100ms sebelum jalan lagi agar smooth
     }
+});
+
+// Tambahan untuk mouse (jika buka di laptop)
+window.addEventListener('mousedown', () => { isUserInteracting = true; });
+window.addEventListener('mouseup', () => { 
+    isUserInteracting = false; 
+    if (isAutoScrolling) autoScroll(); 
+});
+
 
     // 5. Countdown (Rara & Adi 15 April 2026)
     const target = new Date("April 15, 2026 08:00:00").getTime();
