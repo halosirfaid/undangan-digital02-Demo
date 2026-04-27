@@ -477,22 +477,30 @@ function feedbackSalin(elemen, teksAsli) {
                        
             })
         })
-
         .then(res => {
-            alert("Terima kasih atas ucapannya!");
+        btn.innerText = "TERKIRIM!"; // Mengganti alert
+        btn.style.backgroundColor = "#059669"; // Ubah warna ke hijau (optional)
+        
+        document.getElementById('nama-input').value = "";
+        document.getElementById('pesan-input').value = "";
+        muatUcapan(); 
+
+        setTimeout(() => {
             btn.disabled = false;
             btn.innerText = "KIRIM UCAPAN";
-            document.getElementById('nama-input').value = "";
-            document.getElementById('pesan-input').value = "";
-            muatUcapan(); 
-        })
-        .catch(error => {
-            console.error('Error!', error.message);
-            alert("Gagal mengirim pesan.");
+            btn.style.backgroundColor = ""; // Kembalikan warna asli
+        }, 3000);
+    })
+    .catch(error => {
+        console.error('Error!', error.message);
+        btn.innerText = "GAGAL MENGIRIM";
+        setTimeout(() => {
             btn.disabled = false;
             btn.innerText = "KIRIM UCAPAN";
-        });
-    }
+        }, 3000);
+    });
+
+            }
 
     // 3. Fungsi Muat Ucapan
     function muatUcapan() {
