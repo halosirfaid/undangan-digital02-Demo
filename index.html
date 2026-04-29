@@ -199,18 +199,22 @@
     </div>
 </section>
         <section class="py-20 px-6 bg-[#fffcf5]">
-            <h2 class="text-4xl font-aesthetic text-center text-amber-700 mb-10">Our Love Story</h2>
-            <div class="max-w-md mx-auto space-y-6 reveal">
-                <div class="chat-bubble shadow-md rounded-2xl p-5 mb-6 border-l-4 border-amber-700 reveal">
-                    <p class="text-xs font-bold text-amber-700 mb-1">2023 - Pertemuan Pertama</p>
-                    <p class="text-[11px] text-stone-600">"Semuanya bermula di sebuah cafe kecil, kita tidak sengaja duduk berdekatan..."</p>
-                </div>
-                <div class="chat-bubble shadow-md rounded-2xl p-5 mb-6 border-l-4 border-amber-700 reveal" style="margin-left: auto; background: #fef3c7;">
-                    <p class="text-xs font-bold text-amber-700 mb-1">2024 - Menjalin Komitmen</p>
-                    <p class="text-[11px] text-stone-600">"Setelah setahun mengenal, kami memutuskan untuk melangkah ke jenjang yang lebih serius."</p>
-                </div>
-            </div>
-        </section>
+    <h2 class="text-4xl font-aesthetic text-center text-amber-700 mb-10">Our Love Story</h2>
+    <div id="story-container" class="max-w-md mx-auto space-y-6">
+        
+        <div class="chat-item opacity-0 transform translate-y-4 transition-all duration-700 chat-bubble shadow-md rounded-2xl p-5 border-l-4 border-amber-700">
+            <p class="text-xs font-bold text-amber-700 mb-1 uppercase">2023 - Pertemuan Pertama</p>
+            <p class="text-[11px] text-stone-600">"Semuanya bermula di sebuah cafe kecil, kita tidak sengaja duduk berdekatan..."</p>
+        </div>
+
+        <div class="chat-item opacity-0 transform translate-y-4 transition-all duration-700 chat-bubble shadow-md rounded-2xl p-5 border-l-4 border-amber-700" style="margin-left: auto; background: #fef3c7;">
+            <p class="text-xs font-bold text-amber-700 mb-1 uppercase">2024 - Menjalin Komitmen</p>
+            <p class="text-[11px] text-stone-600">"Setelah setahun mengenal, kami memutuskan untuk melangkah ke jenjang yang lebih serius."</p>
+        </div>
+        
+    </div>
+</section>
+
             <section id="acara" class="py-20 px-6 bg-[#fffcf5] text-center">
     <div class="max-w-md mx-auto reveal">
         <h2 class="text-4xl font-aesthetic text-amber-700 mb-2">Acara Pernikahan</h2>
@@ -434,6 +438,28 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
+    function animesiLoveStory() {
+    const container = document.getElementById('story-container');
+    const items = document.querySelectorAll('.chat-item');
+    const rect = container.getBoundingClientRect();
+
+    // Jika bagian story terlihat di layar
+    if (rect.top < window.innerHeight - 100) {
+        items.forEach((item, index) => {
+            setTimeout(() => {
+                item.classList.remove('opacity-0', 'translate-y-4');
+                item.classList.add('opacity-100', 'translate-y-0');
+            }, index * 800); // Jeda 0.8 detik antar chat agar sempat terbaca
+        });
+        
+        // Hapus event listener setelah animasi jalan sekali (opsional)
+        window.removeEventListener('scroll', animesiLoveStory);
+    }
+}
+
+// Tambahkan ke event scroll yang sudah ada
+window.addEventListener('scroll', animesiLoveStory);
+
     function salinTeks(nomor, label, elemen) {
     const teksAsli = elemen.innerText;
     
