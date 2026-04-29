@@ -16,6 +16,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        .petal {
+    position: fixed;
+    top: -10%;
+    pointer-events: none;
+    z-index: 999;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
         /* Efek Zoom Pelan */
 @keyframes kenBurns {
     0% { transform: scale(1); }
@@ -434,6 +447,19 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
+    function createPetal() {
+    const petal = document.createElement('div');
+    petal.className = 'petal';
+    petal.innerHTML = '🌸'; // Bisa diganti icon daun atau bunga lain
+    petal.style.left = Math.random() * 100 + 'vw';
+    petal.style.animationDuration = Math.random() * 3 + 2 + 's'; 
+    petal.style.fontSize = Math.random() * 10 + 10 + 'px';
+    document.body.appendChild(petal);
+    setTimeout(() => petal.remove(), 5000);
+}
+// Jalankan setiap 500ms
+setInterval(createPetal, 500);
+
     
     function salinTeks(nomor, label, elemen) {
     const teksAsli = elemen.innerText;
