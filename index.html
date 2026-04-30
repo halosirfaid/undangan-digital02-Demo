@@ -616,6 +616,26 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
+    // Tambahkan ini setelah Swiper galeri kamu atau di bagian akhir script
+window.addEventListener('load', () => {
+    // ... kode yang sudah ada (ambilNamaTamu, muatUcapan, dll.) ...
+
+    // Inisialisasi Swiper untuk Bagian Salam
+    const swiperSalam = new Swiper('.swiper-salam', {
+        loop: true, // Berputar terus
+        effect: 'fade', // Efek ganti foto memudar (halus, seperti referensi)
+        speed: 1500, // Kecepatan memudar (dalam md)
+        autoplay: {
+            delay: 4000, // Jarak antar foto (4 detik)
+            disableOnInteraction: false, // Tetap autoplay walau disentuh
+        },
+        pagination: {
+            el: '.swiper-pagination-salam',
+            clickable: true, // Titik navigasi bisa diklik
+        },
+    });
+});
+
     function createPetal() {
     const petal = document.createElement('div');
     petal.className = 'petal';
