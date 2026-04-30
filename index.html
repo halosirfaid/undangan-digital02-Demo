@@ -20,70 +20,52 @@
     <style>
         /* WhatsApp Dark Mode Style */
 .wa-chat-container {
-    background-color: #0b141a; /* Background WA Dark */
+    background-color: #0b141a; /* Background hitam gelap WA */
+    /* Menambahkan corak khas WA */
     background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
-    background-blend-mode: overlay;
+    background-blend-mode: multiply; /* Agar corak menyatu dengan warna gelap */
     background-size: contain;
     border-radius: 20px;
     overflow: hidden;
-}
-
-.wa-header {
-    background: #202c33;
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.wa-profile-pic {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    object-fit: cover;
+    border: 1px solid #222;
 }
 
 .wa-bubble {
     position: relative;
     max-width: 85%;
-    padding: 8px 12px;
-    margin-bottom: 10px;
-    font-size: 12px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    font-size: 13px;
     line-height: 1.4;
-    box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
 }
 
+/* Bubble Kiri (Pesan Masuk) */
 .wa-bubble-left {
-    background: #202c33;
-    color: #e9edef;
-    border-radius: 0 10px 10px 10px;
+    background: #ffffff; /* Putih bersih */
+    color: #000000 !important; /* Teks Hitam */
+    border-radius: 0 15px 15px 15px;
     align-self: flex-start;
 }
 
+/* Bubble Kanan (Pesan Terkirim) */
 .wa-bubble-right {
-    background: #005c4b;
-    color: #e9edef;
-    border-radius: 10px 0 10px 10px;
+    background: #dcf8c6; /* Hijau muda WA asli */
+    color: #000000 !important; /* Teks Hitam */
+    border-radius: 15px 0 15px 15px;
     align-self: flex-end;
 }
 
+/* Waktu pesan */
 .wa-time {
-    font-size: 9px;
-    color: #8696a0;
+    font-size: 10px;
+    color: #666; /* Warna abu gelap agar terbaca di atas hitam */
     text-align: right;
     margin-top: 4px;
     display: block;
 }
 
 .wa-check { color: #53bdeb; margin-left: 2px; }
-
-.wa-footer {
-    background: #202c33;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
 
     /* --- PERBAIKAN SECTION SALAM --- */
 #salam {
@@ -424,31 +406,21 @@
     </div>
 </section>
 
-        <section id="story" class="py-20 px-6 bg-[#fffcf5]">
-    <h2 class="text-4xl font-aesthetic text-center text-amber-700 mb-10">Our Love Story</h2>
+       <section id="story" class="py-20 px-6 bg-[#000000]"> <h2 class="text-4xl font-aesthetic text-center text-amber-200 mb-10">Our Love Story</h2>
     
     <div class="max-w-md mx-auto wa-chat-container shadow-2xl reveal">
-        <div class="wa-header">
-            <i class="fa-solid fa-arrow-left text-stone-400"></i>
-            <img src="3.jpg" class="wa-profile-pic" alt="Profil">
+        <div class="wa-header" style="background: #202c33;">
+            <i class="fa-solid fa-arrow-left text-white"></i>
+            <img src="3.jpg" class="wa-profile-pic">
             <div>
                 <p class="text-white text-sm font-bold leading-none">Rara & Adi</p>
-                <p class="text-[#8696a0] text-[10px]">Online</p>
-            </div>
-            <div class="ml-auto flex gap-4 text-[#8696a0]">
-                <i class="fa-solid fa-video text-sm"></i>
-                <i class="fa-solid fa-phone text-sm"></i>
-                <i class="fa-solid fa-ellipsis-vertical text-sm"></i>
+                <p class="text-[#00a884] text-[10px] font-bold">Online</p>
             </div>
         </div>
 
-        <div class="p-4 flex flex-col min-h-[400px]">
-            <div class="text-center mb-4">
-                <span class="bg-[#182229] text-[#8696a0] text-[9px] px-2 py-1 rounded-md uppercase tracking-wider">Hari Ini</span>
-            </div>
-
+        <div class="p-4 flex flex-col min-h-[450px]">
             <div class="wa-bubble wa-bubble-left reveal">
-                <p>Met Pertama Kali di Cafe, 2023. Gak sengaja duduk sebelahan... Mdr dan 🥰😍</p>
+                <p>Met Pertama Kali di Cafe, 2023. Gak sengaja duduk sebelahan... 🥰</p>
                 <span class="wa-time">11:32</span>
             </div>
 
@@ -457,35 +429,24 @@
                 <span class="wa-time">11:35 <i class="fa-solid fa-check-double wa-check"></i></span>
             </div>
 
-            <div class="wa-bubble wa-bubble-right reveal">
-                <p>Nembak, 2024. Kita komitmen bareng.</p>
-                <span class="wa-time">11:40 <i class="fa-solid fa-check-double wa-check"></i></span>
-            </div>
-
-            <div class="wa-bubble wa-bubble-left reveal">
-                <img src="1.jpg" class="rounded-lg mb-2 w-full h-32 object-cover" alt="Foto">
-                <p>Tunangan, 2025. Persiapan masa depan... 😍</p>
-                <span class="wa-time">11:42</span>
-            </div>
-
-            <div class="wa-bubble wa-bubble-right reveal">
-                <p>Hari Spesial Kita, 15 April 2026. Ayuk, kita halal! 😊</p>
-                <span class="wa-time">11:43 <i class="fa-solid fa-check-double wa-check"></i></span>
+            <div class="wa-bubble wa-bubble-left reveal" style="padding: 5px;">
+                <img src="1.jpg" class="rounded-lg mb-1 w-full h-40 object-cover">
+                <p class="px-2 pb-1">Tunangan, 2025. Persiapan masa depan... 😍</p>
+                <span class="wa-time px-2">11:42</span>
             </div>
         </div>
 
-        <div class="wa-footer">
-            <i class="fa-regular fa-face-smile text-[#8696a0] text-xl"></i>
-            <i class="fa-solid fa-paperclip text-[#8696a0] text-xl"></i>
-            <div class="bg-[#2a3942] rounded-full flex-1 py-2 px-4 text-[#8696a0] text-xs">
+        <div class="wa-footer" style="background: #202c33;">
+             <div class="bg-[#2a3942] rounded-full flex-1 py-2 px-4 text-[#8696a0] text-xs">
                 Ketik pesan...
             </div>
             <div class="bg-[#00a884] w-10 h-10 rounded-full flex items-center justify-center">
-                <i class="fa-solid fa-microphone text-white"></i>
+                <i class="fa-solid fa-paper-plane text-white"></i>
             </div>
         </div>
     </div>
 </section>
+
             
             <section id="acara" class="py-20 px-6 bg-[#fffcf5] text-center">
     <div class="max-w-md mx-auto reveal">
