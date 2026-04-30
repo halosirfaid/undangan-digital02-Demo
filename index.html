@@ -18,6 +18,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Memberikan jarak antara foto profil dan teks nama */
+.wa-profile-info {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Jarak ditambah dari 8px ke 12px */
+    flex: 1;
+}
+
+/* Mengatur tata letak nama dan status agar tidak menempel */
+.wa-chat-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px; /* Jarak antara Nama dan teks Online */
+}
+
+/* Mengubah warna status Online menjadi putih */
+#typing-status {
+    color: #ffffff !important; /* Putih murni */
+    font-size: 11px;
+    opacity: 0.8; /* Sedikit transparan agar tidak terlalu mencolok dibanding nama */
+}
+
       /* WhatsApp High-Fidelity Style */
 .wa-chat-container {
     background-color: #0b141a; 
