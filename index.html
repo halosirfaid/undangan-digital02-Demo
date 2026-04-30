@@ -18,6 +18,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Jarak Foto ke Nama yang lebih pasti */
+.wa-profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px !important; /* Memaksa jarak 12px ke kanan foto */
+}
+
+/* Memastikan teks status Online/Mengetik berwarna putih */
+#typing-status {
+    color: #ffffff !important;
+    font-size: 11px;
+    font-weight: 400;
+    margin-top: 1px;
+}
+
         /* Memberikan jarak antara foto profil dan teks nama */
 .wa-profile-info {
     display: flex;
@@ -490,23 +507,23 @@
     <h2 class="text-4xl font-aesthetic text-center text-amber-200 mb-10">Our Love Story</h2>
     
     <div class="max-w-md mx-auto wa-chat-container shadow-2xl reveal">
-        <div class="wa-header">
-    <i class="fa-solid fa-arrow-left text-[#8696a0] mr-2"></i>
-    <img src="pengantinWanita.jpg" class="wa-profile-pic">
+    <div class="wa-header flex items-center p-3 bg-[#202c33] text-white">
+    <i class="fa-solid fa-arrow-left text-[#8696a0] mr-3"></i>
     
-    <div class="wa-profile-info">
-        <div class="wa-chat-meta">
-            <p class="text-white text-[15px] font-bold leading-none">Rara</p>
-            <p id="typing-status">Online</p>
-        </div>
+    <img src="pengantinwanita.jpg" class="wa-profile-pic">
+    
+    <div class="flex flex-col justify-center">
+        <h1 class="text-[15px] font-medium leading-tight">Rara</h1>
+        <span id="typing-status">Online</span>
     </div>
 
-    <div class="flex gap-5 text-[#8696a0]">
-        <i class="fa-solid fa-video text-sm"></i>
-        <i class="fa-solid fa-phone text-sm"></i>
-        <i class="fa-solid fa-ellipsis-vertical text-sm"></i>
+    <div class="flex ml-auto gap-5 text-[#8696a0]">
+        <i class="fa-solid fa-video"></i>
+        <i class="fa-solid fa-phone"></i>
+        <i class="fa-solid fa-ellipsis-vertical"></i>
     </div>
 </div>
+
 
         <div class="p-4 flex flex-col min-h-[500px] max-h-[600px] overflow-y-auto">
             <div class="text-center mb-6">
@@ -767,6 +784,25 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
+    // Fungsi agar status "Mengetik..." muncul terus tanpa hilang
+function jalankanAnimasiMengetik() {
+    const status = document.getElementById('typing-status');
+    
+    // Langsung set ke Mengetik dan biarkan selamanya
+    status.innerText = 'Sedang mengetik...';
+    status.style.color = '#00a884'; // Warna hijau khas WA saat mengetik
+}
+
+// Jalankan fungsi saat halaman di-scroll ke bagian chat
+window.addEventListener('scroll', function() {
+    const storySection = document.getElementById('story');
+    const rect = storySection.getBoundingClientRect();
+    
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+        jalankanAnimasiMengetik();
+    }
+});
+
     // --- LOGIKA ANIMASI WA TYPING ---
 
 // Cari section story
