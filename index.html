@@ -62,19 +62,28 @@
     font-size: 13.5px;
     line-height: 1.5;
 }
-
+/* Balon Chat Kiri (Rara) - Background Gelap, Teks Putih */
 .wa-bubble-left {
-    background: #202c33;
-    color: #e9edef;
+    background: #202c33 !important; /* Hijau sangat tua hampir hitam */
+    color: #ffffff !important;    /* Putih murni agar kontras */
     border-radius: 0 8px 8px 8px;
     align-self: flex-start;
+    box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
 }
 
+/* Balon Chat Kanan (Adi) - Background Hijau WA Dark, Teks Terang */
 .wa-bubble-right {
-    background: #005c4b;
-    color: #e9edef;
+    background: #005c4b !important; /* Hijau khas WA Dark Mode */
+    color: #e1ffd7 !important;    /* Hijau sangat muda (hampir putih) */
     border-radius: 8px 0 8px 8px;
     align-self: flex-end;
+    box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+}
+
+/* Perbaikan warna jam agar terlihat di background gelap */
+.wa-time-meta {
+    color: rgba(255, 255, 255, 0.6) !important; 
+    font-size: 10px;
 }
 
 .wa-time-meta {
@@ -455,7 +464,7 @@
                     </p>
                 </div>
 </section>
-<section id="story" class="py-20 px-6 bg-black">
+          <section id="story" class="py-20 px-6 bg-black">
     <h2 class="text-4xl font-aesthetic text-center text-amber-200 mb-10">Our Love Story</h2>
     
     <div class="max-w-md mx-auto wa-chat-container shadow-2xl reveal">
@@ -472,71 +481,44 @@
                 <i class="fa-solid fa-ellipsis-vertical text-sm"></i>
             </div>
         </div>
-     <div class="p-4 flex flex-col min-h-[550px] overflow-y-auto">
-    <div class="text-center mb-6">
-        <span class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest">JANUARI 2023</span>
-    </div>
 
-    <div class="wa-bubble wa-bubble-left reveal">
-        Ingat nggak waktu pertama kali kita nggak sengaja duduk sebelahan di cafe? 🥰
-        <span class="wa-time-meta">10:00</span>
-    </div>
+        <div class="p-4 flex flex-col min-h-[500px] max-h-[600px] overflow-y-auto">
+            <div class="text-center mb-6">
+                <span class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest uppercase">Januari 2023</span>
+            </div>
 
-    <div class="wa-bubble wa-bubble-right reveal">
-        Ingat banget lah! Waktu itu aku gugup mau ajak kenalan haha. Akhirnya berani juga ya ❤️
-        <span class="wa-time-meta">10:05 <i class="fa-solid fa-check-double text-[#53bdeb]"></i></span>
-    </div>
+            <div class="wa-bubble wa-bubble-left">
+                Ingat nggak waktu pertama kali kita nggak sengaja duduk sebelahan di cafe? 🥰
+                <span class="wa-time-meta">10:00</span>
+            </div>
 
-    <div class="text-center my-6">
-        <span class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest">FEBRUARI 2024</span>
-    </div>
+            <div class="wa-bubble wa-bubble-right">
+                Ingat banget lah! Waktu itu aku gugup mau ajak kenalan haha. Akhirnya berani juga ya ❤️
+                <span class="wa-time-meta">10:05 <i class="fa-solid fa-check-double text-[#53bdeb]"></i></span>
+            </div>
 
-    <div class="wa-bubble wa-bubble-right reveal">
-        Setelah setahun bareng, aku rasa aku nggak mau kehilangan kamu. Kita komitmen serius ya? 💍
-        <span class="wa-time-meta">19:20 <i class="fa-solid fa-check-double text-[#53bdeb]"></i></span>
-    </div>
+            <div class="text-center my-6">
+                <span class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest uppercase">Maret 2025</span>
+            </div>
 
-    <div class="wa-bubble wa-bubble-left reveal">
-        Bismillah, iya aku mau. Kita jaga sama-sama ya perasaannya. 😊
-        <span class="wa-time-meta">19:25</span>
-    </div>
+            <div class="wa-bubble wa-bubble-left" style="padding: 4px;">
+                <img src="1.jpg" class="rounded-lg w-full h-44 object-cover mb-1">
+                <div class="px-2 pb-1">
+                    Momen paling haru waktu keluarga kita kumpul semua. Hari pertunangan kita... 😍
+                    <span class="wa-time-meta">11:42</span>
+                </div>
+            </div>
 
-    <div class="text-center my-6">
-        <span class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest">MARET 2025</span>
-    </div>
-
-    <div class="wa-bubble wa-bubble-left reveal" style="padding: 4px;">
-        <img src="1.jpg" class="rounded-lg w-full h-44 object-cover mb-1">
-        <div class="px-2 pb-1">
-            Momen paling haru waktu keluarga kita kumpul semua. Hari pertunangan kita... 😍
-            <span class="wa-time-meta">11:42</span>
+            <div id="typing-bubble" class="wa-bubble wa-bubble-left hidden">
+                <div class="typing py-1 flex gap-1">
+                    <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
+                    <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                    <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="wa-bubble wa-bubble-right reveal">
-        Satu langkah lebih dekat menuju ibadah seumur hidup. Nggak sabar nunggu hari H!
-        <span class="wa-time-meta">11:50 <i class="fa-solid fa-check-double text-[#53bdeb]"></i></span>
-    </div>
-
-    <div class="text-center my-6">
-        <span class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest">HARI INI</span>
-    </div>
-
-    <div class="wa-bubble wa-bubble-left reveal">
-        And now, we are getting married! 15 April 2026. Doakan lancar ya semuanya. ✨
-        <span class="wa-time-meta">08:00</span>
-    </div>
-
-    <div class="wa-bubble wa-bubble-right reveal">
-        Sampai ketemu di hari spesial kita ya teman-teman! Ayuk, kita halal! 😇
-        <span class="wa-time-meta">08:05 <i class="fa-solid fa-check-double text-[#53bdeb]"></i></span>
-    </div>
-<div id="typing-bubble" class="wa-bubble wa-bubble-left hidden">
-    <div class="typing py-1">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-    </div>
-</div> </div>
-       <div class="wa-footer-input">
+        <div class="wa-footer-input">
             <div class="wa-input-box">
                 <i class="fa-regular fa-face-smile text-xl"></i>
                 <span class="flex-1">Ketik pesan</span>
@@ -546,8 +528,10 @@
             <div class="bg-[#00a884] w-11 h-11 rounded-full flex items-center justify-center shadow-lg">
                 <i class="fa-solid fa-microphone text-white text-lg"></i>
             </div>
-    </section>
-          
+        </div>
+    </div>
+</section>
+
             <section id="acara" class="py-20 px-6 bg-[#fffcf5] text-center">
     <div class="max-w-md mx-auto reveal">
         <h2 class="text-4xl font-aesthetic text-amber-700 mb-2">Acara Pernikahan</h2>
