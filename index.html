@@ -579,146 +579,35 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
-    // Tambahkan ini setelah Swiper galeri kamu atau di bagian akhir script
-window.addEventListener('load', () => {
-    // ... kode yang sudah ada (ambilNamaTamu, muatUcapan, dll.) ...
-
-    const swiperSalam = new Swiper('.swiper-salam', {
-    loop: true,
-    effect: 'fade', // Efek memudar seperti referensi
-    fadeEffect: {
-        crossFade: true // Membuat transisi antar gambar sangat halus
-    },
-    autoplay: {
-        delay: 4000,
-        disableOnInteraction: false,
-    },
-    speed: 2000 // Durasi animasi memudar (2 detik)
-});
-
-    function createPetal() {
-    const petal = document.createElement('div');
-    petal.className = 'petal';
-    petal.innerHTML = '🌸'; // Bisa diganti icon daun atau bunga lain
-    petal.style.left = Math.random() * 100 + 'vw';
-    petal.style.animationDuration = Math.random() * 3 + 2 + 's'; 
-    petal.style.fontSize = Math.random() * 10 + 10 + 'px';
-    document.body.appendChild(petal);
-    setTimeout(() => petal.remove(), 5000);
-}
-// Jalankan setiap 500ms
-setInterval(createPetal, 500);
-
-    
-    function salinTeks(nomor, label, elemen) {
-    const teksAsli = elemen.innerText;
-    
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(nomor).then(() => {
-            feedbackSalin(elemen, teksAsli);
-        }).catch(err => { 
-            fallbackSalin(nomor); 
-            feedbackSalin(elemen, teksAsli);
-        });
-    } else { 
-        fallbackSalin(nomor); 
-        feedbackSalin(elemen, teksAsli);
-    }
-}
-
-// Fungsi untuk memberi efek tulisan berubah
-function feedbackSalin(elemen, teksAsli) {
-    elemen.innerText = "BERHASIL DISALIN!";
-    elemen.classList.add('bg-green-600', 'text-white');
-    
-    setTimeout(() => {
-        elemen.innerText = teksAsli;
-        elemen.classList.remove('bg-green-600', 'text-white');
-    }, 2000); // Kembali ke tulisan asli setelah 2 detik
-}
-
-    // 1. SETTING UTAMA (Ganti idUndangan setiap ada pesanan baru)
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
-    const idUndangan = 'devi-ehsan'; // <-- Cukup ganti ini saja untuk klien baru!
-    
     const audio = document.getElementById('musik');
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
+    const idUndangan = 'devi-ehsan'; 
     let isAutoScrolling = false;
 
-    // 2. Fungsi Kirim Ucapan
-    function kirimKeSheets() {
-        const btn = document.getElementById('btn-kirim');
-        const nama = document.getElementById('nama-input').value;
-        const ucapan = document.getElementById('pesan-input').value;
-        const hadir = document.getElementById('hadir-input').value;
-
-        if (!nama || !ucapan) return alert("Mohon isi nama dan ucapan!");
-
-        btn.disabled = true;
-        btn.innerText = "Mengirim...";
-
-        fetch(scriptURL, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: JSON.stringify({ 
-                "nama": nama, 
-                "ucapan": ucapan, 
-                "kehadiran": hadir,
-                "tujuan": idUndangan
-                       
-            })
-        })
-        .then(res => {
-        btn.innerText = "TERKIRIM!"; // Mengganti alert
-        btn.style.backgroundColor = "#059669"; // Ubah warna ke hijau (optional)
+    // FUNGSI BUKA UNDANGAN (PENTING)
+    function bukaUndangan() {
+        document.getElementById('halaman-sampul').style.display = 'none';
+        document.getElementById('konten-utama').style.display = 'block';
+        document.getElementById('nav-menu').classList.remove('hidden');
+        document.getElementById('music-btn').classList.remove('hidden');
         
-        document.getElementById('nama-input').value = "";
-        document.getElementById('pesan-input').value = "";
-        muatUcapan(); 
+        audio.play();
+        window.scrollTo(0, 0);
+        
+        // Inisialisasi Swiper SALAM setelah dibuka agar tidak berat di awal
+        new Swiper('.swiper-salam', {
+            loop: true,
+            effect: 'fade',
+            fadeEffect: { crossFade: true },
+            autoplay: { delay: 4000, disableOnInteraction: false },
+            speed: 2000
+        });
 
-        setTimeout(() => {
-            btn.disabled = false;
-            btn.innerText = "KIRIM UCAPAN";
-            btn.style.backgroundColor = ""; // Kembalikan warna asli
-        }, 3000);
-    })
-    .catch(error => {
-        console.error('Error!', error.message);
-        btn.innerText = "GAGAL MENGIRIM";
-        setTimeout(() => {
-            btn.disabled = false;
-            btn.innerText = "KIRIM UCAPAN";
-        }, 3000);
-    });
-
-            }
-
-    // 3. Fungsi Muat Ucapan
-    function muatUcapan() {
-        fetch(scriptURL + "?tujuan=" + idUndangan)
-        .then(res => res.json())
-        .then(data => {
-            const wadah = document.getElementById('daftar-ucapan');
-            wadah.innerHTML = ""; 
-            if (data.length === 0) {
-                wadah.innerHTML = "<p class='text-[10px] text-center text-stone-400'>Belum ada ucapan.</p>";
-                return;
-            }
-            data.reverse().forEach(row => {
-                const item = `
-                    <div class="bg-stone-50 p-4 rounded-2xl border-l-4 border-amber-700 shadow-sm mb-4">
-                        <div class="flex justify-between items-start">
-                            <p class="font-bold text-stone-800 text-xs">${row[1]}</p>
-                            <span class="text-[9px] font-normal text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">${row[3]}</span>
-                        </div>
-                        <p class="text-[11px] text-stone-600 mt-1 italic">"${row[2]}"</p>
-                    </div>`;
-                wadah.innerHTML += item;
-            });
-        })
-        .catch(err => console.error("Gagal memuat:", err));
+        isAutoScrolling = true;
+        setTimeout(autoScroll, 2000);
     }
 
-    // 4. Fungsi Navigasi & Nama Tamu
+    // Fungsi Ambil Nama Tamu
     function ambilNamaTamu() {
         const urlParams = new URLSearchParams(window.location.search);
         const nama = urlParams.get('to');
@@ -726,24 +615,26 @@ function feedbackSalin(elemen, teksAsli) {
         elemenNama.innerText = nama ? decodeURIComponent(nama.replace(/\+/g, ' ')) : "Tamu Undangan";
     }
 
-    function bukaUndangan() {
-        document.getElementById('halaman-sampul').style.display = 'none';
-        document.getElementById('konten-utama').style.display = 'block';
-        document.getElementById('nav-menu').classList.remove('hidden');
-        document.getElementById('music-btn').classList.remove('hidden');
-        audio.play();
-        window.scrollTo(0, 0);
-        isAutoScrolling = true;
-        setTimeout(autoScroll, 2000);
-    }
-
+    // Fungsi Musik
     function toggleMusik() {
         const btn = document.getElementById('music-btn');
         if (audio.paused) { audio.play(); btn.classList.add('spinning'); }
         else { audio.pause(); btn.classList.remove('spinning'); }
     }
 
-   
+    // Fungsi Efek Kelopak Bunga (Petals)
+    function createPetal() {
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        petal.innerHTML = '🌸';
+        petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.animationDuration = Math.random() * 3 + 2 + 's'; 
+        petal.style.fontSize = Math.random() * 10 + 10 + 'px';
+        document.body.appendChild(petal);
+        setTimeout(() => petal.remove(), 5000);
+    }
+
+    // Auto Scroll Logic
     function toggleAutoScroll() {
         isAutoScrolling = !isAutoScrolling;
         const icon = document.getElementById('scroll-icon');
@@ -762,43 +653,50 @@ function feedbackSalin(elemen, teksAsli) {
         }
     }
 
-    // 5. Countdown (Rara & Adi 15 April 2026)
+    // Fungsi Salin Rekening
+    function salinTeks(nomor, label, elemen) {
+        const teksAsli = elemen.innerText;
+        navigator.clipboard.writeText(nomor).then(() => {
+            elemen.innerText = "BERHASIL DISALIN!";
+            elemen.classList.add('bg-green-600');
+            setTimeout(() => {
+                elemen.innerText = teksAsli;
+                elemen.classList.remove('bg-green-600');
+            }, 2000);
+        });
+    }
+
+    // Countdown Logic
     const target = new Date("April 15, 2026 08:00:00").getTime();
     setInterval(() => {
         const sisa = target - new Date().getTime();
+        if(sisa < 0) return;
         document.getElementById("days").innerText = Math.floor(sisa / (1000 * 60 * 60 * 24));
         document.getElementById("hours").innerText = Math.floor((sisa % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         document.getElementById("minutes").innerText = Math.floor((sisa % (1000 * 60 * 60)) / (1000 * 60));
         document.getElementById("seconds").innerText = Math.floor((sisa % (1000 * 60)) / 1000);
     }, 1000);
 
-    function scrollReveal() {
-        const reveals = document.querySelectorAll(".reveal");
-        reveals.forEach(el => {
-            const rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight - 100 && rect.bottom > 0) el.classList.add("active");
-            else el.classList.remove("active");
-        });
-    }
-
-    window.addEventListener("scroll", scrollReveal);
-    window.addEventListener('load', () => {
+    // Saat Halaman Dimuat
+    window.onload = () => {
         ambilNamaTamu();
-        muatUcapan();
-        scrollReveal();
-        new LuminousGallery(document.querySelectorAll(".galeri-item"));
-    });
-      new Swiper(".mySwiper", {
-        loop: true,
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-    });
+        setInterval(createPetal, 500);
+        
+        // Swiper Galeri
+        new Swiper(".mySwiper", {
+            loop: true,
+            autoplay: { delay: 3000 },
+            pagination: { el: ".swiper-pagination", clickable: true },
+        });
+
+        // Scroll Reveal
+        window.addEventListener("scroll", () => {
+            document.querySelectorAll(".reveal").forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) el.classList.add("active");
+            });
+        });
+    };
 </script>
 
   </body>
