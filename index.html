@@ -18,62 +18,83 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-/* Container Dasar */
+/* Container Dasar Layout Ramping */
 .event-section {
-    display: flex;
-    flex-direction: column;
     width: 100%;
+    padding: 20px 0; /* Memberikan ruang napas atas-bawah */
 }
 
-/* Frame Foto Arch */
-.arch-container {
+/* Bingkai Foto Arch yang diperkecil tinggi-nya */
+.event-image-frame {
     width: 100%;
-    height: 400px;
-    overflow: hidden;
+    height: 320px; /* Dikurangi dari 450px agar lebih seimbang */
     position: relative;
+    overflow: hidden;
 }
 
-.arch-container img {
+.event-image-frame img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* Sudut kiri atas melengkung */
+    border-radius: 400px 0 0 0; 
 }
 
-/* Sisi Detail */
-.event-body {
-    padding: 40px 24px;
+/* Bagian Detail Teks yang Lebih Padat */
+.event-info {
+    padding: 30px 25px; /* Jarak padding dikurangi sedikit */
+    position: relative;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center; /* Teks dan vertical-title sejajar tengah */
 }
 
-.vertical-text {
+.event-text-left { flex: 1; }
+
+/* Tulisan Vertikal Diperkecil Sedikit */
+.vertical-title {
     writing-mode: vertical-rl;
+    text-orientation: mixed;
     font-family: 'Great Vibes', cursive;
-    font-size: 2.2rem;
-    color: inherit;
-    opacity: 0.8;
+    font-size: 1.8rem; /* Ukuran font vertikal dikurangi */
+    color: #222;
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
     line-height: 1;
+    opacity: 0.7; /* Sedikit lebih redup agar teks utama lebih menonjol */
 }
 
-/* Tombol Custom agar menyatu dengan desain */
-.btn-action {
+/* Tema Gelap Resepsi */
+.dark-event {
+    background: #000 !important;
+    color: #fff !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5); /* Shadow lebih kuat di gelap */
+}
+
+.dark-event .vertical-title, 
+.dark-event p {
+    color: #fff !important;
+}
+
+.btn-location {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
+    gap: 6px;
+    background: #fff;
+    color: #000;
+    padding: 6px 16px;
     border-radius: 50px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
+    font-size: 9px;
+    font-weight: bold;
     margin-top: 15px;
+    border: 1px solid #ddd;
+    transition: background 0.3s ease;
 }
 
-/* Memastikan teks nama pengantin tidak terlalu besar */
-.wa-header h1 {
-    font-size: 15px !important;
-    margin-bottom: -2px;
+.dark-event .btn-location {
+    background: #fff;
+    color: #000;
 }
 
        /* Memaksa jarak foto dan nama */
@@ -642,68 +663,55 @@
     </div>
 </section>
 
-         <section id="acara" class="event-section overflow-hidden">
+    <section id="acara" class="event-section bg-[#fffcf5]">
     
-    <div class="py-12 bg-[#fffcf5] text-center reveal">
-        <h2 class="text-4xl font-aesthetic text-amber-700 mb-4">Wedding Schedule</h2>
-        <div class="flex items-center justify-center gap-4">
-            <div class="h-[1px] w-8 bg-amber-700"></div>
-            <p class="text-xl font-bold tracking-widest text-stone-800">15 . 04 . 2026</p>
-            <div class="h-[1px] w-8 bg-amber-700"></div>
-        </div>
+    <div class="p-6 text-center reveal">
+         <h2 class="text-3xl font-aesthetic text-amber-700">Wedding Day</h2>
+         <p class="text-[10px] tracking-[0.3em] font-bold text-stone-500 uppercase">15 April 2026</p>
     </div>
 
-    <div class="bg-white reveal">
-        <div class="arch-container" style="border-radius: 0 400px 0 0;">
-            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=1000" alt="Akad Nikah">
+    <div class="event-card mx-4 bg-white rounded-3xl overflow-hidden shadow-sm mb-6 reveal">
+        <div class="event-image-frame">
+            <img src="1.jpg" alt="Akad Nikah">
         </div>
-        <div class="event-body">
-            <div class="flex-1">
-                <p class="uppercase tracking-[0.3em] text-[10px] font-bold text-stone-400 mb-2">The Vows</p>
-                <h3 class="text-2xl font-bold text-stone-800 mb-1">AKAD NIKAH</h3>
-                <p class="text-xs font-bold text-amber-700 mb-3">08.00 - 10.00 WIB</p>
-                <p class="text-[11px] text-stone-500 leading-relaxed mb-4">
-                    Masjid Raya Kota Bandung<br>
-                    Jl. Asia Afrika, Balonggede, Bandung
+        <div class="event-info">
+            <div class="event-text-left">
+                <p class="uppercase tracking-[0.3em] text-[9px] mb-3 font-bold text-stone-400">Saturday,</p>
+                <h3 class="text-2xl font-bold tracking-tighter mb-1 text-stone-800">31ST JANUARY 2026</h3>
+                <p class="text-sm font-semibold mb-3 text-amber-700">MASJID GEDHE KAUMAN</p>
+                <p class="text-[10px] leading-relaxed text-stone-500 max-w-[200px]">
+                    Jl. Kauman, Ngupasan, Kec. Gondomanan, Kota Yogyakarta<br>
+                    09.00 AM - 11.00 AM
                 </p>
-                <a href="https://maps.google.com" target="_blank" class="btn-action bg-stone-100 text-stone-800 hover:bg-stone-200">
-                    <i class="fa-solid fa-location-dot"></i> SEE LOCATION
+                <a href="#" class="btn-location shadow-sm">
+                    <i class="fa-solid fa-location-dot"></i> See Location
                 </a>
             </div>
-            <div class="vertical-text text-stone-300">Akad Nikah</div>
+            <div class="vertical-text text-stone-300">The Vows</div>
         </div>
     </div>
 
-    <div class="bg-black text-white reveal">
-        <div class="arch-container" style="border-radius: 0 0 0 400px;">
-            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1000" alt="Resepsi">
+    <div class="event-card dark-event mx-4 rounded-3xl overflow-hidden reveal">
+        <div class="event-image-frame">
+             <img src="2.jpg" alt="Resepsi" style="border-radius: 400px 0 0 0;">
         </div>
-        <div class="event-body flex-row-reverse"> <div class="flex-1 text-right">
-                <p class="uppercase tracking-[0.3em] text-[10px] font-bold text-stone-500 mb-2">The Celebration</p>
-                <h3 class="text-2xl font-bold text-white mb-1">RESEPSI</h3>
-                <p class="text-xs font-bold text-amber-500 mb-3">11.00 - SELESAI</p>
-                <p class="text-[11px] text-stone-400 leading-relaxed mb-4">
-                    Gedung Serbaguna Kebahagiaan<br>
-                    Jl. Soekarno Hatta No. 123, Bandung
+        <div class="event-info flex-row-reverse"> <div class="vertical-text" style="margin-left: 0; margin-right: 15px; transform: rotate(180deg);">The Reception</div>
+            <div class="event-text-left text-right">
+                <p class="uppercase tracking-[0.3em] text-[9px] mb-3 font-bold text-stone-500">Saturday,</p>
+                <h3 class="text-2xl font-bold tracking-tighter mb-1 text-white">31ST JANUARY 2026</h3>
+                <p class="text-sm font-semibold mb-3 text-amber-500">ROYAL AMBARRUKMO YOGYAKARTA</p>
+                <p class="text-[10px] leading-relaxed text-stone-400 ml-auto max-w-[250px]">
+                    Jl. Laksda Adisucipto No.81, Ambarukmo, Depok, Sleman, DIY<br>
+                    06.00 PM - Selesai
                 </p>
-                <a href="https://maps.google.com" target="_blank" class="btn-action bg-white text-black hover:bg-stone-200">
-                    <i class="fa-solid fa-location-dot"></i> SEE LOCATION
+                <a href="#" class="btn-location shadow-sm">
+                    <i class="fa-solid fa-location-dot"></i> See Location
                 </a>
             </div>
-            <div class="vertical-text text-stone-800" style="margin-right: 20px;">The Reception</div>
         </div>
-    </div>
-
-    <div class="py-16 bg-[#fffcf5] text-center reveal">
-        <p class="text-[10px] text-stone-400 italic mb-6">"Mohon doa restunya agar acara berjalan lancar"</p>
-        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Rara+%26+Adi&dates=20260415T010000Z/20260415T040000Z&details=Mohon+doa+restunya.&location=Bandung&sf=true&output=xml" 
-           target="_blank" 
-           class="inline-flex items-center gap-3 bg-amber-700 text-white px-10 py-4 rounded-full text-[10px] font-bold tracking-[0.2em] shadow-xl hover:bg-amber-800 transition-all">
-           <i class="fa-solid fa-calendar-check"></i> SAVE TO CALENDAR
-        </a>
     </div>
 </section>
-   
+
 
         <section id="lokasi" class="py-20 px-6 bg-[#fffcf5]">
             <h2 class="text-4xl font-aesthetic text-amber-700 mb-2">Maps</h2>
