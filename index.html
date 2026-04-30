@@ -18,94 +18,108 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-       /* WhatsApp Dark Mode Style - Absolute Realism */
+      /* WhatsApp High-Fidelity Style */
 .wa-chat-container {
-    background-color: #0b141a; /* Background WA Dark */
+    background-color: #0b141a; 
     background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
-    background-blend-mode: multiply; /* Menyatukan corak dengan warna gelap */
-    background-size: contain;
-    border-radius: 20px;
+    background-blend-mode: overlay;
+    background-size: 400px; /* Ukuran corak lebih rapat */
+    border-radius: 15px;
     overflow: hidden;
-    border: 1px solid #222;
+    display: flex;
+    flex-direction: column;
+    border: 0.5px solid #222;
 }
 
 .wa-header {
     background: #202c33;
-    padding: 10px 15px;
+    padding: 10px 12px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    border-bottom: 0.5px solid #2a3942;
+}
+
+.wa-profile-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
 }
 
 .wa-profile-pic {
-    width: 35px;
-    height: 35px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     object-fit: cover;
 }
 
+/* Bubble Design */
 .wa-bubble {
     position: relative;
-    max-width: 85%;
-    padding: 8px 12px;
-    margin-bottom: 10px;
-    font-size: 12px;
-    line-height: 1.4;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+    max-width: 80%;
+    padding: 6px 10px 14px 10px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    line-height: 1.5;
 }
 
 .wa-bubble-left {
-    background: #202c33; /* Bubble Kiri (Pesan Masuk) */
+    background: #202c33;
     color: #e9edef;
-    border-radius: 0 10px 10px 10px;
+    border-radius: 0 8px 8px 8px;
     align-self: flex-start;
 }
 
 .wa-bubble-right {
-    background: #005c4b; /* Bubble Kanan (Pesan Terkirim) */
+    background: #005c4b;
     color: #e9edef;
-    border-radius: 10px 0 10px 10px;
+    border-radius: 8px 0 8px 8px;
     align-self: flex-end;
 }
 
-.wa-time {
-    font-size: 9px;
-    color: #8696a0;
-    text-align: right;
-    margin-top: 4px;
-    display: block;
-}
-
-.wa-check { color: #53bdeb; margin-left: 2px; }
-
-/* ANIMASI MENGETIK (TYPING EFFECT) */
-.typing {
+.wa-time-meta {
+    position: absolute;
+    bottom: 3px;
+    right: 7px;
+    font-size: 10px;
+    color: rgba(233, 237, 239, 0.6);
     display: flex;
     align-items: center;
-    gap: 3px;
-    padding: 2px 0;
+    gap: 2px;
 }
-.dot {
-    width: 6px;
-    height: 6px;
-    background-color: #8696a0;
+
+/* Footer & Input */
+.wa-footer-input {
+    background: #0b141a;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wa-input-box {
+    background: #2a3942;
+    border-radius: 24px;
+    padding: 8px 12px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8696a0;
+    font-size: 14px;
+}
+
+.wa-mic-btn {
+    background: #00a884;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    animation: typingPulse 1.5s infinite;
-}
-.dot:nth-child(2) { animation-delay: 0.2s; }
-.dot:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes typingPulse {
-    0%, 60%, 100% { transform: translateY(0); opacity: 0.6; }
-    30% { transform: translateY(-4px); opacity: 1; }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }
 
-/* CSS baru untuk status mengetik di header */
-#typing-status {
-    color: #00a884; /* Warna hijau khas status Online/Typing WA */
-    font-size: 10px;
-    font-weight: bold;
-}
 
     /* --- PERBAIKAN SECTION SALAM --- */
 #salam {
@@ -446,48 +460,73 @@
     </div>
 </section>
 
-       <section id="story" class="py-20 px-6 bg-[#000000]"> <h2 class="text-4xl font-aesthetic text-center text-amber-200 mb-10">Our Love Story</h2>
-    
+     
+     <section id="story" class="py-20 px-4 bg-[#000000]">
     <div class="max-w-md mx-auto wa-chat-container shadow-2xl reveal">
-        <div class="wa-header" style="background: #202c33;">
-            <i class="fa-solid fa-arrow-left text-white"></i>
-            <img src="3.jpg" class="wa-profile-pic">
-            <div>
-                <p class="text-white text-sm font-bold leading-none">Rara & Adi</p>
-                <p class="text-[#00a884] text-[10px] font-bold">Online</p>
+        <div class="wa-header">
+            <div class="wa-profile-info">
+                <i class="fa-solid fa-arrow-left text-[#8696a0] mr-1"></i>
+                <img src="profil_wanita.jpg" class="wa-profile-pic">
+                <div class="flex flex-col">
+                    <span class="text-white font-semibold text-[15px]">Rara</span>
+                    <span id="typing-status" class="text-[#00a884] text-[11px] font-medium leading-none">Online</span>
+                </div>
+            </div>
+            <div class="flex gap-5 text-[#8696a0] mr-2">
+                <i class="fa-solid fa-video"></i>
+                <i class="fa-solid fa-phone"></i>
+                <i class="fa-solid fa-ellipsis-vertical"></i>
             </div>
         </div>
 
-        <div class="p-4 flex flex-col min-h-[450px]">
+        <div class="p-4 flex flex-col min-h-[480px] overflow-y-auto">
+            <div class="text-center mb-5 mt-2">
+                <span class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm">HARI INI</span>
+            </div>
+
             <div class="wa-bubble wa-bubble-left reveal">
-                <p>Met Pertama Kali di Cafe, 2023. Gak sengaja duduk sebelahan... 🥰</p>
-                <span class="wa-time">11:32</span>
+                Met Pertama Kali di Cafe, 2023. Gak sengaja duduk sebelahan... 🥰
+                <span class="wa-time-meta">11:32</span>
             </div>
 
             <div class="wa-bubble wa-bubble-right reveal">
-                <p>Mulai Dekat, 2023. Akhirnya berani ajak kenalan... ❤️</p>
-                <span class="wa-time">11:35 <i class="fa-solid fa-check-double wa-check"></i></span>
+                Mulai Dekat, 2023. Akhirnya berani ajak kenalan... ❤️
+                <span class="wa-time-meta">11:35 <i class="fa-solid fa-check-double text-[#53bdeb]"></i></span>
             </div>
 
-            <div class="wa-bubble wa-bubble-left reveal" style="padding: 5px;">
-                <img src="1.jpg" class="rounded-lg mb-1 w-full h-40 object-cover">
-                <p class="px-2 pb-1">Tunangan, 2025. Persiapan masa depan... 😍</p>
-                <span class="wa-time px-2">11:42</span>
+            <div class="wa-bubble wa-bubble-left reveal" style="padding: 4px;">
+                <img src="foto_tunangan.jpg" class="rounded-md w-full h-44 object-cover mb-1">
+                <div class="px-2 pb-2">
+                    Persiapan masa depan... 😍
+                    <span class="wa-time-meta">11:42</span>
+                </div>
+            </div>
+
+            <div id="typing-bubble" class="wa-bubble wa-bubble-left hidden">
+                <div class="typing px-2 py-1">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
             </div>
         </div>
 
-        <div class="wa-footer" style="background: #202c33;">
-             <div class="bg-[#2a3942] rounded-full flex-1 py-2 px-4 text-[#8696a0] text-xs">
-                Ketik pesan...
+        <div class="wa-footer-input">
+            <div class="wa-input-box">
+                <i class="fa-regular fa-face-smile text-xl"></i>
+                <span>Ketik pesan</span>
+                <div class="ml-auto flex gap-4 text-xl">
+                    <i class="fa-solid fa-paperclip rotate-45"></i>
+                    <i class="fa-solid fa-camera"></i>
+                </div>
             </div>
-            <div class="bg-[#00a884] w-10 h-10 rounded-full flex items-center justify-center">
-                <i class="fa-solid fa-paper-plane text-white"></i>
+            <div class="wa-mic-btn">
+                <i class="fa-solid fa-microphone text-xl"></i>
             </div>
         </div>
     </div>
 </section>
-
-            
+       
             <section id="acara" class="py-20 px-6 bg-[#fffcf5] text-center">
     <div class="max-w-md mx-auto reveal">
         <h2 class="text-4xl font-aesthetic text-amber-700 mb-2">Acara Pernikahan</h2>
