@@ -18,23 +18,34 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Jarak Foto ke Nama yang lebih pasti */
-.wa-profile-pic {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 12px !important; /* Memaksa jarak 12px ke kanan foto */
+
+/* Memastikan teks nama pengantin tidak terlalu besar */
+.wa-header h1 {
+    font-size: 15px !important;
+    margin-bottom: -2px;
 }
 
-/* Memastikan teks status Online/Mengetik berwarna putih */
+       /* Memaksa jarak foto dan nama */
+.wa-profile-pic {
+    width: 40px !important;
+    height: 40px !important;
+    margin-right: 15px !important; /* Jarak lebih lebar agar tidak rapat */
+}
+
+/* Status Online/Mengetik Default adalah Putih */
 #typing-status {
     color: #ffffff !important;
     font-size: 11px;
     font-weight: 400;
-    margin-top: 1px;
+    display: block;
+    opacity: 0.9;
 }
 
+/* Memastikan teks nama pengantin tidak terlalu besar */
+.wa-header h1 {
+    font-size: 15px !important;
+    margin-bottom: -2px;
+}
         /* Memberikan jarak antara foto profil dan teks nama */
 .wa-profile-info {
     display: flex;
@@ -789,15 +800,39 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
-    // Fungsi agar status "Mengetik..." muncul terus tanpa hilang
-function jalankanAnimasiMengetik() {
+  // FUNGSI STATUS MENGETIK PERMANEN
+function statusMengetikAktif() {
     const status = document.getElementById('typing-status');
+    const bubble = document.getElementById('typing-bubble');
     
-    // Langsung set ke Mengetik dan biarkan selamanya
-    status.innerText = 'Sedang mengetik...';
-    status.style.color = '#00a884'; // Warna hijau khas WA saat mengetik
+    if (status && bubble) {
+        // Mengubah teks status di header
+        status.innerText = 'Sedang mengetik...';
+        status.style.color = '#00a884'; // Warna hijau khas WA saat mengetik
+        
+        // Memunculkan bubble titik-titik (animasi mengetik) di dalam chat
+        bubble.classList.remove('hidden');
+    }
 }
 
+// Pantau Scroll untuk memicu animasi saat area chat terlihat
+window.addEventListener("scroll", () => {
+    const storySection = document.getElementById('story');
+    if (storySection) {
+        const rect = storySection.getBoundingClientRect();
+        // Jika bagian story sudah terlihat di layar
+        if (rect.top < window.innerHeight - 100 && rect.bottom > 0) {
+            statusMengetikAktif();
+        }
+    }
+
+    // Fungsi Reveal lama kamu (biarkan tetap ada)
+    document.querySelectorAll(".reveal").forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight - 100) el.classList.add("active");
+    });
+});
+  
 // Jalankan fungsi saat halaman di-scroll ke bagian chat
 window.addEventListener('scroll', function() {
     const storySection = document.getElementById('story');
