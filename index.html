@@ -18,6 +18,45 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Container Dasar Bingkai Foto (Dibuat sama) */
+.event-image-frame {
+    width: 100%;
+    height: 320px; /* Pertahankan ukuran seimbang */
+    position: relative;
+    overflow: hidden;
+}
+
+.event-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* LENGKUNGAN KIRI: Untuk Bagian Akad (Sesuai Gambar Atas) */
+.frame-arch-left img {
+    /* Hanya sudut kiri atas yang melengkung */
+    border-radius: 400px 0 0 0 !important; 
+}
+
+/* LENGKUNGAN KANAN: Untuk Bagian Resepsi (Sesuai Gambar Bawah) */
+.frame-arch-right img {
+    /* Hanya sudut kanan atas yang melengkung */
+    border-radius: 0 400px 0 0 !important; 
+}
+
+   .vertical-text-container {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.2rem;
+    line-height: 1;
+}
+
+/* Memutar teks 180 derajat untuk bagian Akad agar tulisan terbaca dari bawah ke atas */
+.rotate-text {
+    transform: rotate(180deg);
+}
+     
 /* Container Dasar Layout Ramping */
 .event-section {
     width: 100%;
@@ -663,49 +702,62 @@
     </div>
 </section>
 
-    <section id="acara" class="event-section bg-[#fffcf5]">
+    <section id="acara" class="event-section bg-[#fffcf5] py-10">
     
     <div class="p-6 text-center reveal">
-         <h2 class="text-3xl font-aesthetic text-amber-700">Wedding Day</h2>
-         <p class="text-[10px] tracking-[0.3em] font-bold text-stone-500 uppercase">15 April 2026</p>
+         <h2 class="text-3xl font-aesthetic text-amber-700">Wedding Schedule</h2>
+         <p class="text-[10px] tracking-[0.3em] font-bold text-stone-500 uppercase">sirfa.id Handmade Edition</p>
     </div>
 
     <div class="event-card mx-4 bg-white rounded-3xl overflow-hidden shadow-sm mb-6 reveal">
-        <div class="event-image-frame">
-            <img src="1.jpg" alt="Akad Nikah">
+        
+        <div class="event-image-frame frame-arch-left">
+            <img src="https://sirfaid.github.io/Undangan-saya/1.jpg" alt="Akad Nikah">
         </div>
-        <div class="event-info">
-            <div class="event-text-left">
-                <p class="uppercase tracking-[0.3em] text-[9px] mb-3 font-bold text-stone-400">Saturday,</p>
-                <h3 class="text-2xl font-bold tracking-tighter mb-1 text-stone-800">31ST JANUARY 2026</h3>
-                <p class="text-sm font-semibold mb-3 text-amber-700">MASJID GEDHE KAUMAN</p>
-                <p class="text-[10px] leading-relaxed text-stone-500 max-w-[200px]">
-                    Jl. Kauman, Ngupasan, Kec. Gondomanan, Kota Yogyakarta<br>
-                    09.00 AM - 11.00 AM
+
+        <div class="event-info flex items-center p-6">
+            <div class="vertical-text-container rotate-text text-stone-200 mr-4 opacity-70">
+                The Vows
+            </div>
+            
+            <div class="event-text-left flex-1">
+                <p class="uppercase tracking-[0.3em] text-[9px] mb-3 font-bold text-stone-400">Wednesday,</p>
+                <h3 class="text-2xl font-bold tracking-tighter mb-1 text-stone-800 uppercase">Akad Nikah</h3>
+                <p class="text-sm font-semibold mb-3 text-amber-700">15 . 04 . 2026</p>
+                <p class="text-[10px] leading-relaxed text-stone-500">
+                    08.00 - 10.00 WIB<br>
+                    Masjid Raya Kota Bandung<br>
+                    Jl. Asia Afrika, Bandung
                 </p>
-                <a href="#" class="btn-location shadow-sm">
-                    <i class="fa-solid fa-location-dot"></i> See Location
+                <a href="https://maps.google.com" target="_blank" class="btn-location shadow-sm mt-4">
+                    <i class="fa-solid fa-location-dot"></i> Lihat Lokasi
                 </a>
             </div>
-            <div class="vertical-text text-stone-300">The Vows</div>
         </div>
     </div>
 
     <div class="event-card dark-event mx-4 rounded-3xl overflow-hidden reveal">
-        <div class="event-image-frame">
-             <img src="2.jpg" alt="Resepsi" style="border-radius: 400px 0 0 0;">
+        
+        <div class="event-image-frame frame-arch-right">
+            <img src="https://sirfaid.github.io/Undangan-saya/2.jpg" alt="Resepsi">
         </div>
-        <div class="event-info flex-row-reverse"> <div class="vertical-text" style="margin-left: 0; margin-right: 15px; transform: rotate(180deg);">The Reception</div>
-            <div class="event-text-left text-right">
-                <p class="uppercase tracking-[0.3em] text-[9px] mb-3 font-bold text-stone-500">Saturday,</p>
-                <h3 class="text-2xl font-bold tracking-tighter mb-1 text-white">31ST JANUARY 2026</h3>
-                <p class="text-sm font-semibold mb-3 text-amber-500">ROYAL AMBARRUKMO YOGYAKARTA</p>
-                <p class="text-[10px] leading-relaxed text-stone-400 ml-auto max-w-[250px]">
-                    Jl. Laksda Adisucipto No.81, Ambarukmo, Depok, Sleman, DIY<br>
-                    06.00 PM - Selesai
+
+        <div class="event-info flex items-center p-6 flex-row-reverse">
+            <div class="vertical-text-container text-stone-800 ml-4 opacity-70">
+                The Reception
+            </div>
+
+            <div class="event-text-left flex-1 text-right">
+                <p class="uppercase tracking-[0.3em] text-[9px] mb-3 font-bold text-stone-500">Wednesday,</p>
+                <h3 class="text-2xl font-bold tracking-tighter mb-1 text-white uppercase">Resepsi</h3>
+                <p class="text-sm font-semibold mb-3 text-amber-500">15 . 04 . 2026</p>
+                <p class="text-[10px] leading-relaxed text-stone-400">
+                    11.00 - Selesai<br>
+                    Gedung Serbaguna Kebahagiaan<br>
+                    Jl. Soekarno Hatta, Bandung
                 </p>
-                <a href="#" class="btn-location shadow-sm">
-                    <i class="fa-solid fa-location-dot"></i> See Location
+                <a href="https://maps.google.com" target="_blank" class="btn-location shadow-sm mt-4">
+                    <i class="fa-solid fa-location-dot"></i> Lihat Lokasi
                 </a>
             </div>
         </div>
