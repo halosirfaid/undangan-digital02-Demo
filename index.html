@@ -18,54 +18,94 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* WhatsApp Dark Mode Style */
+       /* WhatsApp Dark Mode Style - Absolute Realism */
 .wa-chat-container {
-    background-color: #0b141a; /* Background hitam gelap WA */
-    /* Menambahkan corak khas WA */
+    background-color: #0b141a; /* Background WA Dark */
     background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
-    background-blend-mode: multiply; /* Agar corak menyatu dengan warna gelap */
+    background-blend-mode: multiply; /* Menyatukan corak dengan warna gelap */
     background-size: contain;
     border-radius: 20px;
     overflow: hidden;
     border: 1px solid #222;
 }
 
+.wa-header {
+    background: #202c33;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wa-profile-pic {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 .wa-bubble {
     position: relative;
     max-width: 85%;
-    padding: 10px 14px;
-    margin-bottom: 12px;
-    font-size: 13px;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    font-size: 12px;
     line-height: 1.4;
     box-shadow: 0 1px 1px rgba(0,0,0,0.2);
 }
 
-/* Bubble Kiri (Pesan Masuk) */
 .wa-bubble-left {
-    background: #ffffff; /* Putih bersih */
-    color: #000000 !important; /* Teks Hitam */
-    border-radius: 0 15px 15px 15px;
+    background: #202c33; /* Bubble Kiri (Pesan Masuk) */
+    color: #e9edef;
+    border-radius: 0 10px 10px 10px;
     align-self: flex-start;
 }
 
-/* Bubble Kanan (Pesan Terkirim) */
 .wa-bubble-right {
-    background: #dcf8c6; /* Hijau muda WA asli */
-    color: #000000 !important; /* Teks Hitam */
-    border-radius: 15px 0 15px 15px;
+    background: #005c4b; /* Bubble Kanan (Pesan Terkirim) */
+    color: #e9edef;
+    border-radius: 10px 0 10px 10px;
     align-self: flex-end;
 }
 
-/* Waktu pesan */
 .wa-time {
-    font-size: 10px;
-    color: #666; /* Warna abu gelap agar terbaca di atas hitam */
+    font-size: 9px;
+    color: #8696a0;
     text-align: right;
     margin-top: 4px;
     display: block;
 }
 
 .wa-check { color: #53bdeb; margin-left: 2px; }
+
+/* ANIMASI MENGETIK (TYPING EFFECT) */
+.typing {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 0;
+}
+.dot {
+    width: 6px;
+    height: 6px;
+    background-color: #8696a0;
+    border-radius: 50%;
+    animation: typingPulse 1.5s infinite;
+}
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingPulse {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.6; }
+    30% { transform: translateY(-4px); opacity: 1; }
+}
+
+/* CSS baru untuk status mengetik di header */
+#typing-status {
+    color: #00a884; /* Warna hijau khas status Online/Typing WA */
+    font-size: 10px;
+    font-weight: bold;
+}
 
     /* --- PERBAIKAN SECTION SALAM --- */
 #salam {
@@ -657,6 +697,45 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
+    // --- LOGIKA ANIMASI WA TYPING ---
+
+// Cari section story
+const storySection = document.getElementById('story');
+const typingBubble = document.getElementById('typing-bubble');
+const typingStatus = document.getElementById('typing-status');
+let isTypingShown = false; // Flag agar animasi hanya jalan sekali
+
+function jalankanAnimasiMengetik() {
+    if (!typingBubble || !typingStatus || isTypingShown) return;
+    
+    isTypingShown = true; // Kunci agar tidak berulang
+
+    // 1. Ganti status di header: "Online" -> "Mengetik..."
+    typingStatus.innerText = "Mengetik...";
+    
+    // 2. Munculkan bubble "tiga titik" (Typing Bubble)
+    typingBubble.classList.remove('hidden');
+
+    // 3. Setelah 3 detik, hilangkan bubble dan balikan status jadi "Online"
+    setTimeout(() => {
+        typingBubble.classList.add('hidden');
+        typingStatus.innerText = "Online";
+    }, 3000); // 3000ms = 3 detik
+}
+
+// Tambahkan logika ini ke fungsi scroll Reveal kamu
+window.addEventListener("scroll", () => {
+    // ... kode reveal lama kamu ...
+    
+    // Logika khusus untuk story: jika storySECTION masuk layar, jalankan animasi
+    if (storySection) {
+        const rectStory = storySection.getBoundingClientRect();
+        if (rectStory.top < window.innerHeight - 100 && rectStory.bottom > 0) {
+            jalankanAnimasiMengetik();
+        }
+    }
+});
+
     const audio = document.getElementById('musik');
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
     const idUndangan = 'devi-ehsan'; 
