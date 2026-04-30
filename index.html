@@ -636,6 +636,18 @@ function feedbackSalin(elemen, teksAsli) {
         scrollReveal();
         new LuminousGallery(document.querySelectorAll(".galeri-item"));
     });
+      new Swiper(".mySwiper", {
+        loop: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+    });
+});
 </script>
 
   </body>
