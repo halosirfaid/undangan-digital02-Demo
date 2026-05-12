@@ -18,6 +18,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Membuat container daftar ucapan bisa di-scroll secara internal */
+#daftar-ucapan {
+    max-height: 500px; /* Batasi tinggi kotak agar tidak terlalu panjang ke bawah */
+    overflow-y: auto;  /* Munculkan scrollbar jika ucapan banyak */
+    position: relative;
+    padding-top: 10px;
+}
+
+/* Membuat Badge Jumlah tetap di posisi atas (Sticky) */
+.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background-color: #1a1a1a; /* Samakan dengan background undangan */
+    padding-bottom: 15px;
+    padding-top: 5px;
+}
+
+.badge-jumlah {
+    display: inline-block;
+    background-color: #fcd34d;
+    color: #1a1a1a;
+    padding: 3px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
 
 /* Warna Input & Textarea jadi Kuning Gelap */
 #rsvp input, #rsvp textarea, #rsvp select {
@@ -981,42 +1010,45 @@ function formatWaktuLalu(tanggal) {
     return "Baru saja";
 }
 
-    function muatUcapan() {
+function muatUcapan() {
     fetch(scriptURL + "?tujuan=" + idUndangan)
     .then(res => res.json())
     .then(data => {
         const wadah = document.getElementById('daftar-ucapan');
         wadah.innerHTML = ""; 
         
-        // Header Jumlah Ucapan dalam kotak kecil
+        // Bagian Header yang menetap (Sticky)
         const headerHtml = `
-            <div class="text-center">
-                <span class="badge-jumlah">${data.length} UCAPAN</span>
+            <div class="sticky-header text-center">
+                <span class="badge-jumlah">${data.length} UCAPAN TERKIRIM</span>
             </div>
         `;
-        wadah.innerHTML = headerHtml;
+        
+        // Bagian pembungkus isi ucapan
+        let isiUcapanHtml = "";
 
         if (data.length === 0) {
-            wadah.innerHTML += "<p class='text-[10px] text-center text-stone-500'>Belum ada doa tertulis.</p>";
-            return;
+            isiUcapanHtml = "<p class='text-[10px] text-center text-stone-500 mt-4'>Belum ada doa tertulis.</p>";
+        } else {
+            data.reverse().forEach(row => {
+                const waktuLalu = formatWaktuLalu(row[0]);
+                isiUcapanHtml += `
+                    <div class="ucapan-card">
+                        <div class="flex justify-between items-start">
+                            <p class="font-bold text-[12px] text-amber-200">${row[1]}</p>
+                            <span class="text-[8px] bg-amber-900/30 text-amber-400 px-2 py-0.5 rounded border border-amber-500/30 font-bold uppercase">${row[3]}</span>
+                        </div>
+                        <p class="text-[11px] mt-2 text-stone-300 italic leading-relaxed">"${row[2]}"</p>
+                        <div class="flex items-center gap-1 mt-3 opacity-50 text-stone-400">
+                            <i class="fa-regular fa-clock text-[8px]"></i>
+                            <p class="text-[8px] uppercase tracking-tighter">${waktuLalu}</p>
+                        </div>
+                    </div>`;
+            });
         }
 
-        data.reverse().forEach(row => {
-            const waktuLalu = formatWaktuLalu(row[0]);
-            const item = `
-                <div class="ucapan-card">
-                    <div class="flex justify-between items-start">
-                        <p class="font-bold text-[12px] text-amber-200">${row[1]}</p>
-                        <span class="text-[8px] bg-amber-900/30 text-amber-400 px-2 py-0.5 rounded border border-amber-500/30 font-bold uppercase">${row[3]}</span>
-                    </div>
-                    <p class="text-[11px] mt-2 text-stone-300 italic leading-relaxed">"${row[2]}"</p>
-                    <div class="flex items-center gap-1 mt-3 opacity-50">
-                        <i class="fa-regular fa-clock text-[8px]"></i>
-                        <p class="text-[8px] uppercase tracking-tighter">${waktuLalu}</p>
-                    </div>
-                </div>`;
-            wadah.innerHTML += item;
-        });
+        // Gabungkan header sticky dengan isi ucapan
+        wadah.innerHTML = headerHtml + isiUcapanHtml;
     });
 }
 
