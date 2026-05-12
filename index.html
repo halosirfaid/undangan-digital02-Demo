@@ -18,6 +18,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+
+#rsvp input, #rsvp textarea, #rsvp select {
+    background-color: #2a2a2a !important; /* Abu-abu sangat tua */
+    color: white !important;
+    border: 1px solid #444 !important;
+}
+
+/* Style untuk Bubble Ucapan Putih di gambar */
+.ucapan-card {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+        
         /* Container Dasar Bingkai Foto (Dibuat sama) */
 .event-image-frame {
     width: 100%;
@@ -925,6 +943,21 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
+function formatWaktuLalu(tanggal) {
+    const detik = Math.floor((new Date() - new Date(tanggal)) / 1000);
+    let interval = detik / 31536000;
+    if (interval > 1) return Math.floor(interval) + " tahun lalu";
+    interval = detik / 2592000;
+    if (interval > 1) return Math.floor(interval) + " bulan lalu";
+    interval = detik / 86400;
+    if (interval > 1) return Math.floor(interval) + " hari lalu";
+    interval = detik / 3600;
+    if (interval > 1) return Math.floor(interval) + " jam lalu";
+    interval = detik / 60;
+    if (interval > 1) return Math.floor(interval) + " menit lalu";
+    return "Baru saja";
+}
+    
 
 // 1. SETTING UTAMA (Ganti idUndangan setiap ada pesanan baru)
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
@@ -981,31 +1014,44 @@
 
             }
 
-    // 3. Fungsi Muat Ucapan
     function muatUcapan() {
-        fetch(scriptURL + "?tujuan=" + idUndangan)
-        .then(res => res.json())
-        .then(data => {
-            const wadah = document.getElementById('daftar-ucapan');
-            wadah.innerHTML = ""; 
-            if (data.length === 0) {
-                wadah.innerHTML = "<p class='text-[10px] text-center text-stone-400'>Belum ada ucapan.</p>";
-                return;
-            }
-            data.reverse().forEach(row => {
-                const item = `
-                    <div class="bg-stone-50 p-4 rounded-2xl border-l-4 border-amber-700 shadow-sm mb-4">
-                        <div class="flex justify-between items-start">
-                            <p class="font-bold text-stone-800 text-xs">${row[1]}</p>
-                            <span class="text-[9px] font-normal text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">${row[3]}</span>
-                        </div>
-                        <p class="text-[11px] text-stone-600 mt-1 italic">"${row[2]}"</p>
-                    </div>`;
-                wadah.innerHTML += item;
-            });
-        })
-        .catch(err => console.error("Gagal memuat:", err));
-    }
+    fetch(scriptURL + "?tujuan=" + idUndangan)
+    .then(res => res.json())
+    .then(data => {
+        const wadah = document.getElementById('daftar-ucapan');
+        wadah.innerHTML = ""; 
+        
+        // --- TAMBAHKAN PENGHITUNG JUMLAH ---
+        const jumlahUcapan = data.length;
+        const infoJumlah = `<p class="text-stone-400 text-[10px] mb-4 uppercase tracking-widest text-center">${jumlahUcapan} Ucapan telah dikirim</p>`;
+        wadah.innerHTML = infoJumlah;
+
+        if (jumlahUcapan === 0) {
+            wadah.innerHTML += "<p class='text-[10px] text-center text-stone-400'>Belum ada ucapan.</p>";
+            return;
+        }
+
+        data.reverse().forEach(row => {
+            // Asumsi: row[0] adalah timestamp dari Google Sheets
+            const waktuDibuat = formatWaktuLalu(row[0]); 
+            
+            const item = `
+                <div class="ucapan-card text-left">
+                    <div class="flex justify-between items-start mb-1">
+                        <p class="font-bold text-stone-900 text-xs">${row[1]}</p>
+                        <span class="text-[9px] text-amber-600 font-bold">${row[3]}</span>
+                    </div>
+                    <p class="text-[11px] text-stone-700 italic">"${row[2]}"</p>
+                    <p class="text-[8px] text-stone-400 mt-2 flex items-center gap-1">
+                        <i class="fa-regular fa-clock"></i> ${waktuDibuat}
+                    </p>
+                </div>`;
+            wadah.innerHTML += item;
+        });
+    })
+    .catch(err => console.error("Gagal memuat:", err));
+}
+
 
     
   // FUNGSI STATUS MENGETIK PERMANEN
