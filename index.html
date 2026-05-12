@@ -808,7 +808,7 @@
     </div>
 </section>
 
-            <section id="kado" class="py-20 px-6 text-center bg-[#fffcf5]">
+            <section id="kado" class="py-20 px-6 text-center bg-[#1a1a1a]">
     <h2 class="text-4xl font-aesthetic text-amber-700 mb-2">Kado Digital</h2>
     <p class="text-[10px] text-stone-500 mb-10 tracking-[0.2em] uppercase px-4">Tanda Kasih</p>
 
@@ -889,7 +889,7 @@
 </section>
 
 
-<section id="rsvp" class="py-20 px-6 text-center bg-[#fffcf5]">
+<section id="rsvp" class="py-20 px-6 text-center bg-[#1a1a1a]">
             <h2 class="text-4xl font-aesthetic text-amber-700 mb-10">Doa & Ucapan</h2>
             <div class="max-w-sm mx-auto space-y-4 reveal">
                  <input type="text" id="nama-input" placeholder="Nama" class="w-full p-4 rounded-xl border border-stone-200 text-sm outline-none focus:border-amber-700">
@@ -943,19 +943,46 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
+    
+// Fungsi hitung waktu lalu
 function formatWaktuLalu(tanggal) {
     const detik = Math.floor((new Date() - new Date(tanggal)) / 1000);
-    let interval = detik / 31536000;
-    if (interval > 1) return Math.floor(interval) + " tahun lalu";
-    interval = detik / 2592000;
-    if (interval > 1) return Math.floor(interval) + " bulan lalu";
-    interval = detik / 86400;
-    if (interval > 1) return Math.floor(interval) + " hari lalu";
-    interval = detik / 3600;
+    if (isNaN(detik)) return "Baru saja";
+    
+    let interval = detik / 3600;
     if (interval > 1) return Math.floor(interval) + " jam lalu";
     interval = detik / 60;
     if (interval > 1) return Math.floor(interval) + " menit lalu";
     return "Baru saja";
+}
+
+function muatUcapan() {
+    fetch(scriptURL + "?tujuan=" + idUndangan)
+    .then(res => res.json())
+    .then(data => {
+        const wadah = document.getElementById('daftar-ucapan');
+        wadah.innerHTML = ""; 
+        
+        // Menampilkan Jumlah Ucapan
+        const infoJumlah = `<p class="text-stone-500 text-[10px] mb-6 uppercase tracking-[0.2em] text-center">${data.length} Ucapan Terkirim</p>`;
+        wadah.innerHTML = infoJumlah;
+
+        data.reverse().forEach(row => {
+            const waktuLalu = formatWaktuLalu(row[0]); // row[0] adalah timestamp
+            const item = `
+                <div class="ucapan-card">
+                    <div class="flex justify-between items-start">
+                        <p class="font-bold text-[12px]">${row[1]}</p>
+                        <span class="text-[9px] text-amber-600 font-bold uppercase">${row[3]}</span>
+                    </div>
+                    <p class="text-[11px] mt-1 text-stone-700 italic">"${row[2]}"</p>
+                    <p class="text-[8px] text-stone-400 mt-2">
+                        <i class="fa-regular fa-clock"></i> ${waktuLalu}
+                    </p>
+                </div>`;
+            wadah.innerHTML += item;
+        });
+    });
 }
     
 
@@ -1014,46 +1041,9 @@ function formatWaktuLalu(tanggal) {
 
             }
 
-    function muatUcapan() {
-    fetch(scriptURL + "?tujuan=" + idUndangan)
-    .then(res => res.json())
-    .then(data => {
-        const wadah = document.getElementById('daftar-ucapan');
-        wadah.innerHTML = ""; 
-        
-        // --- TAMBAHKAN PENGHITUNG JUMLAH ---
-        const jumlahUcapan = data.length;
-        const infoJumlah = `<p class="text-stone-400 text-[10px] mb-4 uppercase tracking-widest text-center">${jumlahUcapan} Ucapan telah dikirim</p>`;
-        wadah.innerHTML = infoJumlah;
-
-        if (jumlahUcapan === 0) {
-            wadah.innerHTML += "<p class='text-[10px] text-center text-stone-400'>Belum ada ucapan.</p>";
-            return;
-        }
-
-        data.reverse().forEach(row => {
-            // Asumsi: row[0] adalah timestamp dari Google Sheets
-            const waktuDibuat = formatWaktuLalu(row[0]); 
-            
-            const item = `
-                <div class="ucapan-card text-left">
-                    <div class="flex justify-between items-start mb-1">
-                        <p class="font-bold text-stone-900 text-xs">${row[1]}</p>
-                        <span class="text-[9px] text-amber-600 font-bold">${row[3]}</span>
-                    </div>
-                    <p class="text-[11px] text-stone-700 italic">"${row[2]}"</p>
-                    <p class="text-[8px] text-stone-400 mt-2 flex items-center gap-1">
-                        <i class="fa-regular fa-clock"></i> ${waktuDibuat}
-                    </p>
-                </div>`;
-            wadah.innerHTML += item;
-        });
-    })
-    .catch(err => console.error("Gagal memuat:", err));
-}
-
-
     
+
+
   // FUNGSI STATUS MENGETIK PERMANEN
 function statusMengetikAktif() {
     const status = document.getElementById('typing-status');
