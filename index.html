@@ -836,26 +836,30 @@
 
 </section>
 
+<section id="rsvp" class="py-20 px-6 text-center bg-[#1a1a1a]">
+    <h2 class="text-4xl font-aesthetic text-amber-200 mb-10">Doa & Ucapan</h2>
     
-<section id="rsvp" class="py-20 px-6 text-center bg-[#fffcf5]">
-            <h2 class="text-4xl font-aesthetic text-amber-700 mb-10">Doa & Ucapan</h2>
-            <div class="max-w-sm mx-auto space-y-4 reveal">
-                 <input type="text" id="nama-input" placeholder="Nama" class="w-full p-4 rounded-xl border border-stone-200 text-sm outline-none focus:border-amber-700">
-        <textarea id="pesan-input" placeholder="Tulis Ucapan & Doa..." class="w-full p-4 rounded-xl border border-stone-200 text-sm h-28 outline-none focus:border-amber-700"></textarea>
+    <div class="max-w-sm mx-auto space-y-4 reveal">
+        <input type="text" id="nama-input" placeholder="Nama Anda" 
+            class="w-full p-4 rounded-xl border border-stone-700 bg-stone-800 text-white text-sm outline-none focus:border-amber-200">
         
-        <select id="hadir-input" class="w-full p-4 rounded-xl border border-stone-200 text-sm bg-white outline-none">
+        <textarea id="pesan-input" placeholder="Tulis Ucapan & Doa..." 
+            class="w-full p-4 rounded-xl border border-stone-700 bg-stone-800 text-white text-sm h-28 outline-none focus:border-amber-200"></textarea>
+        
+        <select id="hadir-input" class="w-full p-4 rounded-xl border border-stone-700 bg-stone-800 text-white text-sm outline-none">
             <option value="Hadir">Saya Akan Hadir</option>
             <option value="Tidak Hadir">Maaf, Tidak Bisa Hadir</option>
         </select>
 
-        <button onclick="kirimKeSheets()" id="btn-kirim" class="w-full bg-amber-700 text-white p-4 rounded-xl font-bold shadow-lg">KIRIM UCAPAN</button>
+        <button onclick="kirimKeSheets()" id="btn-kirim" 
+            class="w-full bg-amber-200 text-stone-900 p-4 rounded-xl font-bold shadow-lg active:scale-95 transition-all">
+            KIRIM UCAPAN
+        </button>
     </div>
 
-    <div id="daftar-ucapan" class="max-w-sm mx-auto mt-10 text-left p-2 h-96 overflow-y-auto border-t border-stone-100">
+    <div id="daftar-ucapan" class="max-w-sm mx-auto mt-10 text-left p-2 h-96 overflow-y-auto border-t border-stone-800 custom-scrollbar">
         </div>
 </section>
-
-
         <footer class="pt-10 pb-32 text-center bg-[#1a1a1a]">
     <div class="max-w-xs mx-auto mb-6">
         <p class="text-stone-400 text-[10px] tracking-[0.3em] uppercase mb-4">Created by Sirfa.id</p>
@@ -892,86 +896,81 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
-    // 1. SETTING UTAMA (Ganti idUndangan setiap ada pesanan baru)
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
-    const idUndangan = 'devi-ehsan'; // <-- Cukup ganti ini saja untuk klien baru!
-    
-    const audio = document.getElementById('musik');
-    let isAutoScrolling = false;
+    // 1. Konfigurasi Database (Sesuaikan dengan data Anda)
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
+const idUndangan = 'devi-ehsan'; // Ganti ID ini sesuai klien baru
 
-    // 2. Fungsi Kirim Ucapan
-    function kirimKeSheets() {
-        const btn = document.getElementById('btn-kirim');
-        const nama = document.getElementById('nama-input').value;
-        const ucapan = document.getElementById('pesan-input').value;
-        const hadir = document.getElementById('hadir-input').value;
+// 2. Fungsi Kirim Ucapan ke Google Sheets
+function kirimKeSheets() {
+    const btn = document.getElementById('btn-kirim');
+    const nama = document.getElementById('nama-input').value;
+    const ucapan = document.getElementById('pesan-input').value;
+    const hadir = document.getElementById('hadir-input').value;
 
-        if (!nama || !ucapan) return alert("Mohon isi nama dan ucapan!");
+    if (!nama || !ucapan) return alert("Mohon isi nama dan ucapan!");
 
-        btn.disabled = true;
-        btn.innerText = "Mengirim...";
+    btn.disabled = true;
+    btn.innerText = "Mengirim...";
 
-        fetch(scriptURL, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: JSON.stringify({ 
-                "nama": nama, 
-                "ucapan": ucapan, 
-                "kehadiran": hadir,
-                "tujuan": idUndangan
-                       
-            })
+    fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify({ 
+            "nama": nama, 
+            "ucapan": ucapan, 
+            "kehadiran": hadir,
+            "tujuan": idUndangan
         })
-        .then(res => {
-        btn.innerText = "TERKIRIM!"; // Mengganti alert
-        btn.style.backgroundColor = "#059669"; // Ubah warna ke hijau (optional)
+    })
+    .then(res => {
+        btn.innerText = "TERKIRIM!";
+        btn.style.backgroundColor = "#059669";
         
         document.getElementById('nama-input').value = "";
         document.getElementById('pesan-input').value = "";
-        muatUcapan(); 
+        muatUcapan(); // Refresh daftar ucapan
 
         setTimeout(() => {
             btn.disabled = false;
             btn.innerText = "KIRIM UCAPAN";
-            btn.style.backgroundColor = ""; // Kembalikan warna asli
+            btn.style.backgroundColor = ""; 
         }, 3000);
     })
     .catch(error => {
         console.error('Error!', error.message);
         btn.innerText = "GAGAL MENGIRIM";
-        setTimeout(() => {
-            btn.disabled = false;
-            btn.innerText = "KIRIM UCAPAN";
-        }, 3000);
+        btn.disabled = false;
     });
+}
 
-            }
+// 3. Fungsi Ambil Ucapan dari Google Sheets
+function muatUcapan() {
+    fetch(scriptURL + "?tujuan=" + idUndangan)
+    .then(res => res.json())
+    .then(data => {
+        const wadah = document.getElementById('daftar-ucapan');
+        wadah.innerHTML = ""; 
+        if (data.length === 0) {
+            wadah.innerHTML = "<p class='text-[10px] text-center text-stone-400'>Belum ada ucapan.</p>";
+            return;
+        }
+        data.reverse().forEach(row => {
+            const item = `
+                <div class="bg-white p-4 rounded-2xl border-l-4 border-amber-700 shadow-sm mb-4">
+                    <div class="flex justify-between items-start">
+                        <p class="font-bold text-stone-800 text-xs">${row[1]}</p>
+                        <span class="text-[9px] font-normal text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">${row[3]}</span>
+                    </div>
+                    <p class="text-[11px] text-stone-600 mt-1 italic">"${row[2]}"</p>
+                </div>`;
+            wadah.innerHTML += item;
+        });
+    })
+    .catch(err => console.error("Gagal memuat ucapan:", err));
+}
 
-    // 3. Fungsi Muat Ucapan
-    function muatUcapan() {
-        fetch(scriptURL + "?tujuan=" + idUndangan)
-        .then(res => res.json())
-        .then(data => {
-            const wadah = document.getElementById('daftar-ucapan');
-            wadah.innerHTML = ""; 
-            if (data.length === 0) {
-                wadah.innerHTML = "<p class='text-[10px] text-center text-stone-400'>Belum ada ucapan.</p>";
-                return;
-            }
-            data.reverse().forEach(row => {
-                const item = `
-                    <div class="bg-stone-50 p-4 rounded-2xl border-l-4 border-amber-700 shadow-sm mb-4">
-                        <div class="flex justify-between items-start">
-                            <p class="font-bold text-stone-800 text-xs">${row[1]}</p>
-                            <span class="text-[9px] font-normal text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">${row[3]}</span>
-                        </div>
-                        <p class="text-[11px] text-stone-600 mt-1 italic">"${row[2]}"</p>
-                    </div>`;
-                wadah.innerHTML += item;
-            });
-        })
-        .catch(err => console.error("Gagal memuat:", err));
-    }
+// Jalankan fungsi muat ucapan saat halaman pertama kali dibuka
+window.addEventListener('load', muatUcapan);
 
   // FUNGSI STATUS MENGETIK PERMANEN
 function statusMengetikAktif() {
