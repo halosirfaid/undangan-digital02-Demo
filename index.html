@@ -897,7 +897,7 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
-function muatUcapan() {
+    function muatUcapan() {
     fetch(scriptURL + "?tujuan=" + idUndangan)
     .then(res => res.json())
     .then(data => {
@@ -905,8 +905,6 @@ function muatUcapan() {
         const labelJumlah = document.getElementById('jumlah-ucapan');
         
         wadah.innerHTML = ""; 
-        
-        // Update Jumlah Ucapan
         labelJumlah.innerText = data.length + " UCAPAN";
 
         if (data.length === 0) {
@@ -914,18 +912,23 @@ function muatUcapan() {
             return;
         }
 
-        // Tampilkan Data (Paling Baru di Atas)
         data.reverse().forEach(row => {
-             // Asumsi: row[0] adalah kolom tanggal/timestamp dari Google Sheets
-    const teksWaktu = formatWaktuLalu(row[0]); 
+            // 1. Ambil teks waktu (misal: "5 menit yang lalu")
+            const teksWaktu = formatWaktuLalu(row[0]); 
+            
             const item = `
                 <div class="bg-stone-800/50 p-4 rounded-2xl border border-stone-700/50 mb-4 backdrop-blur-sm">
-                    <div class="flex justify-between items-center mb-2">
+                    <div class="flex justify-between items-center mb-1">
                         <p class="font-bold text-amber-200 text-xs tracking-wide uppercase">${row[1]}</p>
                         <span class="text-[8px] font-bold text-stone-400 bg-stone-900 px-2 py-0.5 rounded-md border border-stone-700">
                             ${row[3] === 'Hadir' ? '✓ HADIR' : '✕ ABSEN'}
                         </span>
                     </div>
+                    
+                    <p class="text-[8px] text-stone-500 mb-2 uppercase tracking-tighter">
+                        <i class="fa-regular fa-clock mr-1"></i> ${teksWaktu}
+                    </p>
+
                     <p class="text-[11px] text-stone-300 leading-relaxed italic opacity-90">"${row[2]}"</p>
                 </div>`;
             wadah.innerHTML += item;
@@ -933,6 +936,9 @@ function muatUcapan() {
     })
     .catch(err => {
         console.error("Gagal memuat ucapan:", err);
+    });
+}
+
         document.getElementById('daftar-ucapan').innerHTML = "<p class='text-[10px] text-center text-red-400'>Gagal memuat data.</p>";
     });
 }
