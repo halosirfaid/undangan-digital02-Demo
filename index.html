@@ -19,22 +19,47 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
 
+/* Warna Input & Textarea jadi Kuning Gelap */
 #rsvp input, #rsvp textarea, #rsvp select {
-    background-color: #2a2a2a !important; /* Abu-abu sangat tua */
-    color: white !important;
-    border: 1px solid #444 !important;
+    background-color: #262626 !important;
+    color: #fcd34d !important; /* Warna kuning teks */
+    border: 1px solid #fcd34d !important; /* Border kuning */
+    border-radius: 12px;
 }
 
-/* Style untuk Bubble Ucapan Putih di gambar */
+/* Tombol Kirim Ucapan Warna Kuning */
+#btn-kirim {
+    background-color: #fcd34d !important;
+    color: #1a1a1a !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Kotak Ucapan Terkirim (Senada dengan Background) */
 .ucapan-card {
-    background: white;
+    background: #262626; /* Senada dengan background tapi sedikit lebih terang */
     border-radius: 15px;
     padding: 15px;
     margin-bottom: 15px;
-    position: relative;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    color: #e5e5e5;
+    border-left: 4px solid #fcd34d; /* Aksen garis kuning di kiri */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
+/* Kotak Kecil untuk Jumlah Ucapan */
+.badge-jumlah {
+    display: inline-block;
+    background-color: #fcd34d;
+    color: #1a1a1a;
+    padding: 2px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 10px;
+    margin-bottom: 20px;
+}
+
+        
         
         /* Container Dasar Bingkai Foto (Dibuat sama) */
 .event-image-frame {
@@ -956,35 +981,45 @@ function formatWaktuLalu(tanggal) {
     return "Baru saja";
 }
 
-function muatUcapan() {
+    function muatUcapan() {
     fetch(scriptURL + "?tujuan=" + idUndangan)
     .then(res => res.json())
     .then(data => {
         const wadah = document.getElementById('daftar-ucapan');
         wadah.innerHTML = ""; 
         
-        // Menampilkan Jumlah Ucapan
-        const infoJumlah = `<p class="text-stone-500 text-[10px] mb-6 uppercase tracking-[0.2em] text-center">${data.length} Ucapan Terkirim</p>`;
-        wadah.innerHTML = infoJumlah;
+        // Header Jumlah Ucapan dalam kotak kecil
+        const headerHtml = `
+            <div class="text-center">
+                <span class="badge-jumlah">${data.length} UCAPAN</span>
+            </div>
+        `;
+        wadah.innerHTML = headerHtml;
+
+        if (data.length === 0) {
+            wadah.innerHTML += "<p class='text-[10px] text-center text-stone-500'>Belum ada doa tertulis.</p>";
+            return;
+        }
 
         data.reverse().forEach(row => {
-            const waktuLalu = formatWaktuLalu(row[0]); // row[0] adalah timestamp
+            const waktuLalu = formatWaktuLalu(row[0]);
             const item = `
                 <div class="ucapan-card">
                     <div class="flex justify-between items-start">
-                        <p class="font-bold text-[12px]">${row[1]}</p>
-                        <span class="text-[9px] text-amber-600 font-bold uppercase">${row[3]}</span>
+                        <p class="font-bold text-[12px] text-amber-200">${row[1]}</p>
+                        <span class="text-[8px] bg-amber-900/30 text-amber-400 px-2 py-0.5 rounded border border-amber-500/30 font-bold uppercase">${row[3]}</span>
                     </div>
-                    <p class="text-[11px] mt-1 text-stone-700 italic">"${row[2]}"</p>
-                    <p class="text-[8px] text-stone-400 mt-2">
-                        <i class="fa-regular fa-clock"></i> ${waktuLalu}
-                    </p>
+                    <p class="text-[11px] mt-2 text-stone-300 italic leading-relaxed">"${row[2]}"</p>
+                    <div class="flex items-center gap-1 mt-3 opacity-50">
+                        <i class="fa-regular fa-clock text-[8px]"></i>
+                        <p class="text-[8px] uppercase tracking-tighter">${waktuLalu}</p>
+                    </div>
                 </div>`;
             wadah.innerHTML += item;
         });
     });
 }
-    
+
 
 // 1. SETTING UTAMA (Ganti idUndangan setiap ada pesanan baru)
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
