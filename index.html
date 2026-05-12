@@ -18,183 +18,72 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Container Frame Utama */
-.event-image-frame {
-    width: 100%;
-    height: 320px;
-    position: relative;
-    overflow: hidden;
-    background: transparent !important; /* Menghilangkan bg hitam di belakang foto */
-}
+        <style>
+    body { font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
+    .font-aesthetic { font-family: 'Great Vibes', cursive; }
 
-/* LENGKUNGAN BAWAH KIRI: Untuk Bagian Akad */
-.frame-arch-left img {
-    /* Atas kiri: 0, Atas kanan: 0, Bawah kanan: 0, Bawah kiri: melengkung */
-    border-radius: 0 0 0 400px !important; 
-    object-fit: cover;
-}
+    /* --- PERBAIKAN FRAME FOTO (BERSIH DI ATAS, LENGKUNG DI BAWAH) --- */
+    .event-image-frame {
+        width: 100%;
+        height: 320px;
+        position: relative;
+        overflow: hidden;
+        background: transparent !important; /* Hilangkan background hitam di belakang foto */
+    }
 
-/* LENGKUNGAN BAWAH KANAN: Untuk Bagian Resepsi */
-.frame-arch-right img {
-    /* Atas kiri: 0, Atas kanan: 0, Bawah kanan: melengkung, Bawah kiri: 0 */
-    border-radius: 0 0 400px 0 !important; 
-    object-fit: cover;
-}
+    .event-image-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0 !important; /* Reset semua radius bawaan */
+    }
 
-/* Memastikan kartu tidak memotong bagian atas foto secara tajam */
-.event-card {
-    border-top-left-radius: 1.5rem; /* Menyesuaikan dengan rounded-3xl */
-    border-top-right-radius: 1.5rem;
-}
+    /* Lengkungan Bawah Kiri untuk AKAD */
+    .frame-arch-left img {
+        border-radius: 0 0 0 200px !important; 
+    }
 
-        /* Akad: Kita buat Abu-abu Sangat Gelap (bukan hitam pekat) */
-.akad-card {
-    background: #1a1a1a !important; /* Charcoal */
-    color: #f4f4f4 !important;
-}
+    /* Lengkungan Bawah Kanan untuk RESEPSI */
+    .frame-arch-right img {
+        border-radius: 0 0 200px 0 !important; 
+    }
 
-.akad-card .vertical-text-container {
-    color: #333 !important; /* Teks vertikal halus di latar gelap */
-}
+    /* Area Informasi (Bagian Hitam/Abu) */
+    .event-info {
+        padding: 30px 25px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-/* Resepsi: Tetap Hitam Pekat */
-.resepsi-card {
-    background: #000000 !important;
-    color: #ffffff !important;
-}
+    .dark-event {
+        background: #000 !important;
+        color: #fff !important;
+    }
 
-/* Tombol untuk tema gelap agar tetap terlihat */
-.btn-location-dark {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    padding: 8px 18px;
-    border-radius: 50px;
-    font-size: 9px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    margin-top: 15px;
-    backdrop-filter: blur(5px);
-}
+    .vertical-text-container {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        font-family: 'Great Vibes', cursive;
+        font-size: 2rem;
+        line-height: 1;
+        opacity: 0.4;
+    }
 
-        /* Container Dasar Bingkai Foto (Dibuat sama) */
-.event-image-frame {
-    width: 100%;
-    height: 320px; /* Pertahankan ukuran seimbang */
-    position: relative;
-    overflow: hidden;
-}
+    .rotate-text { transform: rotate(180deg); }
 
-.event-image-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+    /* Navigasi & UI Lainnya */
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    
+    .nav-bottom {
+        position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+        display: flex; gap: 15px; background: rgba(255, 255, 255, 0.9);
+        padding: 12px 25px; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 99;
+    }
 
-/* LENGKUNGAN KIRI: Untuk Bagian Akad (Sesuai Gambar Atas) */
-.frame-arch-left img {
-    /* Hanya sudut kiri atas yang melengkung */
-    border-radius: 400px 0 0 0 !important; 
-}
-
-/* LENGKUNGAN KANAN: Untuk Bagian Resepsi (Sesuai Gambar Bawah) */
-.frame-arch-right img {
-    /* Hanya sudut kanan atas yang melengkung */
-    border-radius: 0 400px 0 0 !important; 
-}
-
-   .vertical-text-container {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    font-family: 'Great Vibes', cursive;
-    font-size: 2.2rem;
-    line-height: 1;
-}
-
-/* Memutar teks 180 derajat untuk bagian Akad agar tulisan terbaca dari bawah ke atas */
-.rotate-text {
-    transform: rotate(180deg);
-}
-     
-/* Container Dasar Layout Ramping */
-.event-section {
-    width: 100%;
-    padding: 20px 0; /* Memberikan ruang napas atas-bawah */
-}
-
-/* Bingkai Foto Arch yang diperkecil tinggi-nya */
-.event-image-frame {
-    width: 100%;
-    height: 320px; /* Dikurangi dari 450px agar lebih seimbang */
-    position: relative;
-    overflow: hidden;
-}
-
-.event-image-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* Sudut kiri atas melengkung */
-    border-radius: 400px 0 0 0; 
-}
-
-/* Bagian Detail Teks yang Lebih Padat */
-.event-info {
-    padding: 30px 25px; /* Jarak padding dikurangi sedikit */
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* Teks dan vertical-title sejajar tengah */
-}
-
-.event-text-left { flex: 1; }
-
-/* Tulisan Vertikal Diperkecil Sedikit */
-.vertical-title {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    font-family: 'Great Vibes', cursive;
-    font-size: 1.8rem; /* Ukuran font vertikal dikurangi */
-    color: #222;
-    margin-left: 15px;
-    display: flex;
-    align-items: center;
-    line-height: 1;
-    opacity: 0.7; /* Sedikit lebih redup agar teks utama lebih menonjol */
-}
-
-/* Tema Gelap Resepsi */
-.dark-event {
-    background: #000 !important;
-    color: #fff !important;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5); /* Shadow lebih kuat di gelap */
-}
-
-.dark-event .vertical-title, 
-.dark-event p {
-    color: #fff !important;
-}
-
-.btn-location {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: #fff;
-    color: #000;
-    padding: 6px 16px;
-    border-radius: 50px;
-    font-size: 9px;
-    font-weight: bold;
-    margin-top: 15px;
-    border: 1px solid #ddd;
-    transition: background 0.3s ease;
-}
-
-.dark-event .btn-location {
-    background: #fff;
-    color: #000;
-}
+    /* ... Sisa CSS (WA Chat, Countdown, dll) biarkan seperti aslinya ... */
+</style>
 
        /* Memaksa jarak foto dan nama */
 .wa-profile-pic {
