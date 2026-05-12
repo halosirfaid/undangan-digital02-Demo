@@ -18,121 +18,59 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Kotak pembungkus daftar ucapan */
+     
+        /* Container Utama untuk area Scroll */
 #daftar-ucapan {
-    max-height: 400px; /* Tentukan tinggi maksimal kotak (misal 400px) */
-    overflow-y: auto;  /* Mengaktifkan scroll hanya di dalam kotak ini */
-    padding-right: 10px; /* Ruang untuk scrollbar agar tidak menutupi teks */
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 10px;
     margin-top: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.05); /* Border sangat tipis agar ada batas halus */
     border-radius: 15px;
+    /* Memberikan efek halus di tepi scroll */
+    mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
 }
 
-/* Mempercantik tampilan Scrollbar (khusus Chrome/Safari/Hp) */
-#daftar-ucapan::-webkit-scrollbar {
-    width: 4px;
+/* Kotak Ucapan Satuan (Card) */
+.ucapan-card {
+    background: rgba(255, 255, 255, 0.03); /* Hitam sedikit terang */
+    border: 1px solid rgba(251, 191, 36, 0.3); /* Border Kuning Amber Tipis */
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+    color: #e5e5e5;
+    transition: all 0.3s ease;
 }
-#daftar-ucapan::-webkit-scrollbar-track {
-    background: transparent;
+
+/* Mempercantik Scrollbar agar tipis dan kuning */
+#daftar-ucapan::-webkit-scrollbar {
+    width: 3px;
 }
 #daftar-ucapan::-webkit-scrollbar-thumb {
-    background: #fcd34d; /* Warna kuning senada tema */
+    background: #fcd34d;
     border-radius: 10px;
 }
 
-      
-/* Container utama RSVP */
-.rsvp-container {
-    background: #262626; /* Sedikit lebih terang dari bg utama */
-    border-radius: 20px;
-    padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Input sesuai gaya gambar */
-.rsvp-input {
-    width: 100%;
-    background: transparent !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
-    border-radius: 15px;
-    padding: 12px;
-    color: white !important;
-    margin-top: 5px;
-    margin-bottom: 15px;
-}
-
-/* Badge Jumlah yang menetap di atas */
+/* Header Jumlah (Sticky) */
 .sticky-header {
     position: sticky;
     top: 0;
     z-index: 20;
     background-color: #1a1a1a;
-    padding: 15px 0;
+    padding-bottom: 10px;
     display: flex;
-    justify-content: flex-start; /* Posisi kiri sesuai gambar */
+    justify-content: flex-start;
 }
 
 .badge-jumlah {
-    background-color: #fcd34d; /* Kuning kita */
-    color: #1a1a1a;
-    padding: 4px 12px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 10px;
-    text-transform: uppercase;
-}
-
-/* Kotak Ucapan Terkirim */
-.ucapan-card {
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Garis tipis sesuai gambar */
-    border-radius: 15px;
-    padding: 15px;
-    margin-bottom: 15px;
-    background: transparent;
-}
-
-        
-/* Warna Input & Textarea jadi Kuning Gelap */
-#rsvp input, #rsvp textarea, #rsvp select {
-    background-color: #262626 !important;
-    color: #fcd34d !important; /* Warna kuning teks */
-    border: 1px solid #fcd34d !important; /* Border kuning */
-    border-radius: 12px;
-}
-
-/* Tombol Kirim Ucapan Warna Kuning */
-#btn-kirim {
-    background-color: #fcd34d !important;
-    color: #1a1a1a !important;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Kotak Ucapan Terkirim (Senada dengan Background) */
-.ucapan-card {
-    background: #262626; /* Senada dengan background tapi sedikit lebih terang */
-    border-radius: 15px;
-    padding: 15px;
-    margin-bottom: 15px;
-    color: #e5e5e5;
-    border-left: 4px solid #fcd34d; /* Aksen garis kuning di kiri */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-/* Kotak Kecil untuk Jumlah Ucapan */
-.badge-jumlah {
-    display: inline-block;
     background-color: #fcd34d;
     color: #1a1a1a;
-    padding: 2px 10px;
+    padding: 4px 12px;
     border-radius: 6px;
     font-weight: bold;
     font-size: 10px;
-    margin-bottom: 20px;
+    text-transform: uppercase;
 }
 
-        
         
         /* Container Dasar Bingkai Foto (Dibuat sama) */
 .event-image-frame {
