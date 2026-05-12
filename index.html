@@ -836,45 +836,45 @@
 
 </section>
 
-       <section id="rsvp" class="relative py-20 px-4 overflow-hidden min-h-screen flex flex-col items-center justify-center">
-    <div class="absolute inset-0 z-0">
-        <img src="3.jpg" class="w-full h-full object-cover blur-md brightness-50">
-    </div>
+    <section id="rsvp" class="py-20 px-6 text-center bg-[#fffcf5] relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-32 h-32 bg-amber-100 rounded-full blur-3xl opacity-50 -z-10"></div>
+    
+    <h2 class="text-4xl font-aesthetic text-amber-700 mb-2">Doa & Ucapan</h2>
+    <p class="text-[10px] text-stone-500 mb-10 tracking-[0.2em] uppercase">Berikan Restu Anda</p>
 
-    <div class="relative z-10 w-full max-w-md">
-        <h2 class="text-3xl font-aesthetic text-white text-center mb-8 drop-shadow-lg">Ucapan dan Doa Para Tamu</h2>
+    <div class="max-w-sm mx-auto space-y-4 reveal bg-white/40 backdrop-blur-md p-6 rounded-3xl border border-white/60 shadow-xl">
+        <div class="relative">
+            <input type="text" id="nama-input" placeholder="Nama Lengkap" 
+                class="w-full p-4 bg-white/60 rounded-2xl border border-stone-200 text-sm outline-none focus:border-amber-700 focus:ring-1 focus:ring-amber-700 transition-all">
+        </div>
 
-        <div class="bg-white/10 backdrop-blur-lg p-6 rounded-3xl border border-white/20 shadow-2xl mb-8">
-            <div class="space-y-4">
-                <div>
-                    <label class="text-white text-[10px] uppercase tracking-widest ml-2 mb-1 block">Nama Tamu:</label>
-                    <input type="text" id="nama-input" placeholder="Masukkan Nama Anda" class="w-full bg-white/10 border border-white/30 p-3 rounded-xl text-white text-sm outline-none focus:border-amber-400 transition-all placeholder:text-white/40">
-                </div>
-                <div>
-                    <label class="text-white text-[10px] uppercase tracking-widest ml-2 mb-1 block">Ucapan & Doa:</label>
-                    <textarea id="pesan-input" placeholder="Tulis doa terbaik anda..." class="w-full bg-white/10 border border-white/30 p-3 rounded-xl text-white text-sm h-28 outline-none focus:border-amber-400 transition-all placeholder:text-white/40"></textarea>
-                </div>
-                <button onclick="kirimKeSheets()" id="btn-kirim" class="bg-[#00a884] hover:bg-[#008f6f] text-white px-6 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-2 shadow-lg">
-                    <i class="fa-solid fa-paper-plane"></i> Beri Ucapan
-                </button>
+        <div class="relative">
+            <textarea id="pesan-input" placeholder="Tulis Ucapan & Doa..." 
+                class="w-full p-4 bg-white/60 rounded-2xl border border-stone-200 text-sm h-32 outline-none focus:border-amber-700 focus:ring-1 focus:ring-amber-700 transition-all"></textarea>
+        </div>
+        
+        <div class="relative">
+            <select id="hadir-input" 
+                class="w-full p-4 bg-white/60 rounded-2xl border border-stone-200 text-sm outline-none appearance-none focus:border-amber-700 transition-all">
+                <option value="Hadir">Konfirmasi Kehadiran: Hadir</option>
+                <option value="Tidak Hadir">Maaf, Saya Tidak Bisa Hadir</option>
+            </select>
+            <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-stone-400">
+                <i class="fa-solid fa-chevron-down text-xs"></i>
             </div>
         </div>
 
-        <div class="bg-white/10 backdrop-blur-lg rounded-3xl border border-white/20 shadow-2xl overflow-hidden">
-            <div class="p-4 border-bottom border-white/10 flex justify-between items-center bg-white/5">
-                <span class="bg-amber-500 text-white text-[9px] px-3 py-1 rounded-full font-bold uppercase tracking-tighter">Jumlah: 20 Ucapan</span>
-            </div>
-            
-            <div id="daftar-ucapan" class="p-4 space-y-4 max-h-[400px] overflow-y-auto custom-scrollbar">
-                <div class="border-b border-white/10 pb-3">
-                    <h4 class="text-white font-bold text-sm">Gita & Pasangan</h4>
-                    <p class="text-white/80 text-xs leading-relaxed mt-1">Selamat Berbahagia buat bro & sist semoga menjadi keluarga sakinah mawaddah warahmah...</p>
-                    <span class="text-white/40 text-[9px] block mt-2">17 menit yang lalu</span>
-                </div>
-            </div>
-        </div>
+        <button onclick="kirimKeSheets()" id="btn-kirim" 
+            class="w-full bg-amber-700 hover:bg-amber-800 text-white p-4 rounded-2xl font-bold shadow-lg transform active:scale-95 transition-all duration-300 tracking-widest text-xs">
+            KIRIM UCAPAN
+        </button>
     </div>
+
+    <div id="daftar-ucapan" class="max-w-sm mx-auto mt-12 text-left p-2 h-96 overflow-y-auto space-y-4 custom-scrollbar">
+        </div>
 </section>
+
+
 
         <footer class="pt-10 pb-32 text-center bg-[#1a1a1a]">
     <div class="max-w-xs mx-auto mb-6">
@@ -912,6 +912,58 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
+      // Pakai URL Script lama kamu di sini
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
+const idUndangan = 'devi-ehsan'; 
+
+function kirimKeSheets() {
+    const btn = document.getElementById('btn-kirim');
+    const nama = document.getElementById('nama-input').value;
+    const ucapan = document.getElementById('pesan-input').value;
+    const hadir = document.getElementById('hadir-input').value;
+
+    if (!nama || !ucapan) {
+        alert("Silakan isi nama dan pesan Anda.");
+        return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin mr-2"></i> MENGIRIM...';
+
+    fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify({ 
+            "nama": nama, 
+            "ucapan": ucapan, 
+            "kehadiran": hadir,
+            "tujuan": idUndangan
+        })
+    })
+    .then(res => {
+        btn.innerHTML = '<i class="fa-solid fa-check-circle mr-2"></i> TERKIRIM!';
+        btn.classList.replace('bg-amber-700', 'bg-green-600');
+        
+        // Reset form
+        document.getElementById('nama-input').value = "";
+        document.getElementById('pesan-input').value = "";
+        
+        // Refresh daftar ucapan
+        muatUcapan(); 
+
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.innerHTML = "KIRIM UCAPAN";
+            btn.classList.replace('bg-green-600', 'bg-amber-700');
+        }, 4000);
+    })
+    .catch(error => {
+        console.error('Error!', error.message);
+        btn.innerText = "GAGAL MENGIRIM";
+        btn.disabled = false;
+    });
+}
+
   // FUNGSI STATUS MENGETIK PERMANEN
 function statusMengetikAktif() {
     const status = document.getElementById('typing-status');
