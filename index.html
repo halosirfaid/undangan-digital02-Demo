@@ -990,23 +990,12 @@
     <h2 class="text-3xl font-aesthetic text-center text-white mb-10">Ucapan dan Doa Para Tamu</h2>
     
     <div class="rsvp-container max-w-md mx-auto mb-10">
-        <label class="text-white text-[11px] ml-2">Nama Tamu:</label>
-        <input type="text" id="nama-input" class="rsvp-input" placeholder="Nama Anda">
-        
-        <label class="text-white text-[11px] ml-2">Ucapan & Doa:</label>
-        <textarea id="pesan-input" class="rsvp-input h-24" placeholder="Tulis Ucapan & Doa..."></textarea>
-        
-        <select id="hadir-input" class="rsvp-input">
-            <option value="Hadir">Saya Akan Hadir</option>
-            <option value="Tidak Hadir">Maaf, Tidak Bisa Hadir</option>
-        </select>
-
         <button onclick="kirimKeSheets()" id="btn-kirim" class="w-full bg-amber-400 text-black p-3 rounded-xl font-bold mt-2 shadow-lg">
             KIRIM UCAPAN
         </button>
     </div>
 
-    <div id="daftar-ucapan" class="max-w-md mx-auto">
+    <div id="daftar-ucapan-container" class="max-w-md mx-auto">
         </div>
 </section>
 
@@ -1064,37 +1053,45 @@ function muatUcapan() {
     fetch(scriptURL + "?tujuan=" + idUndangan)
     .then(res => res.json())
     .then(data => {
-        // 1. Ambil container luar
+        // Ambil container utama yang baru kita buat di HTML tadi
         const wadahUtama = document.getElementById('daftar-ucapan-container'); 
-        
-        // 2. Buat Header (Jumlah) tetap di atas
+        if (!wadahUtama) return; // Keamanan jika elemen tidak ditemukan
+
+        // 1. Buat Header (Jumlah) tetap di atas (Sticky)
         const headerHtml = `
-            <div class="sticky-header mb-2" style="background:#1a1a1a; position:sticky; top:0; z-index:10; padding:10px 0;">
+            <div class="sticky-header" style="background:#1a1a1a; position:sticky; top:0; z-index:10; padding:10px 0; margin-bottom:10px;">
                 <span class="badge-jumlah">JUMLAH: ${data.length} UCAPAN</span>
             </div>
         `;
         
-        // 3. Buat isi ucapan
-        let isiUcapanHtml = `<div id="daftar-ucapan">`; // Bungkus dalam div yang bisa discroll
+        // 2. Buat isi ucapan di dalam div yang bisa di-scroll
+        let isiUcapanHtml = `<div id="daftar-ucapan" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">`;
         
-        data.reverse().forEach(row => {
-            const waktuLalu = formatWaktuLalu(row[0]);
-            isiUcapanHtml += `
-                <div class="ucapan-card">
-                    <p class="font-bold text-[12px] text-amber-200 mb-1">${row[1]}</p>
-                    <p class="text-[11px] text-stone-300 leading-relaxed mb-3">${row[2]}</p>
-                    <div class="flex justify-between items-center opacity-60">
-                        <span class="text-[9px] text-amber-500 font-bold uppercase">${row[3]}</span>
-                        <span class="text-[9px] text-stone-400">${waktuLalu}</span>
-                    </div>
-                </div>`;
-        });
+        if (data.length === 0) {
+            isiUcapanHtml += `<p class="text-center text-stone-500 text-[10px] py-10">Belum ada ucapan terkirim.</p>`;
+        } else {
+            // Membalik urutan agar yang terbaru di atas
+            const dataTerbalik = [...data].reverse();
+            dataTerbalik.forEach(row => {
+                const waktuLalu = formatWaktuLalu(row[0]);
+                isiUcapanHtml += `
+                    <div class="ucapan-card">
+                        <p class="font-bold text-[12px] text-amber-200 mb-1">${row[1]}</p>
+                        <p class="text-[11px] text-stone-300 leading-relaxed mb-3">${row[2]}</p>
+                        <div class="flex justify-between items-center opacity-60">
+                            <span class="text-[9px] text-amber-500 font-bold uppercase">${row[3] || 'Hadir'}</span>
+                            <span class="text-[9px] text-stone-400">${waktuLalu}</span>
+                        </div>
+                    </div>`;
+            });
+        }
         
         isiUcapanHtml += `</div>`; // Tutup div scroll
         
         // Masukkan semuanya ke container utama
         wadahUtama.innerHTML = headerHtml + isiUcapanHtml;
-    });
+    })
+    .catch(err => console.error("Gagal memuat data:", err));
 }
 
 
