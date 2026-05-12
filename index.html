@@ -17,8 +17,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
+
         <style>
+            /* Membuat scrollbar pada daftar ucapan jadi tipis dan transparan */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+/* Memastikan teks dropdown/select juga transparan jika digunakan */
+#hadir-input {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+#hadir-input option {
+    background: #2a3942; /* Warna gelap agar teks option terbaca */
+    color: white;
+}
+
+
+
+            
     body { font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
     .font-aesthetic { font-family: 'Great Vibes', cursive; }
 
