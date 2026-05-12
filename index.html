@@ -897,158 +897,13 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
-    function muatUcapan() {
-    fetch(scriptURL + "?tujuan=" + idUndangan)
-    .then(res => res.json())
-    .then(data => {
-        const wadah = document.getElementById('daftar-ucapan');
-        const labelJumlah = document.getElementById('jumlah-ucapan');
-        
-        wadah.innerHTML = ""; 
-        labelJumlah.innerText = data.length + " UCAPAN";
+    // --- 1. KONFIGURASI DATABASE (WAJIB ISI) ---
+    const scriptURL = 'ISI_DENGAN_URL_SCRIPT_GOOGLE_SHEETS_ANDA'; // Ganti dengan URL dari Google Apps Script
+    const idUndangan = 'RaraAdiWedding';
+    const audio = document.getElementById('musik');
+    let isAutoScrolling = false;
 
-        if (data.length === 0) {
-            wadah.innerHTML = "<p class='text-[10px] text-center text-stone-500 py-10 uppercase tracking-widest'>Belum ada ucapan.</p>";
-            return;
-        }
-
-        data.reverse().forEach(row => {
-            // 1. Ambil teks waktu (misal: "5 menit yang lalu")
-            const teksWaktu = formatWaktuLalu(row[0]); 
-            
-            const item = `
-                <div class="bg-stone-800/50 p-4 rounded-2xl border border-stone-700/50 mb-4 backdrop-blur-sm">
-                    <div class="flex justify-between items-center mb-1">
-                        <p class="font-bold text-amber-200 text-xs tracking-wide uppercase">${row[1]}</p>
-                        <span class="text-[8px] font-bold text-stone-400 bg-stone-900 px-2 py-0.5 rounded-md border border-stone-700">
-                            ${row[3] === 'Hadir' ? '✓ HADIR' : '✕ ABSEN'}
-                        </span>
-                    </div>
-                    
-                    <p class="text-[8px] text-stone-500 mb-2 uppercase tracking-tighter">
-                        <i class="fa-regular fa-clock mr-1"></i> ${teksWaktu}
-                    </p>
-
-                    <p class="text-[11px] text-stone-300 leading-relaxed italic opacity-90">"${row[2]}"</p>
-                </div>`;
-            wadah.innerHTML += item;
-        });
-    })
-    .catch(err => {
-        console.error("Gagal memuat ucapan:", err);
-    });
-}
-
-        document.getElementById('daftar-ucapan').innerHTML = "<p class='text-[10px] text-center text-red-400'>Gagal memuat data.</p>";
-    });
-}
-  
-
-// Jalankan fungsi muat ucapan saat halaman pertama kali dibuka
-window.addEventListener('load', muatUcapan);
-
-function formatWaktuLalu(tanggal) {
-    const sekarang = new Date();
-    const waktuUcapan = new Date(tanggal);
-    const selisihDetik = Math.floor((sekarang - waktuUcapan) / 1000);
-
-    if (selisihDetik < 60) return "Baru saja";
-    
-    const menit = Math.floor(selisihDetik / 60);
-    if (menit < 60) return `${menit} menit yang lalu`;
-    
-    const jam = Math.floor(menit / 60);
-    if (jam < 24) return `${jam} jam yang lalu`;
-    
-    const hari = Math.floor(jam / 24);
-    return `${hari} hari yang lalu`;
-}
-
-    
-  // FUNGSI STATUS MENGETIK PERMANEN
-function statusMengetikAktif() {
-    const status = document.getElementById('typing-status');
-    const bubble = document.getElementById('typing-bubble');
-    
-    if (status && bubble) {
-        // Mengubah teks status di header
-        status.innerText = 'Sedang mengetik...';
-        status.style.color = '#00a884'; // Warna hijau khas WA saat mengetik
-        
-        // Memunculkan bubble titik-titik (animasi mengetik) di dalam chat
-        bubble.classList.remove('hidden');
-    }
-}
-
-// Pantau Scroll untuk memicu animasi saat area chat terlihat
-window.addEventListener("scroll", () => {
-    const storySection = document.getElementById('story');
-    if (storySection) {
-        const rect = storySection.getBoundingClientRect();
-        // Jika bagian story sudah terlihat di layar
-        if (rect.top < window.innerHeight - 100 && rect.bottom > 0) {
-            statusMengetikAktif();
-        }
-    }
-
-    // Fungsi Reveal lama kamu (biarkan tetap ada)
-    document.querySelectorAll(".reveal").forEach(el => {
-        const r = el.getBoundingClientRect();
-        if (r.top < window.innerHeight - 100) el.classList.add("active");
-    });
-});
-  
-// Jalankan fungsi saat halaman di-scroll ke bagian chat
-window.addEventListener('scroll', function() {
-    const storySection = document.getElementById('story');
-    const rect = storySection.getBoundingClientRect();
-    
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
-        jalankanAnimasiMengetik();
-    }
-});
-
-    // --- LOGIKA ANIMASI WA TYPING ---
-
-// Cari section story
-const storySection = document.getElementById('story');
-const typingBubble = document.getElementById('typing-bubble');
-const typingStatus = document.getElementById('typing-status');
-let isTypingShown = false; // Flag agar animasi hanya jalan sekali
-
-function jalankanAnimasiMengetik() {
-    if (!typingBubble || !typingStatus || isTypingShown) return;
-    
-    isTypingShown = true; // Kunci agar tidak berulang
-
-    // 1. Ganti status di header: "Online" -> "Mengetik..."
-    typingStatus.innerText = "Mengetik...";
-    
-    // 2. Munculkan bubble "tiga titik" (Typing Bubble)
-    typingBubble.classList.remove('hidden');
-
-    // 3. Setelah 3 detik, hilangkan bubble dan balikan status jadi "Online"
-    setTimeout(() => {
-        typingBubble.classList.add('hidden');
-        typingStatus.innerText = "Online";
-    }, 3000); // 3000ms = 3 detik
-}
-
-// Tambahkan logika ini ke fungsi scroll Reveal kamu
-window.addEventListener("scroll", () => {
-    // ... kode reveal lama kamu ...
-    
-    // Logika khusus untuk story: jika storySECTION masuk layar, jalankan animasi
-    if (storySection) {
-        const rectStory = storySection.getBoundingClientRect();
-        if (rectStory.top < window.innerHeight - 100 && rectStory.bottom > 0) {
-            jalankanAnimasiMengetik();
-        }
-    }
-});
-
-
-    // FUNGSI BUKA UNDANGAN (PENTING)
+    // --- 2. FUNGSI BUKA UNDANGAN ---
     function bukaUndangan() {
         document.getElementById('halaman-sampul').style.display = 'none';
         document.getElementById('konten-utama').style.display = 'block';
@@ -1058,7 +913,7 @@ window.addEventListener("scroll", () => {
         audio.play();
         window.scrollTo(0, 0);
         
-        // Inisialisasi Swiper SALAM setelah dibuka agar tidak berat di awal
+        // Inisialisasi Swiper SALAM setelah dibuka
         new Swiper('.swiper-salam', {
             loop: true,
             effect: 'fade',
@@ -1069,24 +924,67 @@ window.addEventListener("scroll", () => {
 
         isAutoScrolling = true;
         setTimeout(autoScroll, 2000);
+        muatUcapan(); // Panggil fungsi muat ucapan saat dibuka
     }
 
-    // Fungsi Ambil Nama Tamu
-    function ambilNamaTamu() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const nama = urlParams.get('to');
-        const elemenNama = document.getElementById('nama-tamu');
-        elemenNama.innerText = nama ? decodeURIComponent(nama.replace(/\+/g, ' ')) : "Tamu Undangan";
+    // --- 3. FUNGSI MUAT UCAPAN DARI SHEETS ---
+    function muatUcapan() {
+        const wadah = document.getElementById('daftar-ucapan');
+        const labelJumlah = document.getElementById('jumlah-ucapan');
+        
+        if (!scriptURL || scriptURL.includes('ISI_DENGAN')) {
+            wadah.innerHTML = "<p class='text-[10px] text-center text-stone-500 py-10 uppercase'>Data belum terkoneksi.</p>";
+            return;
+        }
+
+        fetch(scriptURL + "?tujuan=" + idUndangan)
+        .then(res => res.json())
+        .then(data => {
+            wadah.innerHTML = ""; 
+            labelJumlah.innerText = data.length + " UCAPAN";
+
+            if (data.length === 0) {
+                wadah.innerHTML = "<p class='text-[10px] text-center text-stone-500 py-10 uppercase'>Belum ada ucapan.</p>";
+                return;
+            }
+
+            data.reverse().forEach(row => {
+                const teksWaktu = formatWaktuLalu(row[0]); 
+                const item = `
+                    <div class="bg-stone-800/50 p-4 rounded-2xl border border-stone-700/50 mb-4 backdrop-blur-sm">
+                        <div class="flex justify-between items-center mb-1">
+                            <p class="font-bold text-amber-200 text-xs tracking-wide uppercase">${row[1]}</p>
+                            <span class="text-[8px] font-bold text-stone-400 bg-stone-900 px-2 py-0.5 rounded-md border border-stone-700">
+                                ${row[3] === 'Hadir' ? '✓ HADIR' : '✕ ABSEN'}
+                            </span>
+                        </div>
+                        <p class="text-[8px] text-stone-500 mb-2 uppercase">
+                            <i class="fa-regular fa-clock mr-1"></i> ${teksWaktu}
+                        </p>
+                        <p class="text-[11px] text-stone-300 leading-relaxed italic">"${row[2]}"</p>
+                    </div>`;
+                wadah.innerHTML += item;
+            });
+        })
+        .catch(err => {
+            console.error("Gagal memuat:", err);
+            wadah.innerHTML = "<p class='text-[10px] text-center text-red-400'>Gagal memuat data.</p>";
+        });
     }
 
-    // Fungsi Musik
-    function toggleMusik() {
-        const btn = document.getElementById('music-btn');
-        if (audio.paused) { audio.play(); btn.classList.add('spinning'); }
-        else { audio.pause(); btn.classList.remove('spinning'); }
+    // --- 4. FUNGSI PEMBANTU (TIME, PETAL, COPY, SCROLL) ---
+    function formatWaktuLalu(tanggal) {
+        const sekarang = new Date();
+        const waktuUcapan = new Date(tanggal);
+        const selisihDetik = Math.floor((sekarang - waktuUcapan) / 1000);
+        if (selisihDetik < 60) return "Baru saja";
+        const menit = Math.floor(selisihDetik / 60);
+        if (menit < 60) return `${menit} menit lalu`;
+        const jam = Math.floor(menit / 60);
+        if (jam < 24) return `${jam} jam lalu`;
+        return `${Math.floor(jam / 24)} hari lalu`;
     }
 
-    // Fungsi Efek Kelopak Bunga (Petals)
     function createPetal() {
         const petal = document.createElement('div');
         petal.className = 'petal';
@@ -1098,12 +996,12 @@ window.addEventListener("scroll", () => {
         setTimeout(() => petal.remove(), 5000);
     }
 
-    // Auto Scroll Logic
-    function toggleAutoScroll() {
-        isAutoScrolling = !isAutoScrolling;
-        const icon = document.getElementById('scroll-icon');
-        if (isAutoScrolling) { icon.classList.replace('fa-play', 'fa-pause'); autoScroll(); }
-        else { icon.classList.replace('fa-pause', 'fa-play'); }
+    function salinTeks(nomor, label, elemen) {
+        const teksAsli = elemen.innerText;
+        navigator.clipboard.writeText(nomor).then(() => {
+            elemen.innerText = "BERHASIL DISALIN!";
+            setTimeout(() => { elemen.innerText = teksAsli; }, 2000);
+        });
     }
 
     function autoScroll() {
@@ -1111,26 +1009,46 @@ window.addEventListener("scroll", () => {
         window.scrollBy(0, 0.6);
         if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
             requestAnimationFrame(autoScroll);
-        } else {
-            isAutoScrolling = false;
-            document.getElementById('scroll-icon').classList.replace('fa-pause', 'fa-play');
         }
     }
 
-    // Fungsi Salin Rekening
-    function salinTeks(nomor, label, elemen) {
-        const teksAsli = elemen.innerText;
-        navigator.clipboard.writeText(nomor).then(() => {
-            elemen.innerText = "BERHASIL DISALIN!";
-            elemen.classList.add('bg-green-600');
-            setTimeout(() => {
-                elemen.innerText = teksAsli;
-                elemen.classList.remove('bg-green-600');
-            }, 2000);
-        });
+    function toggleAutoScroll() {
+        isAutoScrolling = !isAutoScrolling;
+        const icon = document.getElementById('scroll-icon');
+        if (isAutoScrolling) { icon.classList.replace('fa-play', 'fa-pause'); autoScroll(); }
+        else { icon.classList.replace('fa-pause', 'fa-play'); }
     }
 
-    // Countdown Logic
+    function toggleMusik() {
+        const btn = document.getElementById('music-btn');
+        if (audio.paused) { audio.play(); btn.classList.add('spinning'); }
+        else { audio.pause(); btn.classList.remove('spinning'); }
+    }
+
+    // --- 5. INITIALIZATION ---
+    window.onload = () => {
+        // Nama Tamu
+        const urlParams = new URLSearchParams(window.location.search);
+        const nama = urlParams.get('to');
+        document.getElementById('nama-tamu').innerText = nama ? decodeURIComponent(nama.replace(/\+/g, ' ')) : "Tamu Undangan";
+        
+        setInterval(createPetal, 500);
+        
+        new Swiper(".mySwiper", {
+            loop: true,
+            autoplay: { delay: 3000 },
+            pagination: { el: ".swiper-pagination", clickable: true },
+        });
+    };
+
+    window.addEventListener("scroll", () => {
+        document.querySelectorAll(".reveal").forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 100) el.classList.add("active");
+        });
+    });
+
+    // Countdown
     const target = new Date("April 15, 2026 08:00:00").getTime();
     setInterval(() => {
         const sisa = target - new Date().getTime();
@@ -1140,27 +1058,7 @@ window.addEventListener("scroll", () => {
         document.getElementById("minutes").innerText = Math.floor((sisa % (1000 * 60 * 60)) / (1000 * 60));
         document.getElementById("seconds").innerText = Math.floor((sisa % (1000 * 60)) / 1000);
     }, 1000);
-
-    // Saat Halaman Dimuat
-    window.onload = () => {
-        ambilNamaTamu();
-        setInterval(createPetal, 500);
-        
-        // Swiper Galeri
-        new Swiper(".mySwiper", {
-            loop: true,
-            autoplay: { delay: 3000 },
-            pagination: { el: ".swiper-pagination", clickable: true },
-        });
-
-        // Scroll Reveal
-        window.addEventListener("scroll", () => {
-            document.querySelectorAll(".reveal").forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight - 100) el.classList.add("active");
-            });
-        });
-    };
 </script>
+
 </body>
 </html>                               
