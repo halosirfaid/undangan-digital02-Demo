@@ -17,97 +17,124 @@
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-        <style>
-            /* Membuat scrollbar pada daftar ucapan jadi tipis dan transparan */
-.custom-scrollbar::-webkit-scrollbar {
-    width: 4px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
+    <style>
+        /* Container Dasar Bingkai Foto (Dibuat sama) */
+.event-image-frame {
+    width: 100%;
+    height: 320px; /* Pertahankan ukuran seimbang */
+    position: relative;
+    overflow: hidden;
 }
 
-/* Memastikan teks dropdown/select juga transparan jika digunakan */
-#hadir-input {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-}
-#hadir-input option {
-    background: #2a3942; /* Warna gelap agar teks option terbaca */
-    color: white;
+.event-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
+/* LENGKUNGAN KIRI: Untuk Bagian Akad (Sesuai Gambar Atas) */
+.frame-arch-left img {
+    /* Hanya sudut kiri atas yang melengkung */
+    border-radius: 400px 0 0 0 !important; 
+}
 
+/* LENGKUNGAN KANAN: Untuk Bagian Resepsi (Sesuai Gambar Bawah) */
+.frame-arch-right img {
+    /* Hanya sudut kanan atas yang melengkung */
+    border-radius: 0 400px 0 0 !important; 
+}
 
-            
-    body { font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
-    .font-aesthetic { font-family: 'Great Vibes', cursive; }
+   .vertical-text-container {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.2rem;
+    line-height: 1;
+}
 
-    /* --- PERBAIKAN FRAME FOTO (BERSIH DI ATAS, LENGKUNG DI BAWAH) --- */
-    .event-image-frame {
-        width: 100%;
-        height: 320px;
-        position: relative;
-        overflow: hidden;
-        background: transparent !important; /* Hilangkan background hitam di belakang foto */
-    }
+/* Memutar teks 180 derajat untuk bagian Akad agar tulisan terbaca dari bawah ke atas */
+.rotate-text {
+    transform: rotate(180deg);
+}
+     
+/* Container Dasar Layout Ramping */
+.event-section {
+    width: 100%;
+    padding: 20px 0; /* Memberikan ruang napas atas-bawah */
+}
 
-    .event-image-frame img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 0 !important; /* Reset semua radius bawaan */
-    }
+/* Bingkai Foto Arch yang diperkecil tinggi-nya */
+.event-image-frame {
+    width: 100%;
+    height: 320px; /* Dikurangi dari 450px agar lebih seimbang */
+    position: relative;
+    overflow: hidden;
+}
 
-    /* Lengkungan Bawah Kiri untuk AKAD */
-    .frame-arch-left img {
-        border-radius: 0 0 0 200px !important; 
-    }
+.event-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Sudut kiri atas melengkung */
+    border-radius: 400px 0 0 0; 
+}
 
-    /* Lengkungan Bawah Kanan untuk RESEPSI */
-    .frame-arch-right img {
-        border-radius: 0 0 200px 0 !important; 
-    }
+/* Bagian Detail Teks yang Lebih Padat */
+.event-info {
+    padding: 30px 25px; /* Jarak padding dikurangi sedikit */
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Teks dan vertical-title sejajar tengah */
+}
 
-    /* Area Informasi (Bagian Hitam/Abu) */
-    .event-info {
-        padding: 30px 25px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+.event-text-left { flex: 1; }
 
-    .dark-event {
-        background: #000 !important;
-        color: #fff !important;
-    }
+/* Tulisan Vertikal Diperkecil Sedikit */
+.vertical-title {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.8rem; /* Ukuran font vertikal dikurangi */
+    color: #222;
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    opacity: 0.7; /* Sedikit lebih redup agar teks utama lebih menonjol */
+}
 
-    .vertical-text-container {
-        writing-mode: vertical-rl;
-        text-orientation: mixed;
-        font-family: 'Great Vibes', cursive;
-        font-size: 2rem;
-        line-height: 1;
-        opacity: 0.4;
-    }
+/* Tema Gelap Resepsi */
+.dark-event {
+    background: #000 !important;
+    color: #fff !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5); /* Shadow lebih kuat di gelap */
+}
 
-    .rotate-text { transform: rotate(180deg); }
+.dark-event .vertical-title, 
+.dark-event p {
+    color: #fff !important;
+}
 
-    /* Navigasi & UI Lainnya */
-    .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
-    .reveal.active { opacity: 1; transform: translateY(0); }
-    
-    .nav-bottom {
-        position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-        display: flex; gap: 15px; background: rgba(255, 255, 255, 0.9);
-        padding: 12px 25px; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 99;
-    }
+.btn-location {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    color: #000;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 9px;
+    font-weight: bold;
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    transition: background 0.3s ease;
+}
 
-    /* ... Sisa CSS (WA Chat, Countdown, dll) biarkan seperti aslinya ... */
+.dark-event .btn-location {
+    background: #fff;
+    color: #000;
+}
 
        /* Memaksa jarak foto dan nama */
 .wa-profile-pic {
@@ -598,7 +625,7 @@
                     </p>
                 </div>
 </section>
-          <section id="story" class="py-20 px-6 bg-[#1a1a1a]">
+          <section id="story" class="py-20 px-6 bg-black">
     <h2 class="text-4xl font-aesthetic text-center text-amber-200 mb-10">Our Love Story</h2>
     
     <div class="max-w-md mx-auto wa-chat-container shadow-2xl reveal">
@@ -674,21 +701,25 @@
         </div>
     </div>
 </section>
-  
-<section id="acara" class="event-section bg-[#1a1a1a] py-10">
+
+    <section id="acara" class="event-section bg-[#fffcf5] py-10">
+    
     <div class="p-6 text-center reveal">
-         <h2 class="text-3xl font-aesthetic text-amber-200">Wedding Schedule</h2>
-         <p class="text-[10px] tracking-[0.3em] font-bold text-stone-400 uppercase">Mengharapkan kedatangan Saudara/i</p>
+         <h2 class="text-3xl font-aesthetic text-amber-700">Wedding Schedule</h2>
+         <p class="text-[10px] tracking-[0.3em] font-bold text-stone-500 uppercase">Mengharapkan kedatangan Saudara/i</p>
     </div>
 
     <div class="event-card mx-4 bg-white rounded-3xl overflow-hidden shadow-sm mb-6 reveal">
+        
         <div class="event-image-frame frame-arch-left">
             <img src="https://sirfaid.github.io/Undangan-saya/3.jpg" alt="Akad Nikah">
         </div>
+
         <div class="event-info flex items-center p-6">
             <div class="vertical-text-container rotate-text text-stone-200 mr-4 opacity-70">
                 The Vows
             </div>
+            
             <div class="event-text-left flex-1">
                 <p class="uppercase tracking-[0.3em] text-[9px] mb-3 font-bold text-stone-400">Wednesday,</p>
                 <h3 class="text-2xl font-bold tracking-tighter mb-1 text-stone-800 uppercase">Akad Nikah</h3>
@@ -698,21 +729,24 @@
                     Masjid Raya Kota Bandung<br>
                     Jl. Asia Afrika, Bandung
                 </p>
-                <a href="https://maps.google.com" target="_blank" class="inline-block bg-stone-100 text-stone-800 px-4 py-2 rounded-full text-[9px] font-bold mt-4 shadow-sm">
+                <a href="https://maps.google.com" target="_blank" class="btn-location shadow-sm mt-4">
                     <i class="fa-solid fa-location-dot"></i> Lihat Lokasi
                 </a>
             </div>
         </div>
     </div>
 
-    <div class="event-card dark-event mx-4 bg-black rounded-3xl overflow-hidden shadow-sm mb-6 reveal">
+    <div class="event-card dark-event mx-4 rounded-3xl overflow-hidden reveal">
+        
         <div class="event-image-frame frame-arch-right">
             <img src="https://sirfaid.github.io/Undangan-saya/4.jpg" alt="Resepsi">
         </div>
+
         <div class="event-info flex items-center p-6 flex-row-reverse">
-            <div class="vertical-text-container text-white/10 ml-4">
-                The Celebration
+            <div class="vertical-text-container text-stone-800 ml-4 opacity-70">
+                The Reception
             </div>
+
             <div class="event-text-left flex-1 text-right">
                 <p class="uppercase tracking-[0.3em] text-[9px] mb-3 font-bold text-stone-500">Wednesday,</p>
                 <h3 class="text-2xl font-bold tracking-tighter mb-1 text-white uppercase">Resepsi</h3>
@@ -722,7 +756,7 @@
                     Gedung Serbaguna Kebahagiaan<br>
                     Jl. Soekarno Hatta, Bandung
                 </p>
-                <a href="https://maps.google.com" target="_blank" class="inline-block bg-white/10 text-white px-4 py-2 rounded-full text-[9px] font-bold mt-4 shadow-sm border border-white/20">
+                <a href="https://maps.google.com" target="_blank" class="btn-location shadow-sm mt-4">
                     <i class="fa-solid fa-location-dot"></i> Lihat Lokasi
                 </a>
             </div>
@@ -731,17 +765,17 @@
 </section>
 
 
-        <section id="lokasi" class="py-20 px-6 bg-[#1a1a1a]">
-            <h2 class="text-4xl font-aesthetic text-center text-amber-200 mb-10"">Maps</h2>
+        <section id="lokasi" class="py-20 px-6 bg-[#fffcf5]">
+            <h2 class="text-4xl font-aesthetic text-amber-700 mb-2">Maps</h2>
             <div class="max-w-md mx-auto overflow-hidden rounded-3xl shadow-xl border-4 border-white mb-6 reveal">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2914.315757991008!2d114.45293869238287!3d-3.092351775439721!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2de46b100af7e14d%3A0x84b232b9a80765c6!2sKios%20Ningsih!5e0!3m2!1sid!2sid!4v1776149733951!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" width="100%" height="300" style="border:0;" allowfullscreen=""></iframe>
             </div>
             <div class="text-center"><a href="https://maps.app.goo.gl/TgL9angPRcHxiN238" class="inline-block bg-amber-700 text-white px-8 py-3 rounded-full text-[10px] font-bold">PETUNJUK LOKASI</a></div>
         </section>
             
-<section id="galeri" class="py-20 px-6 bg-[#1a1a1a]">
+<section id="galeri" class="py-20 px-6 bg-[#fffcf5]">
     <div class="max-w-md mx-auto reveal">
-        <h2 class="text-4xl font-aesthetic text-center text-amber-200 mb-10"">Galeri Kebahagiaan</h2>
+        <h2 class="text-4xl font-aesthetic text-center text-amber-700 mb-10">Galeri Kebahagiaan</h2>
         
         <div class="swiper mySwiper rounded-2xl shadow-xl overflow-hidden border-4 border-white">
             <div class="swiper-wrapper">
@@ -756,8 +790,8 @@
     </div>
 </section>
 
-            <section id="kado" class="py-20 px-6 text-center bg-[#1a1a1a]">
-    <h2 class="text-4xl font-aesthetic text-center text-amber-200 mb-10"">Kado Digital</h2>
+            <section id="kado" class="py-20 px-6 text-center bg-[#fffcf5]">
+    <h2 class="text-4xl font-aesthetic text-amber-700 mb-2">Kado Digital</h2>
     <p class="text-[10px] text-stone-500 mb-10 tracking-[0.2em] uppercase px-4">Tanda Kasih</p>
 
     <div class="grid grid-cols-1 gap-6 max-w-sm mx-auto reveal">
@@ -835,33 +869,25 @@
         </div>
 
 </section>
-<section id="rsvp" class="py-20 px-6 text-center bg-[#1a1a1a]">
-    <h2 class="text-4xl font-aesthetic text-amber-200 mb-10">Doa & Ucapan</h2>
-    
-    <div class="max-w-sm mx-auto space-y-4 mb-12 reveal">
-        <input type="text" id="nama-input" placeholder="Nama Anda" class="w-full p-4 rounded-xl border border-stone-700 bg-stone-800 text-white text-sm outline-none focus:border-amber-200">
-        <textarea id="pesan-input" placeholder="Tulis Ucapan & Doa..." class="w-full p-4 rounded-xl border border-stone-700 bg-stone-800 text-white text-sm h-28 outline-none focus:border-amber-200"></textarea>
-        <select id="hadir-input" class="w-full p-4 rounded-xl border border-stone-700 bg-stone-800 text-white text-sm outline-none">
+
+        <section id="rsvp" class="py-20 px-6 text-center bg-[#fffcf5]">
+            <h2 class="text-4xl font-aesthetic text-amber-700 mb-10">Doa & Ucapan</h2>
+            <div class="max-w-sm mx-auto space-y-4 reveal">
+                 <input type="text" id="nama-input" placeholder="Nama" class="w-full p-4 rounded-xl border border-stone-200 text-sm outline-none focus:border-amber-700">
+        <textarea id="pesan-input" placeholder="Tulis Ucapan & Doa..." class="w-full p-4 rounded-xl border border-stone-200 text-sm h-28 outline-none focus:border-amber-700"></textarea>
+        
+        <select id="hadir-input" class="w-full p-4 rounded-xl border border-stone-200 text-sm bg-white outline-none">
             <option value="Hadir">Saya Akan Hadir</option>
             <option value="Tidak Hadir">Maaf, Tidak Bisa Hadir</option>
         </select>
-        <button onclick="kirimKeSheets()" id="btn-kirim" class="w-full bg-amber-200 text-stone-900 p-4 rounded-xl font-bold shadow-lg active:scale-95 transition-all">KIRIM UCAPAN</button>
+
+        <button onclick="kirimKeSheets()" id="btn-kirim" class="w-full bg-amber-700 text-white p-4 rounded-xl font-bold shadow-lg">KIRIM UCAPAN</button>
     </div>
 
-    <div class="max-w-sm mx-auto text-left">
-        <div class="flex items-center gap-2 mb-4">
-            <span class="bg-amber-200 text-stone-900 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter" id="jumlah-ucapan">
-                0 Ucapan
-            </span>
-            <div class="h-[1px] flex-1 bg-stone-800"></div>
+    <div id="daftar-ucapan" class="max-w-sm mx-auto mt-10 text-left p-2 h-96 overflow-y-auto border-t border-stone-100">
         </div>
-
-        <div id="daftar-ucapan" class="h-96 overflow-y-auto pr-2 custom-scrollbar">
-            </div>
-    </div>
 </section>
-
-        <footer class="pt-10 pb-32 text-center bg-[#1a1a1a]">
+        <footer class="pt-10 pb-32 text-center bg-[#fffcf5]">
     <div class="max-w-xs mx-auto mb-6">
         <p class="text-stone-400 text-[10px] tracking-[0.3em] uppercase mb-4">Created by Sirfa.id</p>
         
@@ -897,22 +923,96 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
-    // --- 1. KONFIGURASI GLOBAL (Hanya Deklarasi Sekali) ---
+  // FUNGSI STATUS MENGETIK PERMANEN
+function statusMengetikAktif() {
+    const status = document.getElementById('typing-status');
+    const bubble = document.getElementById('typing-bubble');
+    
+    if (status && bubble) {
+        // Mengubah teks status di header
+        status.innerText = 'Sedang mengetik...';
+        status.style.color = '#00a884'; // Warna hijau khas WA saat mengetik
+        
+        // Memunculkan bubble titik-titik (animasi mengetik) di dalam chat
+        bubble.classList.remove('hidden');
+    }
+}
+
+// Pantau Scroll untuk memicu animasi saat area chat terlihat
+window.addEventListener("scroll", () => {
+    const storySection = document.getElementById('story');
+    if (storySection) {
+        const rect = storySection.getBoundingClientRect();
+        // Jika bagian story sudah terlihat di layar
+        if (rect.top < window.innerHeight - 100 && rect.bottom > 0) {
+            statusMengetikAktif();
+        }
+    }
+
+    // Fungsi Reveal lama kamu (biarkan tetap ada)
+    document.querySelectorAll(".reveal").forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight - 100) el.classList.add("active");
+    });
+});
+  
+// Jalankan fungsi saat halaman di-scroll ke bagian chat
+window.addEventListener('scroll', function() {
+    const storySection = document.getElementById('story');
+    const rect = storySection.getBoundingClientRect();
+    
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+        jalankanAnimasiMengetik();
+    }
+});
+
+    // --- LOGIKA ANIMASI WA TYPING ---
+
+// Cari section story
+const storySection = document.getElementById('story');
+const typingBubble = document.getElementById('typing-bubble');
+const typingStatus = document.getElementById('typing-status');
+let isTypingShown = false; // Flag agar animasi hanya jalan sekali
+
+function jalankanAnimasiMengetik() {
+    if (!typingBubble || !typingStatus || isTypingShown) return;
+    
+    isTypingShown = true; // Kunci agar tidak berulang
+
+    // 1. Ganti status di header: "Online" -> "Mengetik..."
+    typingStatus.innerText = "Mengetik...";
+    
+    // 2. Munculkan bubble "tiga titik" (Typing Bubble)
+    typingBubble.classList.remove('hidden');
+
+    // 3. Setelah 3 detik, hilangkan bubble dan balikan status jadi "Online"
+    setTimeout(() => {
+        typingBubble.classList.add('hidden');
+        typingStatus.innerText = "Online";
+    }, 3000); // 3000ms = 3 detik
+}
+
+// Tambahkan logika ini ke fungsi scroll Reveal kamu
+window.addEventListener("scroll", () => {
+    // ... kode reveal lama kamu ...
+    
+    // Logika khusus untuk story: jika storySECTION masuk layar, jalankan animasi
+    if (storySection) {
+        const rectStory = storySection.getBoundingClientRect();
+        if (rectStory.top < window.innerHeight - 100 && rectStory.bottom > 0) {
+            jalankanAnimasiMengetik();
+        }
+    }
+});
+
+    const audio = document.getElementById('musik');
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
     const idUndangan = 'devi-ehsan'; 
-    const audio = document.getElementById('musik');
-    
     let isAutoScrolling = false;
-    let isTypingShown = false; // Flag agar animasi WA hanya jalan sekali
 
-    // --- 2. FUNGSI INTI ---
-
+    // FUNGSI BUKA UNDANGAN (PENTING)
     function bukaUndangan() {
-        // Efek transisi tutup sampul
-        const sampul = document.getElementById('halaman-sampul');
-        sampul.style.opacity = '0';
-        setTimeout(() => { sampul.style.display = 'none'; }, 1000);
-
+        document.getElementById('halaman-sampul').style.display = 'none';
         document.getElementById('konten-utama').style.display = 'block';
         document.getElementById('nav-menu').classList.remove('hidden');
         document.getElementById('music-btn').classList.remove('hidden');
@@ -920,198 +1020,110 @@
         audio.play();
         window.scrollTo(0, 0);
         
-        // Inisialisasi Slider Salam
+        // Inisialisasi Swiper SALAM setelah dibuka agar tidak berat di awal
         new Swiper('.swiper-salam', {
             loop: true,
             effect: 'fade',
-            autoplay: { delay: 4000 },
+            fadeEffect: { crossFade: true },
+            autoplay: { delay: 4000, disableOnInteraction: false },
             speed: 2000
         });
 
-        muatUcapan();
+        isAutoScrolling = true;
+        setTimeout(autoScroll, 2000);
     }
 
-    function jalankanAnimasiMengetik() {
-        const typingBubble = document.getElementById('typing-bubble');
-        const typingStatus = document.getElementById('typing-status');
-        
-        if (!typingBubble || !typingStatus || isTypingShown) return;
-        
-        isTypingShown = true; 
-        typingStatus.innerText = "Mengetik...";
-        typingStatus.style.color = "#00a884";
-        typingBubble.classList.remove('hidden');
-
-        setTimeout(() => {
-            typingBubble.classList.add('hidden');
-            typingStatus.innerText = "Online";
-            typingStatus.style.color = "#ffffff";
-        }, 3500);
+    // Fungsi Ambil Nama Tamu
+    function ambilNamaTamu() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const nama = urlParams.get('to');
+        const elemenNama = document.getElementById('nama-tamu');
+        elemenNama.innerText = nama ? decodeURIComponent(nama.replace(/\+/g, ' ')) : "Tamu Undangan";
     }
 
- function kirimKeSheets() {
-    const btn = document.getElementById('btn-kirim');
-    const nama = document.getElementById('nama-input').value;
-    const ucapan = document.getElementById('pesan-input').value;
-    const hadir = document.getElementById('hadir-input').value;
-
-    if (!nama || !ucapan) return alert("Mohon isi nama dan ucapan!");
-
-    btn.disabled = true;
-    btn.innerText = "MENGIRIM...";
-
-    const formData = new URLSearchParams();
-    formData.append('tujuan', idUndangan);
-    formData.append('nama', nama);
-    formData.append('pesan', ucapan);
-    formData.append('kehadiran', hadir);
-
-    fetch(scriptURL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData.toString(),
-        headers: { "Content-Type": "application/x-www-form-urlencoded" }
-    }).then(() => {
-        // TAMPILKAN LANGSUNG KE LAYAR (INSTAN)
-        const wadah = document.getElementById('daftar-ucapan');
-        const ucapanBaru = `
-            <div class="bg-stone-800 p-4 rounded-2xl border-l-4 border-amber-200 mb-4">
-                <p class="font-bold text-amber-200 text-xs">${nama} <span class="text-[9px] text-stone-400 font-normal ml-2">Baru saja</span></p>
-                <p class="text-[11px] text-stone-300 mt-1 italic">"${ucapan}"</p>
-            </div>`;
-        wadah.insertAdjacentHTML('afterbegin', ucapanBaru);
-
-        // Reset Form
-        setTimeout(() => {
-            btn.innerText = "TERKIRIM!";
-            document.getElementById('nama-input').value = "";
-            document.getElementById('pesan-input').value = "";
-            muatUcapan(); // Sinkronkan ulang dengan database
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerText = "KIRIM UCAPAN";
-            }, 2000);
-        }, 1000); 
-    }).catch(err => {
-        console.error(err);
-        btn.disabled = false;
-        btn.innerText = "KIRIM UCAPAN";
-    });
-}
-
-
-// Tambahkan ini sebelum muatUcapan() untuk memunculkan pesan secara instan di layar
-const wadah = document.getElementById('daftar-ucapan');
-const ucapanBaru = `
-    <div class="bg-stone-800 p-4 rounded-2xl border-l-4 border-amber-200 mb-4 animate-pulse">
-        <p class="font-bold text-amber-200 text-xs">${nama} <span class="text-[9px] text-stone-400 font-normal ml-2">Baru saja</span></p>
-        <p class="text-[11px] text-stone-300 mt-1 italic">"${ucapan}"</p>
-    </div>`;
-wadah.insertAdjacentHTML('afterbegin', ucapanBaru);
-
-    function muatUcapan() {
-        const wadah = document.getElementById('daftar-ucapan');
-        fetch(`${scriptURL}?tujuan=${idUndangan}`)
-        .then(res => res.json())
-        .then(data => {
-            wadah.innerHTML = ""; 
-            if (!data || data.length === 0) return;
-            document.getElementById('jumlah-ucapan').innerText = `${data.length} Ucapan`;
-            data.reverse().forEach(row => {
-                wadah.innerHTML += `
-                    <div class="bg-stone-800 p-4 rounded-2xl border-l-4 border-amber-200 mb-4">
-                        <p class="font-bold text-amber-200 text-xs">${row[1]} <span class="text-[9px] text-stone-400 font-normal ml-2">${row[3]}</span></p>
-                        <p class="text-[11px] text-stone-300 mt-1 italic">"${row[2]}"</p>
-                    </div>`;
-            });
-        });
-    }
-
-    // --- 4. ANIMASI UI & SCROLL ---
-
-    function autoScroll() {
-        if (!isAutoScrolling) return;
-        window.scrollBy(0, 0.6);
-        if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
-            requestAnimationFrame(autoScroll);
-        }
-    }
-
-    function toggleAutoScroll() {
-        isAutoScrolling = !isAutoScrolling;
-        const icon = document.getElementById('scroll-icon');
-        icon.classList.toggle('fa-pause');
-        icon.classList.toggle('fa-play');
-        if (isAutoScrolling) autoScroll();
-    }
-
+    // Fungsi Musik
     function toggleMusik() {
         const btn = document.getElementById('music-btn');
         if (audio.paused) { audio.play(); btn.classList.add('spinning'); }
         else { audio.pause(); btn.classList.remove('spinning'); }
     }
 
-    function salinTeks(nomor, label, elemen) {
-        const asli = elemen.innerText;
-        navigator.clipboard.writeText(nomor).then(() => {
-            elemen.innerText = "BERHASIL DISALIN!";
-            setTimeout(() => { elemen.innerText = asli; }, 2000);
-        });
-    }
-
+    // Fungsi Efek Kelopak Bunga (Petals)
     function createPetal() {
         const petal = document.createElement('div');
         petal.className = 'petal';
         petal.innerHTML = '🌸';
         petal.style.left = Math.random() * 100 + 'vw';
         petal.style.animationDuration = Math.random() * 3 + 2 + 's'; 
+        petal.style.fontSize = Math.random() * 10 + 10 + 'px';
         document.body.appendChild(petal);
         setTimeout(() => petal.remove(), 5000);
     }
 
-    // --- 5. EVENT LISTENERS (Hanya satu fungsi scroll) ---
+    // Auto Scroll Logic
+    function toggleAutoScroll() {
+        isAutoScrolling = !isAutoScrolling;
+        const icon = document.getElementById('scroll-icon');
+        if (isAutoScrolling) { icon.classList.replace('fa-play', 'fa-pause'); autoScroll(); }
+        else { icon.classList.replace('fa-pause', 'fa-play'); }
+    }
 
-    window.addEventListener("scroll", () => {
-        // Reveal elements
-        document.querySelectorAll(".reveal").forEach(el => {
-            if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
-        });
-
-        // Trigger WhatsApp Story
-        const story = document.getElementById('story');
-        if (story) {
-            const rect = story.getBoundingClientRect();
-            if (rect.top < window.innerHeight - 100 && rect.bottom > 0) {
-                jalankanAnimasiMengetik();
-            }
+    function autoScroll() {
+        if (!isAutoScrolling) return;
+        window.scrollBy(0, 0.6);
+        if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
+            requestAnimationFrame(autoScroll);
+        } else {
+            isAutoScrolling = false;
+            document.getElementById('scroll-icon').classList.replace('fa-pause', 'fa-play');
         }
-    });
+    }
 
+    // Fungsi Salin Rekening
+    function salinTeks(nomor, label, elemen) {
+        const teksAsli = elemen.innerText;
+        navigator.clipboard.writeText(nomor).then(() => {
+            elemen.innerText = "BERHASIL DISALIN!";
+            elemen.classList.add('bg-green-600');
+            setTimeout(() => {
+                elemen.innerText = teksAsli;
+                elemen.classList.remove('bg-green-600');
+            }, 2000);
+        });
+    }
+
+    // Countdown Logic
+    const target = new Date("April 15, 2026 08:00:00").getTime();
+    setInterval(() => {
+        const sisa = target - new Date().getTime();
+        if(sisa < 0) return;
+        document.getElementById("days").innerText = Math.floor(sisa / (1000 * 60 * 60 * 24));
+        document.getElementById("hours").innerText = Math.floor((sisa % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        document.getElementById("minutes").innerText = Math.floor((sisa % (1000 * 60 * 60)) / (1000 * 60));
+        document.getElementById("seconds").innerText = Math.floor((sisa % (1000 * 60)) / 1000);
+    }, 1000);
+
+    // Saat Halaman Dimuat
     window.onload = () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const nama = urlParams.get('to');
-        document.getElementById('nama-tamu').innerText = nama ? decodeURIComponent(nama.replace(/\+/g, ' ')) : "Tamu Undangan";
+        ambilNamaTamu();
+        setInterval(createPetal, 500);
         
-        setInterval(createPetal, 600);
-        
+        // Swiper Galeri
         new Swiper(".mySwiper", {
             loop: true,
             autoplay: { delay: 3000 },
             pagination: { el: ".swiper-pagination", clickable: true },
         });
 
-        // Countdown
-        const target = new Date("April 15, 2026 08:00:00").getTime();
-        setInterval(() => {
-            const sisa = target - new Date().getTime();
-            if(sisa < 0) return;
-            document.getElementById("days").innerText = Math.floor(sisa / (1000 * 60 * 60 * 24));
-            document.getElementById("hours").innerText = Math.floor((sisa % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById("minutes").innerText = Math.floor((sisa % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById("seconds").innerText = Math.floor((sisa % (1000 * 60)) / 1000);
-        }, 1000);
+        // Scroll Reveal
+        window.addEventListener("scroll", () => {
+            document.querySelectorAll(".reveal").forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) el.classList.add("active");
+            });
+        });
     };
 </script>
 
- </body>
-            </html>                               
+  </body>
+</html>                               
