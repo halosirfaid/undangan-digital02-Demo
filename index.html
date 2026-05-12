@@ -18,6 +18,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Kotak pembungkus daftar ucapan */
+#daftar-ucapan {
+    max-height: 400px; /* Tentukan tinggi maksimal kotak (misal 400px) */
+    overflow-y: auto;  /* Mengaktifkan scroll hanya di dalam kotak ini */
+    padding-right: 10px; /* Ruang untuk scrollbar agar tidak menutupi teks */
+    margin-top: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05); /* Border sangat tipis agar ada batas halus */
+    border-radius: 15px;
+}
+
+/* Mempercantik tampilan Scrollbar (khusus Chrome/Safari/Hp) */
+#daftar-ucapan::-webkit-scrollbar {
+    width: 4px;
+}
+#daftar-ucapan::-webkit-scrollbar-track {
+    background: transparent;
+}
+#daftar-ucapan::-webkit-scrollbar-thumb {
+    background: #fcd34d; /* Warna kuning senada tema */
+    border-radius: 10px;
+}
+
       
 /* Container utama RSVP */
 .rsvp-container {
@@ -1042,32 +1064,36 @@ function muatUcapan() {
     fetch(scriptURL + "?tujuan=" + idUndangan)
     .then(res => res.json())
     .then(data => {
-        const wadah = document.getElementById('daftar-ucapan');
-        wadah.innerHTML = ""; 
+        // 1. Ambil container luar
+        const wadahUtama = document.getElementById('daftar-ucapan-container'); 
         
-        // Bagian Header Sticky (Kotak Jumlah)
+        // 2. Buat Header (Jumlah) tetap di atas
         const headerHtml = `
-            <div class="sticky-header">
+            <div class="sticky-header mb-2" style="background:#1a1a1a; position:sticky; top:0; z-index:10; padding:10px 0;">
                 <span class="badge-jumlah">JUMLAH: ${data.length} UCAPAN</span>
             </div>
         `;
         
-        let isiUcapanHtml = "";
-
+        // 3. Buat isi ucapan
+        let isiUcapanHtml = `<div id="daftar-ucapan">`; // Bungkus dalam div yang bisa discroll
+        
         data.reverse().forEach(row => {
             const waktuLalu = formatWaktuLalu(row[0]);
             isiUcapanHtml += `
                 <div class="ucapan-card">
-                    <p class="font-bold text-[13px] text-amber-200 mb-1">${row[1]}</p>
+                    <p class="font-bold text-[12px] text-amber-200 mb-1">${row[1]}</p>
                     <p class="text-[11px] text-stone-300 leading-relaxed mb-3">${row[2]}</p>
                     <div class="flex justify-between items-center opacity-60">
-                        <span class="text-[9px] text-amber-500 font-bold tracking-widest">${row[3]}</span>
+                        <span class="text-[9px] text-amber-500 font-bold uppercase">${row[3]}</span>
                         <span class="text-[9px] text-stone-400">${waktuLalu}</span>
                     </div>
                 </div>`;
         });
-
-        wadah.innerHTML = headerHtml + isiUcapanHtml;
+        
+        isiUcapanHtml += `</div>`; // Tutup div scroll
+        
+        // Masukkan semuanya ke container utama
+        wadahUtama.innerHTML = headerHtml + isiUcapanHtml;
     });
 }
 
