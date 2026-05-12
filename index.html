@@ -949,8 +949,7 @@
         }, 3500);
     }
 
-    // --- 3. FITUR RSVP & UCAPAN ---
-function kirimKeSheets() {
+ function kirimKeSheets() {
     const btn = document.getElementById('btn-kirim');
     const nama = document.getElementById('nama-input').value;
     const ucapan = document.getElementById('pesan-input').value;
@@ -969,21 +968,25 @@ function kirimKeSheets() {
 
     fetch(scriptURL, {
         method: 'POST',
-        mode: 'no-cors', // Mode no-cors tidak bisa membaca respon sukses, tapi data tetap masuk
+        mode: 'no-cors',
         body: formData.toString(),
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-        }
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
     }).then(() => {
-        // Beri jeda 1 detik agar Google Script selesai menulis data sebelum di-fetch ulang
+        // TAMPILKAN LANGSUNG KE LAYAR (INSTAN)
+        const wadah = document.getElementById('daftar-ucapan');
+        const ucapanBaru = `
+            <div class="bg-stone-800 p-4 rounded-2xl border-l-4 border-amber-200 mb-4">
+                <p class="font-bold text-amber-200 text-xs">${nama} <span class="text-[9px] text-stone-400 font-normal ml-2">Baru saja</span></p>
+                <p class="text-[11px] text-stone-300 mt-1 italic">"${ucapan}"</p>
+            </div>`;
+        wadah.insertAdjacentHTML('afterbegin', ucapanBaru);
+
+        // Reset Form
         setTimeout(() => {
             btn.innerText = "TERKIRIM!";
             document.getElementById('nama-input').value = "";
             document.getElementById('pesan-input').value = "";
-            
-            // Panggil fungsi muat ucapan agar data terbaru muncul
-            muatUcapan();
-
+            muatUcapan(); // Sinkronkan ulang dengan database
             setTimeout(() => {
                 btn.disabled = false;
                 btn.innerText = "KIRIM UCAPAN";
@@ -993,9 +996,9 @@ function kirimKeSheets() {
         console.error(err);
         btn.disabled = false;
         btn.innerText = "KIRIM UCAPAN";
-        alert("Gagal mengirim ucapan, coba lagi.");
     });
 }
+
 
 // Tambahkan ini sebelum muatUcapan() untuk memunculkan pesan secara instan di layar
 const wadah = document.getElementById('daftar-ucapan');
