@@ -1101,6 +1101,84 @@
 
     <audio id="musik" loop><source src="LaguNikah.mp3" type="audio/mpeg"></audio>
 <script>
+
+let currentStatus = 0;
+const totalStatus = 5;
+const duration = 5000; // 5 detik per slide
+let statusInterval;
+const captions = [
+    "Momen tak terlupakan ❤️",
+    "Cinta sejati berawal di sini...",
+    "Bersyukur atas segalanya 🙏",
+    "Menuju hari bahagia ✨",
+    "Sampai bertemu di lokasi! 😍"
+];
+
+function startStatus() {
+    resetBars();
+    animateBar(currentStatus);
+    
+    statusInterval = setInterval(() => {
+        nextStatus();
+    }, duration);
+}
+
+function animateBar(index) {
+    const bar = document.getElementById(`bar-${index}`);
+    if (bar) {
+        bar.style.transition = `width ${duration}ms linear`;
+        setTimeout(() => bar.style.width = '100%', 50);
+    }
+}
+
+function resetBars() {
+    for (let i = 0; i < totalStatus; i++) {
+        const bar = document.getElementById(`bar-${i}`);
+        bar.style.transition = 'none';
+        bar.style.width = i < currentStatus ? '100%' : '0%';
+    }
+}
+
+function showStatus(index) {
+    const images = document.querySelectorAll('.status-img');
+    images.forEach((img, i) => {
+        img.classList.toggle('hidden', i !== index);
+    });
+    document.getElementById('status-caption').innerText = captions[index];
+    currentStatus = index;
+    resetBars();
+    animateBar(currentStatus);
+}
+
+function nextStatus() {
+    clearInterval(statusInterval);
+    if (currentStatus < totalStatus - 1) {
+        currentStatus++;
+        showStatus(currentStatus);
+        statusInterval = setInterval(nextStatus, duration);
+    } else {
+        // Balik ke awal atau stop
+        currentStatus = 0;
+        showStatus(currentStatus);
+        statusInterval = setInterval(nextStatus, duration);
+    }
+}
+
+function prevStatus() {
+    clearInterval(statusInterval);
+    if (currentStatus > 0) {
+        currentStatus--;
+    } else {
+        currentStatus = totalStatus - 1;
+    }
+    showStatus(currentStatus);
+    statusInterval = setInterval(nextStatus, duration);
+}
+
+// Panggil startStatus() saat undangan dibuka
+// Tambahkan baris ini di dalam fungsi bukaUndangan() kamu:
+// startStatus();
+
     
 // Fungsi hitung waktu lalu
 function formatWaktuLalu(tanggal) {
