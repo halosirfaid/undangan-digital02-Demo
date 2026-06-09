@@ -735,6 +735,7 @@
     </style>
 </head>
 <body class="bg-stone-50">
+  <div id="music-btn" class="music-control hidden spinning" onclick="toggleMusik()"><i id="music-icon" class="fa-solid fa-music"></i></div>
 
 
 <section id="cover" class="fixed inset-0 z-[9999] bg-[#0b141a] flex flex-col justify-between p-6 text-white transition-all duration-700">
@@ -779,8 +780,7 @@
         </button>
         <p class="text-[10px] text-stone-500 mt-3 tracking-widest uppercase">Murni Buatan Tangan • sirfa.id</p>
     </div>
-        <div id="music-btn" class="music-control hidden spinning" onclick="toggleMusik()"><i id="music-icon" class="fa-solid fa-music"></i></div>
-
+      
 </section>
 
     <div id="nav-menu" class="nav-bottom hidden">
@@ -1758,17 +1758,22 @@
         }
     }
 
-    function toggleMusik() {
-        const btn = document.getElementById('music-btn');
-        if (audio.paused) { 
-            audio.play(); 
-            btn.classList.add('spinning'); 
-        } else { 
-            audio.pause(); 
-            btn.classList.remove('spinning'); 
-        }
+function toggleMusik() {
+    const btn = document.getElementById('music-btn');
+    const icon = document.getElementById('music-icon'); // Ambil element ikonnya
+    
+    if (audio.paused) { 
+        audio.play(); 
+        btn.classList.add('spinning'); 
+        icon.className = "fa-solid fa-compact-disc text-lg"; // Tetap ikon piringan berputar
+    } else { 
+        audio.pause(); 
+        btn.classList.remove('spinning'); 
+        icon.className = "fa-solid fa-play text-lg"; // Berubah jadi ikon PLAY saat musik mati
     }
+}
 
+      
     // EFEK SAKURA / KELOPAK BUNGA GUGUR
     function createPetal() {
         const petal = document.createElement('div');
