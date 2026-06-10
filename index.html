@@ -1531,6 +1531,16 @@
         document.getElementById('konten-utama').style.display = 'block';
         document.getElementById('nav-menu').classList.remove('hidden');
         document.getElementById('music-btn').classList.remove('hidden');
+
+// BARU INISIALISASI SWIPER DI SINI (Saat elemen sudah terlihat)
+    new Swiper(".swiper-salam", {
+        loop: true,
+        effect: "fade",
+        autoplay: { 
+            delay: 4000, 
+            disableOnInteraction: false 
+        },
+    });
         
         // Putar audio latar belakang
         if (audio) {
@@ -1851,17 +1861,13 @@ function toggleMusik() {
         }
     });
 
-    window.onload = () => {
-        ambilNamaTamu();
-        setInterval(createPetal, 600);
-        
-        // Inisialisasi Swiper Slider Background Salam
-        new Swiper(".swiper-salam", {
-            loop: true,
-            effect: "fade",
-            autoplay: { delay: 4000, disableOnInteraction: false },
-        });
-    };
+      window.onload = () => {
+    ambilNamaTamu();
+    setInterval(createPetal, 600);
+    // Kode Swiper di sini sudah dihapus
+};
+
+  
 </script>
 </body>
 </html>              
