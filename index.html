@@ -1857,6 +1857,32 @@ function muatUcapan() {
 
 
 
+    // ANIMASI MENGETIK CHAT WA (Berlangsung Terus-Menerus Tanpa Henti)
+    const typingBubble = document.getElementById('typing-bubble');
+    const typingStatus = document.getElementById('typing-status');
+
+    function jalankanAnimasiMengetik() {
+        if (!typingBubble || !typingStatus) return;
+
+        // Pastikan elemen langsung memunculkan efek mengetik sejak awal
+        typingStatus.innerText = "Mengetik...";
+        typingStatus.style.color = '#00a884'; // Hijau khas WA saat mengetik
+        typingBubble.classList.remove('hidden');
+
+        // Bikin efek realistis: sesekali status "Mengetik..." hilang 2 detik lalu muncul lagi selamanya
+        setInterval(() => {
+            if (typingStatus.innerText === "Mengetik...") {
+                typingStatus.innerText = "Online";
+                typingStatus.style.color = '#ffffff'; // Kembali putih saat online biasa
+                typingBubble.style.opacity = "0"; // Sembunyikan balon chat halus
+                typingBubble.style.transition = "opacity 0.3s ease";
+            } else {
+                typingStatus.innerText = "Mengetik...";
+                typingStatus.style.color = '#00a884';
+                typingBubble.style.opacity = "1"; // Munculkan kembali balon chat
+            }
+        }, 4000); // Setiap 4 detik statusnya akan bergantian secara natural
+    }
 
 
 
@@ -1864,26 +1890,7 @@ function muatUcapan() {
 
       
     
-    // ANIMASI MENGETIK CHAT WA (Picu Sekali Saat Terlihat)
-    const storySection = document.getElementById('story');
-    const typingBubble = document.getElementById('typing-bubble');
-    const typingStatus = document.getElementById('typing-status');
-    let isTypingShown = false;
-
-    function jalankanAnimasiMengetik() {
-        if (!typingBubble || !typingStatus || isTypingShown) return;
-        isTypingShown = true;
-
-        typingStatus.innerText = "Mengetik...";
-        typingStatus.style.color = '#00a884';
-        typingBubble.classList.remove('hidden');
-
-        setTimeout(() => {
-            typingBubble.classList.add('hidden');
-            typingStatus.innerText = "Online";
-            typingStatus.style.color = '#ffffff';
-        }, 3000);
-    }
+    
 
 function ambilNamaTamu() {
     // 1. Ambil nama dari parameter URL (?to=Nama%20Tamu)
