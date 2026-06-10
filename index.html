@@ -1881,16 +1881,34 @@ function muatUcapan() {
         }, 3000);
     }
 
-    // PARSING NAMA TAMU DARI URL PARAM (?to=Nama+Tamu)
-    function ambilNamaTamu() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const nama = urlParams.get('to');
-        const elemenNama = document.getElementById('nama-tamu');
-        if(elemenNama) {
-            elemenNama.innerText = nama ? decodeURIComponent(nama.replace(/\+/g, ' ')) : "Tamu Undangan";
-        }
+function ambilNamaTamu() {
+    // 1. Ambil nama dari parameter URL (?to=Nama%20Tamu)
+    const urlParams = new URLSearchParams(window.location.search);
+    let nama = urlParams.get('to') || urlParams.get('nama');
+    
+    // 2. Jika nama tidak ditemukan di URL, gunakan teks default
+    if (!nama) {
+        nama = "Tamu Undangan";
+    } else {
+        nama = decodeURIComponent(nama);
     }
+    
+    // 3. Masukkan nama ke dalam teks isi chat WhatsApp di atas
+    const elemenNamaChat = document.getElementById('nama-tamu-chat');
+    if (elemenNamaChat) {
+        elemenNamaChat.innerText = nama;
+    }
+    
+    // 4. Masukkan nama ke kotak besar bagian bawah (Kepada Yth:)
+    // Catatan: Sesuaikan 'nama-tamu' dengan ID elemen kotak besar Anda saat ini
+    const elemenNamaKotak = document.getElementById('nama-tamu') || document.querySelector('.kepada-yth-nama');
+    if (elemenNamaKotak) {
+        elemenNamaKotak.innerText = nama;
+    }
+}
 
+
+      
 function toggleMusik() {
     const btn = document.getElementById('music-btn');
     const icon = document.getElementById('music-icon'); // Ambil element ikonnya
