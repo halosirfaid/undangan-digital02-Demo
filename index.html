@@ -1575,6 +1575,7 @@
     const audio = document.getElementById('musik');
     let isAutoScrolling = false;
 
+
     // FUNGSI UTAMA BUKA UNDANGAN
     function bukaUndanganDigital() {
         const coverSection = document.getElementById('cover');
@@ -1585,15 +1586,15 @@
         document.getElementById('nav-menu').classList.remove('hidden');
         document.getElementById('music-btn').classList.remove('hidden');
 
-// BARU INISIALISASI SWIPER DI SINI (Saat elemen sudah terlihat)
-    new Swiper(".swiper-salam", {
-        loop: true,
-        effect: "fade",
-        autoplay: { 
-            delay: 4000, 
-            disableOnInteraction: false 
-        },
-    });
+        // BARU INISIALISASI SWIPER DI SINI (Saat elemen sudah terlihat)
+        new Swiper(".swiper-salam", {
+            loop: true,
+            effect: "fade",
+            autoplay: { 
+                delay: 4000, 
+                disableOnInteraction: false 
+            },
+        });
         
         // Putar audio latar belakang
         if (audio) {
@@ -1607,11 +1608,18 @@
         // Muat ucapan dari Google Sheets
         muatUcapan();
 
+        // Pemicu Cadangan: Jalankan animasi mengetik 4 detik setelah undangan dibuka
+        setTimeout(() => {
+            jalankanAnimasiMengetik();
+        }, 4000);
+
         // Aktifkan auto scroll default setelah dibuka (opsional)
         isAutoScrolling = true;
         autoScroll();
     }
 
+
+      
     function toggleLike(btn) {
         const icon = btn.querySelector('i');
         if (icon.classList.contains('fa-regular')) {
