@@ -1577,10 +1577,6 @@
 
   <script>
 
-
-
-      
-      
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
     const idUndangan = 'devi-ehsan';
     
@@ -1717,6 +1713,111 @@
         return "Baru saja";
     }
 
+
+
+function muatUcapan() {
+    fetch(scriptURL + "?tujuan=" + idUndangan)
+    .then(res => res.json())
+    .then(data => {
+        const wadahUtama = document.getElementById('daftar-ucapan-container'); 
+        if (!wadahUtama) return;
+
+        // Header Jumlah Pesan gaya Informasi WA Grup
+        const headerHtml = `
+            <div class="text-center my-2 sticky-header bg-transparent">
+                <span class="bg-[#182229] text-[#8696a0] text-[9px] px-3 py-1 rounded shadow-sm tracking-widest uppercase font-mono">
+                    TOTAL: ${data.length} PESAN DOA TERKIRIM
+                </span>
+            </div>
+            <div id="daftar-ucapan" class="flex flex-col gap-3">
+        `;
+        
+        let isiUcapanHtml = "";
+        
+        if (data.length === 0) {
+            isiUcapanHtml += `<p class="text-center text-[#8696a0] text-[11px] py-10 italic">Belum ada obrolan ucapan.</p>`;
+        } else {
+            const dataTerbalik = [...data].reverse();
+            dataTerbalik.forEach(row => {
+                const waktuLalu = formatWaktuLalu(row[0]);
+                const statusHadir = row[3] || 'Hadir';
+                
+                // Berikan tanda warna badge konfirmasi kehadiran tamu
+                let badgeColor = "text-green-400 bg-green-500/10";
+                if(statusHadir === "Tidak Hadir") badgeColor = "text-red-400 bg-red-500/10";
+                if(statusHadir === "Masih Ragu") badgeColor = "text-yellow-400 bg-yellow-500/10";
+
+                isiUcapanHtml += `
+                    <div class="wa-bubble wa-bubble-left w-[88%] !bg-[#202c33] rounded-xl p-3 shadow-md border border-white/5 flex flex-col gap-0.5">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <span class="font-bold text-[12px] text-amber-300 tracking-wide">${row[1]}</span>
+                            <span class="text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${badgeColor}">${statusHadir}</span>
+                        </div>
+                        <p class="text-[12.5px] text-stone-200 leading-relaxed pr-6">${row[2]}</p>
+                        <span class="wa-time-meta !right-2 !bottom-1 !text-[#8696a0]">${waktuLalu}</span>
+                    </div>`;
+            });
+        }
+        
+        isiUcapanHtml += `</div>`;
+        wadahUtama.innerHTML = headerHtml + isiUcapanHtml;
+    })
+    .catch(err => console.error("Gagal memuat data:", err));
+}
+// POST UCAPAN BARU
+    function kirimKeSheets() {
+        const btn = document.getElementById('btn-kirim');
+        const nama = document.getElementById('nama-input').value;
+        const ucapan = document.getElementById('pesan-input').value;
+        const hadir = document.getElementById('hadir-input').value;
+
+        if (!nama || !ucapan) return alert("Mohon isi nama dan ucapan!");
+
+        btn.disabled = true;
+        btn.innerText = "Mengirim...";
+
+        fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({ 
+                "nama": nama, 
+                "ucapan": ucapan, 
+                "kehadiran": hadir,
+                "tujuan": idUndangan
+            })
+        })
+        .then(() => {
+            btn.innerText = "TERKIRIM!";
+            btn.style.backgroundColor = "#059669";
+            
+            document.getElementById('nama-input').value = "";
+            document.getElementById('pesan-input').value = "";
+            
+            setTimeout(() => {
+                muatUcapan();
+                btn.disabled = false;
+                btn.innerText = "KIRIM UCAPAN";
+                btn.style.backgroundColor = "";
+            }, 2000);
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            btn.innerText = "GAGAL MENGIRIM";
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerText = "KIRIM UCAPAN";
+            }, 3000);
+        });
+    }
+
+
+
+
+
+
+
+
+      
     // LOAD UCAPAN DARI APPS SCRIPT
     function muatUcapan() {
         fetch(scriptURL + "?tujuan=" + idUndangan)
