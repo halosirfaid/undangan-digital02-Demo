@@ -19,6 +19,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
 
+        /* Custom Animasi Mengetik WA agar Halus Mengalir */
+.wa-dot-animation {
+    animation: waTyping 1.4s infinite ease-in-out both;
+}
+
+@keyframes waTyping {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+}
+
+
 /* Custom Scrollbar Global & Khusus Chat WA */
 .wa-scrollbar::-webkit-scrollbar,
 #daftar-ucapan-container::-webkit-scrollbar,
@@ -1857,33 +1868,22 @@ function muatUcapan() {
 
 
 
-    // ANIMASI MENGETIK CHAT WA (Berlangsung Terus-Menerus Tanpa Henti)
+ 
+    // ANIMASI MENGETIK CHAT WA (Menetap Selamanya Tanpa Putus)
     const typingBubble = document.getElementById('typing-bubble');
     const typingStatus = document.getElementById('typing-status');
 
     function jalankanAnimasiMengetik() {
         if (!typingBubble || !typingStatus) return;
 
-        // Pastikan elemen langsung memunculkan efek mengetik sejak awal
+        // Kunci status di bar atas menjadi "Mengetik..." berwarna hijau
         typingStatus.innerText = "Mengetik...";
-        typingStatus.style.color = '#00a884'; // Hijau khas WA saat mengetik
+        typingStatus.style.color = '#00a884'; 
+        
+        // Kunci balon chat tiga titik di bawah agar selalu muncul
         typingBubble.classList.remove('hidden');
-
-        // Bikin efek realistis: sesekali status "Mengetik..." hilang 2 detik lalu muncul lagi selamanya
-        setInterval(() => {
-            if (typingStatus.innerText === "Mengetik...") {
-                typingStatus.innerText = "Online";
-                typingStatus.style.color = '#ffffff'; // Kembali putih saat online biasa
-                typingBubble.style.opacity = "0"; // Sembunyikan balon chat halus
-                typingBubble.style.transition = "opacity 0.3s ease";
-            } else {
-                typingStatus.innerText = "Mengetik...";
-                typingStatus.style.color = '#00a884';
-                typingBubble.style.opacity = "1"; // Munculkan kembali balon chat
-            }
-        }, 4000); // Setiap 4 detik statusnya akan bergantian secara natural
+        typingBubble.style.opacity = "1";
     }
-
 
 
 
