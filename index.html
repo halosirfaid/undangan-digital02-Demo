@@ -778,6 +778,16 @@
 </head>
 <body class="bg-stone-50">
   <div id="music-btn" class="music-control hidden spinning" onclick="toggleMusik()"><i id="music-icon" class="fa-solid fa-music"></i></div>
+<div id="loading-screen" class="fixed inset-0 bg-[#0b141a] z-[9999] flex flex-col items-center justify-center transition-opacity duration-700 ease-in-out">
+    <div class="text-center flex flex-col items-center animate-fade-in">
+        <div class="w-20 h-20 rounded-full border-2 border-amber-500/30 flex items-center justify-center mb-4 bg-stone-900/50 shadow-lg relative">
+            <div class="absolute inset-0 rounded-full border-2 border-t-amber-400 border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
+            <span class="text-xl font-serif text-amber-400 tracking-wider font-bold">R & A</span>
+        </div>
+        
+        <p class="text-[10px] tracking-[0.4em] uppercase text-stone-400 animate-pulse">Menyiapkan Undangan</p>
+    </div>
+</div>
 
 
 <section id="cover" class="relative min-h-screen w-full flex flex-col items-center justify-between py-12 px-6 overflow-hidden bg-cover bg-center transition-all duration-1000 ease-in-out" 
@@ -1468,27 +1478,42 @@
 
 
   <script>
-
-window.addEventListener('DOMContentLoaded', () => {
-    // 1. Deklarasikan semua variabel penting di paling atas agar bisa dipakai di semua fungsi di bawahnya
-    const waNotif = document.getElementById('wa-notif-pop');
+      
+document.addEventListener('DOMContentLoaded', function() {
+    const loader = document.getElementById('loading-screen');
+    const musik = document.getElementById('musik');
     const notifSound = document.getElementById('notif-sound');
-    const coverSection = document.getElementById('cover');
 
-    // 2. Fungsi terpadu untuk memunculkan notifikasi WA + memutar suara secara otomatis
-    function munculkanNotifDanSuara() {
-        if (waNotif && waNotif.classList.contains('opacity-0')) {
-            // Hilangkan class transparan, jalankan animasi turun
-            waNotif.classList.remove('opacity-0', '-translate-y-10', 'scale-95');
-            waNotif.classList.add('opacity-100', 'translate-y-0', 'scale-100');
-            
-            // Putar suara (Aman dari blokir browser karena dipicu interaksi sentuhan)
-            if (notifSound) {
-                notifSound.volume = 0.6;
-                notifSound.play().catch(err => console.log("Gagal putar suara:", err));
-            }
+    // 1. Perintahkan browser untuk langsung mengunduh audio ke memori
+    if (musik) {
+        musik.load();
+    }
+    if (notifSound) {
+        notifSound.load();
+    }
+
+    // 2. Fungsi untuk menutup loading secara halus
+    function hilangkanLoading() {
+        if (loader) {
+            loader.style.opacity = '0';
+            loader.style.pointerEvents = 'none';
+            // Hapus elemen dari struktur setelah transisi selesai agar hemat RAM HP
+            setTimeout(() => loader.remove(), 700); 
         }
     }
+
+    // 3. Jaminan keamanan: Jika audio loading-nya kelamaan karena sinyal tamu,
+    // halaman akan otomatis terbuka dalam waktu maksimal 3 detik agar tamu tidak bosan.
+    const timeoutMaksimal = setTimeout(hilangkanLoading, 3000);
+
+    // 4. Jika audio sudah terunduh penuh sebelum 3 detik, langsung hilangkan loading (Lebih Cepat)
+    if (notifSound) {
+        notifSound.addEventListener('canplaythrough', function() {
+            clearTimeout(timeoutMaksimal);
+            hilangkanLoading();
+        }, { once: true });
+    }
+});
 
     // 2. Fungsi terpadu untuk memunculkan notifikasi WA + memutar suara secara otomatis
     function munculkanNotifDanSuara() {
