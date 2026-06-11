@@ -18,6 +18,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        
+/* Cari kode cover kamu, lalu pastikan ada kode transition ini */
+.cover {
+    /* ... kode cover yang sudah ada tetap biarkan ... */
+    
+    /* Tambahkan ini agar saat menghilang ada jeda mulus 0.8 detik */
+    transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+}
+
+/* Tambahkan class baru ini di bawah kode cover kamu */
+.cover.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none; /* Supaya cover tidak bisa diklik lagi setelah hilang */
+}
 
         /* Custom Animasi Mengetik WA agar Halus Mengalir */
 .wa-dot-animation {
@@ -1556,10 +1571,11 @@ function bukaUndanganDigital() {
     if (coverSection) {
         coverSection.classList.add('cover-hidden');
         setTimeout(() => {
-            coverSection.style.display = 'none';
+            coverSection.style.display = 'hidden';
         }, 1000);
     }
-            
+
+
     // Munculkan konten utama & menu setelah cover terbuka
     document.getElementById('konten-utama').style.display = 'block';
     document.getElementById('nav-menu').classList.remove('hidden');
