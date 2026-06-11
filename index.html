@@ -1454,7 +1454,7 @@
 window.addEventListener('DOMContentLoaded', () => {
     const waNotif = document.getElementById('wa-notif-pop');
     const notifSound = document.getElementById('notif-sound');
-    const coverSection = document.getElementById('cover'); // Mengambil elemen cover
+    const coverSection = document.getElementById('cover');
 
     // 1. Animasi Muncul Layaknya WA Asli setelah 1.5 detik
     setTimeout(() => {
@@ -1463,13 +1463,13 @@ window.addEventListener('DOMContentLoaded', () => {
             waNotif.classList.add('opacity-100', 'translate-y-0', 'scale-100');
             
             if (notifSound) {
-                notifSound.volume = 0.5;
+                notifSound.volume = 1.5;
                 notifSound.play().catch(err => console.log("Audio otomatis diblokir browser sebelum interaksi."));
             }
         }
     }, 1500); 
 
-    // 2. FUNGSI KLIK UNTUK BUKA UNDANGAN
+    // 2. FUNGSI KLIK NOTIFIKASI UNTUK BUKA UNDANGAN SECARA UTUH
     if (waNotif) {
         waNotif.addEventListener('click', () => {
             if (coverSection) {
@@ -1478,14 +1478,13 @@ window.addEventListener('DOMContentLoaded', () => {
                 coverSection.style.transform = 'translateY(-100%)';
                 coverSection.style.opacity = '0';
                 
+                // Jalankan fungsi bawaan untuk memunculkan konten utama, swiper, dan musik
+                bukaUndanganDigital();
+
                 // Menghilangkan cover sepenuhnya dari layar setelah animasi selesai
                 setTimeout(() => {
                     coverSection.style.display = 'none';
                 }, 1000);
-
-                // Tambahan: Jika kamu punya musik latar utama undangan, kamu bisa memutarnya di sini
-                // const bgMusic = document.getElementById('bg-music');
-                // if(bgMusic) bgMusic.play();
             }
         });
     }
