@@ -1505,11 +1505,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 3. Pasang pendengar interaksi awal user
-    window.addEventListener('touchstart', munculkanNotifDanSuara, { once: true });
-    window.addEventListener('click', munculkanNotifDanSuara, { once: true });
-    window.addEventListener('scroll', munculkanNotifDanSuara, { once: true });
-
+   
     // 4. FUNGSI KLIK NOTIFIKASI UNTUK BUKA UNDANGAN SECARA UTUH
     if (waNotif) {
         waNotif.addEventListener('click', () => {
@@ -1536,27 +1532,41 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 
+// Pastikan kode audio di-load terlebih dahulu saat halaman terbuka agar tidak delay
+document.addEventListener('DOMContentLoaded', function() {
+    const notifSound = document.getElementById('notif-sound');
+    if (notifSound) {
+        notifSound.load(); // Menyiapkan audio di memori browser sejak awal
+    }
+});
+
 function bukaKunciSidikJari() {
     const waNotif = document.getElementById('wa-notif-pop');
     const notifSound = document.getElementById('notif-sound');
     const fpWrapper = document.getElementById('fingerprint-wrapper');
 
-    // 1. Sembunyikan tombol sidik jari dengan efek memudar halus
-    if (fpWrapper) {
-        fpWrapper.style.opacity = '0';
-        fpWrapper.style.pointerEvents = 'none';
+    // 1. Putar suara notifikasi secara INSTAN tanpa delay
+    if (notifSound) {
+        notifSound.currentTime = 0; // Kembalikan durasi ke detik 0
+        notifSound.volume = 1.0;    // Pastikan suara maksimal
+        
+        // Pemicu putar instan karena benar-benar berasal dari klik tombol user
+        const playPromise = notifSound.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(err => console.log("Audio diblokir atau belum siap:", err));
+        }
     }
 
-    // 2. Munculkan Pop-up WhatsApp dari atas
+    // 2. Munculkan Pop-up WhatsApp tepat bersamaan dengan suara
     if (waNotif) {
         waNotif.classList.remove('opacity-0', '-translate-y-10', 'scale-95');
         waNotif.classList.add('opacity-100', 'translate-y-0', 'scale-100');
     }
 
-    // 3. Putar suara notifikasi (100% loss dari blokir karena dipicu ketukan sidik jari)
-    if (notifSound) {
-        notifSound.volume = 1.0; // Setel ke volume maksimal
-        notifSound.play().catch(err => console.log("Gagal putar suara:", err));
+    // 3. Sembunyikan tombol sidik jari secara halus setelah sukses diklik
+    if (fpWrapper) {
+        fpWrapper.style.opacity = '0';
+        fpWrapper.style.pointerEvents = 'none';
     }
 }
 
