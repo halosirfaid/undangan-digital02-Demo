@@ -1480,15 +1480,19 @@
 <audio id="notif-sound" preload="auto"><source src="notifundangan.mp3" type="audio/mpeg"></audio>
 
 
-  <script>
-      
-// Gunakan window.onload agar loading PASTI hilang setelah gambar dan struktur web siap
+    
+
+
+ <script>
+// ==========================================
+// 1. LOGIKA UTAMA LOADING SCREEN (PRELOADER)
+// ==========================================
 window.addEventListener('load', function() {
     const loader = document.getElementById('loading-screen');
     const musik = document.getElementById('musik');
     const notifSound = document.getElementById('notif-sound');
 
-    // Perintahkan browser bersiap memuat audio
+    // Perintahkan browser bersiap memuat audio ke memori
     if (musik) musik.load();
     if (notifSound) notifSound.load();
 
@@ -1504,104 +1508,55 @@ window.addEventListener('load', function() {
     }
 });
 
-    // 3. Jaminan keamanan: Jika audio loading-nya kelamaan karena sinyal tamu,
-    // halaman akan otomatis terbuka dalam waktu maksimal 3 detik agar tamu tidak bosan.
-    const timeoutMaksimal = setTimeout(hilangkanLoading, 3000);
-
-    // 4. Jika audio sudah terunduh penuh sebelum 3 detik, langsung hilangkan loading (Lebih Cepat)
-    if (notifSound) {
-        notifSound.addEventListener('canplaythrough', function() {
-            clearTimeout(timeoutMaksimal);
-            hilangkanLoading();
-        }, { once: true });
-    }
-});
-
-    // 2. Fungsi terpadu untuk memunculkan notifikasi WA + memutar suara secara otomatis
-    function munculkanNotifDanSuara() {
-        if (waNotif && waNotif.classList.contains('opacity-0')) {
-            // Hilangkan class transparan, jalankan animasi turun
-            waNotif.classList.remove('opacity-0', '-translate-y-10', 'scale-95');
-            waNotif.classList.add('opacity-100', 'translate-y-0', 'scale-100');
-            
-            // Putar suara (Aman dari blokir browser karena dipicu interaksi sentuhan)
-            if (notifSound) {
-                notifSound.volume = 0.6;
-                notifSound.play().catch(err => console.log("Gagal putar suara:", err));
-            }
-        }
-    }
-
-   
-    // 4. FUNGSI KLIK NOTIFIKASI UNTUK BUKA UNDANGAN SECARA UTUH
-    if (waNotif) {
-        waNotif.addEventListener('click', () => {
-            if (coverSection) {
-                // Jalankan animasi transisi cover menghilang ke atas
-                coverSection.style.transition = 'all 1s ease-in-out';
-                coverSection.style.transform = 'translateY(-100%)';
-                coverSection.style.opacity = '0';
-            }
-            // Jalankan fungsi utama untuk memunculkan konten, musik, dan swiper
-            bukaUndanganDigital();
-        });
-    }
-}); // Penutup DOMContentLoaded yang bersih dan benar
-
-
-      
-
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
-    const idUndangan = 'devi-ehsan';
-    
-    const audio = document.getElementById('musik');
-    let isAutoScrolling = false;
-
-
-
-// Pastikan kode audio di-load terlebih dahulu saat halaman terbuka agar tidak delay
+// Pastikan audio notifikasi siap saat DOM pertama kali terbentuk
 document.addEventListener('DOMContentLoaded', function() {
     const notifSound = document.getElementById('notif-sound');
     if (notifSound) {
-        notifSound.load(); // Menyiapkan audio di memori browser sejak awal
+        notifSound.load();
     }
 });
 
 
+// ==========================================
+// 2. LOGIKA KUNCI & PEMBUKAAN COVER
+// ==========================================
 function bukaKunciSidikJari() {
     const waNotif = document.getElementById('wa-notif-pop');
     const notifSound = document.getElementById('notif-sound');
     const fpWrapper = document.getElementById('fingerprint-wrapper');
 
-    // 1. Putar suara notifikasi secara instan
+    // Putar suara notifikasi secara instan (Bebas delay karena diload duluan)
     if (notifSound) {
         notifSound.currentTime = 0;
         notifSound.volume = 1.0;
         notifSound.play().catch(err => console.log("Gagal putar suara:", err));
     }
 
-    // 2. Munculkan Pop-up WhatsApp DAN aktifkan izin kliknya
+    // Munculkan Pop-up WhatsApp DAN aktifkan izin kliknya
     if (waNotif) {
-        // Hilangkan efek transparan & geser animasi ke posisi normal
         waNotif.classList.remove('opacity-0', '-translate-y-10', 'scale-95', 'pointer-events-none');
         waNotif.classList.add('opacity-100', 'translate-y-0', 'scale-100', 'pointer-events-auto');
     }
 
-    // 3. Sembunyikan tombol sidik jari secara halus
+    // Sembunyikan tombol sidik jari secara halus
     if (fpWrapper) {
         fpWrapper.style.opacity = '0';
         fpWrapper.style.pointerEvents = 'none';
     }
 }
 
-      
+// Pasang event listener klik langsung pada bodi notifikasi WA
+document.addEventListener('DOMContentLoaded', function() {
+    const waNotif = document.getElementById('wa-notif-pop');
+    if (waNotif) {
+        waNotif.addEventListener('click', function() {
+            bukaUndanganDigital();
+        });
+    }
+});
 
-      function bukaUndanganDigital() {
-    // Paksa suara notifikasi berbunyi saat klik buka
-    const notifSound = document.getElementById('notif-sound');
-    if (notifSound) { notifSound.play().catch(e => console.log(e)); }
-
-    const coverSection = document.getElementById('cover'); // Tambahkan baris ini
+function bukaUndanganDigital() {
+    const coverSection = document.getElementById('cover');
     if (coverSection) {
         coverSection.classList.add('cover-hidden');
         setTimeout(() => {
@@ -1609,161 +1564,57 @@ function bukaKunciSidikJari() {
         }, 1000);
     }
             
-        // Munculkan konten utama & menu setelah animasi cover berjalan
-        document.getElementById('konten-utama').style.display = 'block';
-        document.getElementById('nav-menu').classList.remove('hidden');
-        document.getElementById('music-btn').classList.remove('hidden');
+    // Munculkan konten utama & menu setelah cover terbuka
+    document.getElementById('konten-utama').style.display = 'block';
+    document.getElementById('nav-menu').classList.remove('hidden');
+    document.getElementById('music-btn').classList.remove('hidden');
 
-        // BARU INISIALISASI SWIPER DI SINI (Saat elemen sudah terlihat)
-        new Swiper(".swiper-salam", {
-            loop: true,
-            effect: "fade",
-            autoplay: { 
-                delay: 4000, 
-                disableOnInteraction: false 
-            },
-        });
-        
-        // Putar audio latar belakang
-        if (audio) {
-            audio.play().catch(err => console.log("Autoplay dicegah browser, harus interaksi user."));
-            document.getElementById('music-btn').classList.add('spinning');
-        }
-        
-        // Inisialisasi Galeri WA Status
-        startStatus();
-        
-        // Muat ucapan dari Google Sheets
-        muatUcapan();
-
-        // Pemicu Cadangan: Jalankan animasi mengetik 4 detik setelah undangan dibuka
-        setTimeout(() => {
-            jalankanAnimasiMengetik();
-        }, 4000);
-
-        // Aktifkan auto scroll default setelah dibuka (opsional)
-        isAutoScrolling = true;
-        autoScroll();
-    }
-
-
-      
-    function toggleLike(btn) {
-        const icon = btn.querySelector('i');
-        if (icon.classList.contains('fa-regular')) {
-            icon.classList.replace('fa-regular', 'fa-solid');
-            icon.classList.add('active', 'text-red-500');
-        } else {
-            icon.classList.replace('fa-solid', 'fa-regular');
-            icon.classList.remove('active', 'text-red-500');
-        }
-    }
-
-    // LOGIKA SLIDER GALERI ALAS STATUS WA
-    let currentStatus = 0;
-    const totalStatus = 5;
-    const duration = 5000;
-    let statusInterval;
-    const captions = [
-        "Momen tak terlupakan ❤️",
-        "Cinta sejati berawal di sini...",
-        "Bersyukur atas segalanya 🙏",
-        "Menuju hari bahagia ✨",
-        "Sampai bertemu di lokasi! 😍"
-    ];
-
-    function startStatus() {
-        resetBars();
-        animateBar(currentStatus);
-        statusInterval = setInterval(() => { nextStatus(); }, duration);
-    }
-
-    function animateBar(index) {
-        const bar = document.getElementById(`bar-${index}`);
-        if (bar) {
-            bar.style.transition = `width ${duration}ms linear`;
-            setTimeout(() => bar.style.width = '100%', 50);
-        }
-    }
-
-    function resetBars() {
-        for (let i = 0; i < totalStatus; i++) {
-            const bar = document.getElementById(`bar-${i}`);
-            if(bar) {
-                bar.style.transition = 'none';
-                bar.style.width = i < currentStatus ? '100%' : '0%';
-            }
-        }
-    }
-
-    function showStatus(index) {
-        const images = document.querySelectorAll('.status-img');
-        images.forEach((img, i) => {
-            img.classList.toggle('hidden', i !== index);
-        });
-        document.getElementById('status-caption').innerText = captions[index];
-        currentStatus = index;
-        resetBars();
-        animateBar(currentStatus);
-    }
-
-    function nextStatus() {
-        clearInterval(statusInterval);
-        if (currentStatus < totalStatus - 1) {
-            currentStatus++;
-        } else {
-            currentStatus = 0;
-        }
-        showStatus(currentStatus);
-        statusInterval = setInterval(nextStatus, duration);
-    }
-
-    function prevStatus() {
-        clearInterval(statusInterval);
-        if (currentStatus > 0) {
-            currentStatus--;
-        } else {
-            currentStatus = totalStatus - 1;
-        }
-        showStatus(currentStatus);
-        statusInterval = setInterval(nextStatus, duration);
-    }
-
-    // FORMAT TIMESTAMPS UCAPAN
-    function formatWaktuLalu(tanggal) {
-        const detik = Math.floor((new Date() - new Date(tanggal)) / 1000);
-        if (isNaN(detik) || detik < 0) return "Baru saja";
-        
-        let interval = detik / 3600;
-        if (interval > 1) return Math.floor(interval) + " jam lalu";
-        interval = detik / 60;
-        if (interval > 1) return Math.floor(interval) + " menit lalu";
-        return "Baru saja";
-    }
-
-
-// Fungsi bantuan untuk menghasilkan warna teks acak yang konsisten berdasarkan nama
-function dapatkanWarnaNama(nama) {
-    const warnaWAGrup = [
-        '#1f7aec', // Biru
-        '#df5044', // Merah
-        '#e57c06', // Orange
-        '#05a665', // Hijau WA
-        '#b852cc', // Ungu
-        '#9c6644', // Cokelat
-        '#00a5cf', // Toska
-        '#e05780'  // Pink Tua
-    ];
+    // Inisialisasi Swiper Salam
+    new Swiper(".swiper-salam", {
+        loop: true,
+        effect: "fade",
+        autoplay: { 
+            delay: 4000, 
+            disableOnInteraction: false 
+        },
+    });
     
-    // Hitung angka unik dari susunan huruf nama tamu
+    // Putar audio latar belakang pernikahan
+    const audio = document.getElementById('musik');
+    if (audio) {
+        audio.play().catch(err => console.log("Autoplay dicegah browser"));
+        document.getElementById('music-btn').classList.add('spinning');
+    }
+    
+    // Jalankan sistem status WA & data ucapan
+    startStatus();
+    muatUcapan();
+
+    // Pemicu otomatis status mengetik
+    setTimeout(() => {
+        jalankanAnimasiMengetik();
+    }, 4000);
+
+    // Aktifkan auto scroll halaman
+    isAutoScrolling = true;
+    autoScroll();
+}
+
+
+// ==========================================
+// 3. LOGIKA BACKEND & SISTEM UCAPAN GOOGLE SHEETS
+// ==========================================
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
+const idUndangan = 'devi-ehsan';
+let isAutoScrolling = false;
+
+function dapatkanWarnaNama(nama) {
+    const warnaWAGrup = ['#1f7aec', '#df5044', '#e57c06', '#05a665', '#b852cc', '#9c6644', '#00a5cf', '#e05780'];
     let hash = 0;
     for (let i = 0; i < nama.length; i++) {
         hash = nama.charCodeAt(i) + ((hash << 5) - hash);
     }
-    
-    // Pilih salah satu warna dari daftar di atas
-    const indeks = Math.abs(hash) % warnaWAGrup.length;
-    return warnaWAGrup[indeks];
+    return warnaWAGrup[Math.abs(hash) % warnaWAGrup.length];
 }
 
 function muatUcapan() {
@@ -1783,7 +1634,6 @@ function muatUcapan() {
         `;
         
         let isiUcapanHtml = "";
-        
         if (data.length === 0) {
             isiUcapanHtml += `<p class="text-center text-[#8696a0] text-[11px] py-10 italic">Belum ada obrolan ucapan.</p>`;
         } else {
@@ -1792,8 +1642,6 @@ function muatUcapan() {
                 const namaTamu = row[1];
                 const waktuLalu = formatWaktuLalu(row[0]);
                 const statusHadir = row[3] || 'Hadir';
-                
-                // Ambil warna dinamis untuk nama tamu ini
                 const warnaNamaTamu = dapatkanWarnaNama(namaTamu);
                 
                 let badgeColor = "text-green-400 bg-green-500/10";
@@ -1811,60 +1659,41 @@ function muatUcapan() {
                     </div>`;
             });
         }
-        
         isiUcapanHtml += `</div>`;
         wadahUtama.innerHTML = headerHtml + isiUcapanHtml;
     })
     .catch(err => console.error("Gagal memuat data:", err));
 }
 
-
-      
-// POST UCAPAN BARU
- function kirimKeSheets() {
+function kirimKeSheets() {
     const btn = document.getElementById('btn-kirim');
-    
-    // 1. Ambil elemen input secara pasti
     const namaInput = document.getElementById('nama-input');
     const pesanInput = document.getElementById('pesan-input');
     const hadirInput = document.getElementById('hadir-input');
 
-    // 2. Ambil nilainya (.value)
     const nama = namaInput ? namaInput.value.trim() : "";
     const ucapan = pesanInput ? pesanInput.value.trim() : "";
     const hadir = hadirInput ? hadirInput.value : "Hadir";
 
-    // 3. Validasi: Jika kosong, hentikan proses dan beri tahu pengguna
     if (!nama || !ucapan) {
         alert("Mohon isi nama dan ucapan Anda terlebih dahulu!");
         return; 
     }
 
-    // 4. Ubah status tombol menjadi loading
     btn.disabled = true;
     btn.innerText = "MENGIRIM...";
 
-    // 5. Kirim data ke Google Sheets
     fetch(scriptURL, {
         method: 'POST',
         mode: 'no-cors',
-        body: JSON.stringify({ 
-            "nama": nama, 
-            "ucapan": ucapan, 
-            "kehadiran": hadir,
-            "tujuan": idUndangan
-        })
+        body: JSON.stringify({ "nama": nama, "ucapan": ucapan, "kehadiran": hadir, "tujuan": idUndangan })
     })
     .then(() => {
-        // Sukses Terkirim
         btn.innerText = "TERKIRIM! 🟢";
         btn.style.backgroundColor = "#059669";
-        
-        // Kosongkan form setelah berhasil terkirim
         if(namaInput) namaInput.value = "";
         if(pesanInput) pesanInput.value = "";
         
-        // Muat ulang daftar chat ucapan agar ucapan baru langsung muncul
         setTimeout(() => {
             muatUcapan();
             btn.disabled = false;
@@ -1873,169 +1702,199 @@ function muatUcapan() {
         }, 2000);
     })
     .catch(error => {
-        console.error('Error!', error.message);
-        btn.innerText = "GAGAL MENGIRIM 🔴";
-        setTimeout(() => {
-            btn.disabled = false;
-            btn.innerText = "KIRIM UCAPAN";
-            btn.style.backgroundColor = "";
-        }, 3000);
+        btn.disabled = false;
+        btn.innerText = "KIRIM UCAPAN";
     });
 }
 
 
-
- 
-    // ANIMASI MENGETIK CHAT WA (Menetap Selamanya Tanpa Putus)
+// ==========================================
+// 4. FITUR DAN ANIMASI PENDUKUNG (GALLERY STATUS, ETC)
+// ==========================================
+function jalankanAnimasiMengetik() {
     const typingBubble = document.getElementById('typing-bubble');
     const typingStatus = document.getElementById('typing-status');
+    if (!typingBubble || !typingStatus) return;
+    typingStatus.innerText = "Mengetik...";
+    typingStatus.style.color = '#00a884'; 
+    typingBubble.classList.remove('hidden');
+}
 
-    function jalankanAnimasiMengetik() {
-        if (!typingBubble || !typingStatus) return;
-
-        // Kunci status di bar atas menjadi "Mengetik..." berwarna hijau
-        typingStatus.innerText = "Mengetik...";
-        typingStatus.style.color = '#00a884'; 
-        
-        // Kunci balon chat tiga titik di bawah agar selalu muncul
-        typingBubble.classList.remove('hidden');
-        typingBubble.style.opacity = "1";
-    }
-
-
-
-
-      
-    
-    
-
-function ambilNamaTamu() {
-    // 1. Ambil nama dari parameter URL (?to=Nama%20Tamu)
-    const urlParams = new URLSearchParams(window.location.search);
-    let nama = urlParams.get('to') || urlParams.get('nama');
-    
-    // 2. Jika nama tidak ditemukan di URL, gunakan teks default
-    if (!nama) {
-        nama = "Tamu Undangan";
+function toggleLike(btn) {
+    const icon = btn.querySelector('i');
+    if (icon.classList.contains('fa-regular')) {
+        icon.classList.replace('fa-regular', 'fa-solid');
+        icon.classList.add('active', 'text-red-500');
     } else {
-        nama = decodeURIComponent(nama);
-    }
-    
-    // 3. Masukkan nama ke dalam teks isi chat WhatsApp di atas
-    const elemenNamaChat = document.getElementById('nama-tamu-chat');
-    if (elemenNamaChat) {
-        elemenNamaChat.innerText = nama;
-    }
-    
-    // 4. Masukkan nama ke kotak besar bagian bawah (Kepada Yth:)
-    // Catatan: Sesuaikan 'nama-tamu' dengan ID elemen kotak besar Anda saat ini
-    const elemenNamaKotak = document.getElementById('nama-tamu') || document.querySelector('.kepada-yth-nama');
-    if (elemenNamaKotak) {
-        elemenNamaKotak.innerText = nama;
+        icon.classList.replace('fa-solid', 'fa-regular');
+        icon.classList.remove('active', 'text-red-500');
     }
 }
 
+let currentStatus = 0;
+const totalStatus = 5;
+const duration = 5000;
+let statusInterval;
+const captions = ["Momen tak terlupakan ❤️", "Cinta sejati berawal di sini...", "Bersyukur atas segalanya 🙏", "Menuju hari bahagia ✨", "Sampai bertemu di lokasi! 😍"];
 
-      
+function startStatus() {
+    resetBars();
+    animateBar(currentStatus);
+    statusInterval = setInterval(() => { nextStatus(); }, duration);
+}
+
+function animateBar(index) {
+    const bar = document.getElementById(`bar-${index}`);
+    if (bar) {
+        bar.style.transition = `width ${duration}ms linear`;
+        setTimeout(() => bar.style.width = '100%', 50);
+    }
+}
+
+function resetBars() {
+    for (let i = 0; i < totalStatus; i++) {
+        const bar = document.getElementById(`bar-${i}`);
+        if(bar) {
+            bar.style.transition = 'none';
+            bar.style.width = i < currentStatus ? '100%' : '0%';
+        }
+    }
+}
+
+function showStatus(index) {
+    const images = document.querySelectorAll('.status-img');
+    images.forEach((img, i) => { img.classList.toggle('hidden', i !== index); });
+    document.getElementById('status-caption').innerText = captions[index];
+    currentStatus = index;
+    resetBars();
+    animateBar(currentStatus);
+}
+
+function nextStatus() {
+    clearInterval(statusInterval);
+    currentStatus = (currentStatus < totalStatus - 1) ? currentStatus + 1 : 0;
+    showStatus(currentStatus);
+    statusInterval = setInterval(nextStatus, duration);
+}
+
+function prevStatus() {
+    clearInterval(statusInterval);
+    currentStatus = (currentStatus > 0) ? currentStatus - 1 : totalStatus - 1;
+    showStatus(currentStatus);
+    statusInterval = setInterval(nextStatus, duration);
+}
+
+function formatWaktuLalu(tanggal) {
+    const detik = Math.floor((new Date() - new Date(tanggal)) / 1000);
+    if (isNaN(detik) || detik < 0) return "Baru saja";
+    let interval = detik / 3600;
+    if (interval > 1) return Math.floor(interval) + " jam lalu";
+    interval = detik / 60;
+    if (interval > 1) return Math.floor(interval) + " menit lalu";
+    return "Baru saja";
+}
+
+function ambilNamaTamu() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let nama = urlParams.get('to') || urlParams.get('nama') || "Tamu Undangan";
+    nama = decodeURIComponent(nama);
+    const elemenNamaChat = document.getElementById('nama-tamu-chat');
+    if (elemenNamaChat) elemenNamaChat.innerText = nama;
+    const elemenNamaKotak = document.getElementById('nama-tamu') || document.querySelector('.kepada-yth-nama');
+    if (elemenNamaKotak) elemenNamaKotak.innerText = nama;
+}
+
 function toggleMusik() {
+    const audio = document.getElementById('musik');
     const btn = document.getElementById('music-btn');
-    const icon = document.getElementById('music-icon'); // Ambil element ikonnya
-    
+    const icon = document.getElementById('music-icon');
     if (audio.paused) { 
         audio.play(); 
         btn.classList.add('spinning'); 
-        icon.className = "fa-solid fa-compact-disc text-lg"; // Tetap ikon piringan berputar
+        icon.className = "fa-solid fa-compact-disc text-lg";
     } else { 
         audio.pause(); 
         btn.classList.remove('spinning'); 
-        icon.className = "fa-solid fa-play text-lg"; // Berubah jadi ikon PLAY saat musik mati
+        icon.className = "fa-solid fa-play text-lg";
     }
 }
 
-      
-    // EFEK SAKURA / KELOPAK BUNGA GUGUR
-    function createPetal() {
-        const petal = document.createElement('div');
-        petal.className = 'petal';
-        petal.innerHTML = '🌸';
-        petal.style.left = Math.random() * 100 + 'vw';
-        petal.style.animationDuration = Math.random() * 3 + 2 + 's'; 
-        petal.style.fontSize = Math.random() * 10 + 10 + 'px';
-        document.body.appendChild(petal);
-        setTimeout(() => petal.remove(), 5000);
-    }
+function createPetal() {
+    const petal = document.createElement('div');
+    petal.className = 'petal';
+    petal.innerHTML = '🌸';
+    petal.style.left = Math.random() * 100 + 'vw';
+    petal.style.animationDuration = Math.random() * 3 + 2 + 's'; 
+    petal.style.fontSize = Math.random() * 10 + 10 + 'px';
+    document.body.appendChild(petal);
+    setTimeout(() => petal.remove(), 5000);
+}
 
-    // AUTO SCROLL SCENE LOGIC
-    function toggleAutoScroll() {
-        isAutoScrolling = !isAutoScrolling;
+function toggleAutoScroll() {
+    isAutoScrolling = !isAutoScrolling;
+    const icon = document.getElementById('scroll-icon');
+    if (isAutoScrolling) { 
+        icon.classList.replace('fa-play', 'fa-pause'); 
+        autoScroll(); 
+    } else { 
+        icon.classList.replace('fa-pause', 'fa-play'); 
+    }
+}
+
+function autoScroll() {
+    if (!isAutoScrolling) return;
+    window.scrollBy(0, 0.6);
+    if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
+        requestAnimationFrame(autoScroll);
+    } else {
+        isAutoScrolling = false;
         const icon = document.getElementById('scroll-icon');
-        if (isAutoScrolling) { 
-            icon.classList.replace('fa-play', 'fa-pause'); 
-            autoScroll(); 
-        } else { 
-            icon.classList.replace('fa-pause', 'fa-play'); 
-        }
-    }
-
-    function autoScroll() {
-        if (!isAutoScrolling) return;
-        window.scrollBy(0, 0.6);
-        if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
-            requestAnimationFrame(autoScroll);
-        } else {
-            isAutoScrolling = false;
-            const icon = document.getElementById('scroll-icon');
-            if(icon) icon.classList.replace('fa-pause', 'fa-play');
-        }
-    }
-
-    // FUNGSI COPY TO CLIPBOARD
-    function salinTeks(nomor, label, elemen) {
-        const teksAsli = elemen.innerText;
-        navigator.clipboard.writeText(nomor).then(() => {
-            elemen.innerText = "BERHASIL DISALIN!";
-            elemen.classList.add('bg-green-600');
-            setTimeout(() => {
-                elemen.innerText = teksAsli;
-                elemen.classList.remove('bg-green-600');
-            }, 2000);
-        });
-    }
-
-    // COUNTDOWN WAKTU NYATA TARGET
-    const target = new Date("July 12, 2026 08:00:00").getTime();
-    setInterval(() => {
-        const sisa = target - new Date().getTime();
-        if(sisa < 0) return;
-        document.getElementById("days").innerText = Math.floor(sisa / (1000 * 60 * 60 * 24));
-        document.getElementById("hours").innerText = Math.floor((sisa % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        document.getElementById("minutes").innerText = Math.floor((sisa % (1000 * 60 * 60)) / (1000 * 60));
-        document.getElementById("seconds").innerText = Math.floor((sisa % (1000 * 60)) / 1000);
-    }, 1000);
-
-    // EVENT LISTENERS & SCROLL REVEAL MONITOR
-    window.addEventListener("scroll", () => {
-        // Deteksi Animasi Reveal Objek
-        document.querySelectorAll(".reveal").forEach(el => {
-            const rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight - 100) el.classList.add("active");
-        });
-        
-
-const storySec = document.getElementById('story');
-if (storySec) {
-    const rectStory = storySec.getBoundingClientRect();
-    if (rectStory.top < window.innerHeight - 100 && rectStory.bottom > 0) {
-        jalankanAnimasiMengetik();
+        if(icon) icon.classList.replace('fa-pause', 'fa-play');
     }
 }
+
+function salinTeks(nomor, label, elemen) {
+    const teksAsli = elemen.innerText;
+    navigator.clipboard.writeText(nomor).then(() => {
+        elemen.innerText = "BERHASIL DISALIN!";
+        elemen.classList.add('bg-green-600');
+        setTimeout(() => {
+            elemen.innerText = teksAsli;
+            elemen.classList.remove('bg-green-600');
+        }, 2000);
+    });
+}
+
+// Countdown target wedding
+const target = new Date("July 12, 2026 08:00:00").getTime();
+setInterval(() => {
+    const sisa = target - new Date().getTime();
+    if(sisa < 0) return;
+    document.getElementById("days").innerText = Math.floor(sisa / (1000 * 60 * 60 * 24));
+    document.getElementById("hours").innerText = Math.floor((sisa % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    document.getElementById("minutes").innerText = Math.floor((sisa % (1000 * 60 * 60)) / (1000 * 60));
+    document.getElementById("seconds").innerText = Math.floor((sisa % (1000 * 60)) / 1000);
+}, 1000);
+
+// Scroll Monitoring Event
+window.addEventListener("scroll", () => {
+    document.querySelectorAll(".reveal").forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) el.classList.add("active");
+    });
+    
+    const storySec = document.getElementById('story');
+    if (storySec) {
+        const rectStory = storySec.getBoundingClientRect();
+        if (rectStory.top < window.innerHeight - 100 && rectStory.bottom > 0) {
+            jalankanAnimasiMengetik();
+        }
+    }
 });
-   window.onload = () => {
+
+// Window Onload Starter
+window.onload = () => {
     ambilNamaTamu();
     setInterval(createPetal, 600);
-   };
-    
+};
 </script>
-</body>
-</html>              
-
