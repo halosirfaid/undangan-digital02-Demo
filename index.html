@@ -788,21 +788,21 @@
         <h1 class="text-6xl font-light tracking-wide mb-1">08:00</h1>
         <p class="text-xs opacity-90 tracking-wide">Minggu, 12 Juli 2026</p>
     </div>
-
-    <div id="wa-notif-pop" class="w-full max-w-md my-auto z-20 opacity-0 -translate-y-10 scale-95 transition-all duration-700 ease-out cursor-pointer active:scale-95">
-        <div class="bg-[#202c33]/90 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/5 flex gap-3">
-            <img src="pengantinWanita.jpg" class="w-10 h-10 rounded-full object-cover border border-white/20">
-            <div class="flex-1 min-w-0 text-left">
-                <div class="flex justify-between items-center mb-0.5">
-                    <h3 class="text-sm font-semibold text-white truncate">Rara & Adi (Wedding)</h3>
-                    <span class="text-[10px] text-stone-400">Sekarang</span>
-                </div>
-                <p class="text-[11px] font-bold text-[#00a884] mb-0.5">Spesial Undangan Berharga</p>
-                <p class="text-[11px] text-stone-300 leading-tight">Halo, kami mengundang Anda untuk hadir di hari bahagia kami. Klik untuk membuka pesan...</p>
+<div id="wa-notif-pop" class="w-full max-w-md my-auto z-20 opacity-0 -translate-y-10 scale-95 transition-all duration-700 ease-out cursor-pointer active:scale-95 pointer-events-none">
+    <div onclick="bukaUndanganDigital()" class="bg-[#202c33]/90 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/5 flex gap-3">
+        <img src="pengantinWanita.jpg" class="w-10 h-10 rounded-full object-cover border border-white/20">
+        <div class="flex-1 min-w-0 text-left">
+            <div class="flex justify-between items-center mb-0.5">
+                <h3 class="text-sm font-semibold text-white truncate">Rara & Adi (Wedding)</h3>
+                <span class="text-[10px] text-stone-400">Sekarang</span>
             </div>
+            <p class="text-[11px] font-bold text-[#00a884] mb-0.5">Spesial Undangan Berharga</p>
+            <p class="text-[11px] text-stone-300 leading-tight">Halo, kami mengundang Anda untuk hadir di hari bahagia kami. Klik untuk membuka pesan...</p>
         </div>
     </div>
+</div>
 
+ 
     <div class="w-full w-max-md z-10 flex flex-col items-center gap-6">
         
         <div id="fingerprint-wrapper" class="flex flex-col items-center transition-all duration-500">
@@ -1540,36 +1540,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+
 function bukaKunciSidikJari() {
     const waNotif = document.getElementById('wa-notif-pop');
     const notifSound = document.getElementById('notif-sound');
     const fpWrapper = document.getElementById('fingerprint-wrapper');
 
-    // 1. Putar suara notifikasi secara INSTAN tanpa delay
+    // 1. Putar suara notifikasi secara instan
     if (notifSound) {
-        notifSound.currentTime = 0; // Kembalikan durasi ke detik 0
-        notifSound.volume = 1.0;    // Pastikan suara maksimal
-        
-        // Pemicu putar instan karena benar-benar berasal dari klik tombol user
-        const playPromise = notifSound.play();
-        if (playPromise !== undefined) {
-            playPromise.catch(err => console.log("Audio diblokir atau belum siap:", err));
-        }
+        notifSound.currentTime = 0;
+        notifSound.volume = 1.0;
+        notifSound.play().catch(err => console.log("Gagal putar suara:", err));
     }
 
-    // 2. Munculkan Pop-up WhatsApp tepat bersamaan dengan suara
+    // 2. Munculkan Pop-up WhatsApp DAN aktifkan izin kliknya
     if (waNotif) {
-        waNotif.classList.remove('opacity-0', '-translate-y-10', 'scale-95');
-        waNotif.classList.add('opacity-100', 'translate-y-0', 'scale-100');
+        // Hilangkan efek transparan & geser animasi ke posisi normal
+        waNotif.classList.remove('opacity-0', '-translate-y-10', 'scale-95', 'pointer-events-none');
+        waNotif.classList.add('opacity-100', 'translate-y-0', 'scale-100', 'pointer-events-auto');
     }
 
-    // 3. Sembunyikan tombol sidik jari secara halus setelah sukses diklik
+    // 3. Sembunyikan tombol sidik jari secara halus
     if (fpWrapper) {
         fpWrapper.style.opacity = '0';
         fpWrapper.style.pointerEvents = 'none';
     }
 }
-
 
       
 
