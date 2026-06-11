@@ -1519,6 +1519,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
       function bukaUndanganDigital() {
+    // Paksa suara notifikasi berbunyi saat klik buka
+    const notifSound = document.getElementById('notif-sound');
+    if (notifSound) { notifSound.play().catch(e => console.log(e)); }
+
     const coverSection = document.getElementById('cover'); // Tambahkan baris ini
     if (coverSection) {
         coverSection.classList.add('cover-hidden');
