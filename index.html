@@ -778,13 +778,16 @@
 </head>
 <body class="bg-stone-50">
   <div id="music-btn" class="music-control hidden spinning" onclick="toggleMusik()"><i id="music-icon" class="fa-solid fa-music"></i></div>
-<div id="loading-screen" class="fixed inset-0 bg-[#0b141a] z-[9999] flex flex-col items-center justify-center transition-opacity duration-700 ease-in-out">
-    <div class="text-center flex flex-col items-center animate-fade-in">
-        <div class="w-20 h-20 rounded-full border-2 border-amber-500/30 flex items-center justify-center mb-4 bg-stone-900/50 shadow-lg relative">
+   <div id="loading-screen" class="fixed inset-0 bg-[#0b141a] z-[9999] flex flex-col items-center justify-center transition-opacity duration-700 ease-in-out">
+    <div class="text-center flex flex-col items-center animate-pulse"> <div class="w-20 h-20 rounded-full border-2 border-amber-500/30 flex items-center justify-center mb-4 bg-stone-900/50 shadow-lg relative">
             <div class="absolute inset-0 rounded-full border-2 border-t-amber-400 border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
             <span class="text-xl font-serif text-amber-400 tracking-wider font-bold">R & A</span>
         </div>
         
+        <p class="text-[10px] tracking-[0.4em] uppercase text-stone-400">Menyiapkan Undangan</p>
+    </div>
+</div>
+     
         <p class="text-[10px] tracking-[0.4em] uppercase text-stone-400 animate-pulse">Menyiapkan Undangan</p>
     </div>
 </div>
@@ -1479,28 +1482,27 @@
 
   <script>
       
-document.addEventListener('DOMContentLoaded', function() {
+// Gunakan window.onload agar loading PASTI hilang setelah gambar dan struktur web siap
+window.addEventListener('load', function() {
     const loader = document.getElementById('loading-screen');
     const musik = document.getElementById('musik');
     const notifSound = document.getElementById('notif-sound');
 
-    // 1. Perintahkan browser untuk langsung mengunduh audio ke memori
-    if (musik) {
-        musik.load();
-    }
-    if (notifSound) {
-        notifSound.load();
-    }
+    // Perintahkan browser bersiap memuat audio
+    if (musik) musik.load();
+    if (notifSound) notifSound.load();
 
-    // 2. Fungsi untuk menutup loading secara halus
-    function hilangkanLoading() {
-        if (loader) {
-            loader.style.opacity = '0';
-            loader.style.pointerEvents = 'none';
-            // Hapus elemen dari struktur setelah transisi selesai agar hemat RAM HP
-            setTimeout(() => loader.remove(), 700); 
-        }
+    // Fungsi menutup loading dengan halus
+    if (loader) {
+        loader.style.opacity = '0';
+        loader.style.pointerEvents = 'none';
+        
+        // Hapus dari RAM setelah efek memudar selesai
+        setTimeout(() => {
+            loader.remove();
+        }, 700);
     }
+});
 
     // 3. Jaminan keamanan: Jika audio loading-nya kelamaan karena sinyal tamu,
     // halaman akan otomatis terbuka dalam waktu maksimal 3 detik agar tamu tidak bosan.
