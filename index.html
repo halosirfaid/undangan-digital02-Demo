@@ -1451,36 +1451,33 @@
 
   <script>
 
-
-      window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => {
+    // 1. Deklarasikan semua variabel penting di paling atas agar bisa dipakai di semua fungsi di bawahnya
     const waNotif = document.getElementById('wa-notif-pop');
     const notifSound = document.getElementById('notif-sound');
     const coverSection = document.getElementById('cover');
 
-    // Fungsi untuk memunculkan notifikasi + suara
+    // 2. Fungsi terpadu untuk memunculkan notifikasi WA + memutar suara secara otomatis
     function munculkanNotifDanSuara() {
         if (waNotif && waNotif.classList.contains('opacity-0')) {
-            // Munculkan animasi
+            // Hilangkan class transparan, jalankan animasi turun
             waNotif.classList.remove('opacity-0', '-translate-y-10', 'scale-95');
             waNotif.classList.add('opacity-100', 'translate-y-0', 'scale-100');
             
-            // Putar suara (Pasti berhasil karena dipicu oleh sentuhan user di layar)
+            // Putar suara (Aman dari blokir browser karena dipicu interaksi sentuhan)
             if (notifSound) {
                 notifSound.volume = 0.6;
-                notifSound.play().catch(err => console.log("Gagal putar:", err));
+                notifSound.play().catch(err => console.log("Gagal putar suara:", err));
             }
         }
     }
 
-    // Jalankan HANYA setelah ada interaksi pertama dari tamu di layar cover
+    // 3. Pasang pendengar interaksi: Begitu layar disentuh/diklik/di-scroll pertama kali, notif langsung jebol keluar
     window.addEventListener('touchstart', munculkanNotifDanSuara, { once: true });
     window.addEventListener('click', munculkanNotifDanSuara, { once: true });
     window.addEventListener('scroll', munculkanNotifDanSuara, { once: true });
 
-    // Sisa kode fungsi klik notifikasi untuk buka undangan tetap ditaruh di bawahnya...
-});
-
-    // 2. FUNGSI KLIK NOTIFIKASI UNTUK BUKA UNDANGAN SECARA UTUH
+    // 4. FUNGSI KLIK NOTIFIKASI UNTUK BUKA UNDANGAN SECARA UTUH
     if (waNotif) {
         waNotif.addEventListener('click', () => {
             if (coverSection) {
@@ -1489,7 +1486,7 @@
                 coverSection.style.transform = 'translateY(-100%)';
                 coverSection.style.opacity = '0';
                 
-                // Jalankan fungsi bawaan untuk memunculkan konten utama, swiper, dan musik
+                // Jalankan fungsi bawaan milikmu untuk memunculkan konten utama, swiper, dan musik
                 bukaUndanganDigital();
 
                 // Menghilangkan cover sepenuhnya dari layar setelah animasi selesai
@@ -1499,7 +1496,7 @@
             }
         });
     }
-});
+}); // Penutup DOMContentLoaded yang benar hanya ada satu di paling bawah
 
 
       
