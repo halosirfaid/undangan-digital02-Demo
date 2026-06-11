@@ -1472,34 +1472,40 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 3. Pasang pendengar interaksi: Begitu layar disentuh/diklik/di-scroll pertama kali, notif langsung jebol keluar
+    // 2. Fungsi terpadu untuk memunculkan notifikasi WA + memutar suara secara otomatis
+    function munculkanNotifDanSuara() {
+        if (waNotif && waNotif.classList.contains('opacity-0')) {
+            // Hilangkan class transparan, jalankan animasi turun
+            waNotif.classList.remove('opacity-0', '-translate-y-10', 'scale-95');
+            waNotif.classList.add('opacity-100', 'translate-y-0', 'scale-100');
+            
+            // Putar suara (Aman dari blokir browser karena dipicu interaksi sentuhan)
+            if (notifSound) {
+                notifSound.volume = 0.6;
+                notifSound.play().catch(err => console.log("Gagal putar suara:", err));
+            }
+        }
+    }
+
+    // 3. Pasang pendengar interaksi awal user
     window.addEventListener('touchstart', munculkanNotifDanSuara, { once: true });
     window.addEventListener('click', munculkanNotifDanSuara, { once: true });
     window.addEventListener('scroll', munculkanNotifDanSuara, { once: true });
 
     // 4. FUNGSI KLIK NOTIFIKASI UNTUK BUKA UNDANGAN SECARA UTUH
     if (waNotif) {
-    waNotif.addEventListener('click', () => {
-        bukaUndanganDigital(); // Langsung panggil fungsi utama di sini
-    });
-}
+        waNotif.addEventListener('click', () => {
             if (coverSection) {
-                // Efek transisi menutup cover (menghilang halus ke atas)
+                // Jalankan animasi transisi cover menghilang ke atas
                 coverSection.style.transition = 'all 1s ease-in-out';
                 coverSection.style.transform = 'translateY(-100%)';
                 coverSection.style.opacity = '0';
-                
-                // Jalankan fungsi bawaan milikmu untuk memunculkan konten utama, swiper, dan musik
-                bukaUndanganDigital();
-
-                // Menghilangkan cover sepenuhnya dari layar setelah animasi selesai
-                setTimeout(() => {
-                    coverSection.style.display = 'none';
-                }, 1000);
             }
+            // Jalankan fungsi utama untuk memunculkan konten, musik, dan swiper
+            bukaUndanganDigital();
         });
     }
-}); // Penutup DOMContentLoaded yang benar hanya ada satu di paling bawah
+}); // Penutup DOMContentLoaded yang bersih dan benar
 
 
       
@@ -1941,16 +1947,12 @@ if (storySec) {
         jalankanAnimasiMengetik();
     }
 }
-
-
-        
-      window.onload = () => {
+});
+   window.onload = () => {
     ambilNamaTamu();
     setInterval(createPetal, 600);
-    // Kode Swiper di sini sudah dihapus
-};
-
-  
+   };
+    
 </script>
 </body>
 </html>              
