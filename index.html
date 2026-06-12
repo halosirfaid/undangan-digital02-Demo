@@ -1948,19 +1948,38 @@ function salinTeks(nomor, label, elemen) {
         }, 2000);
     });
 }
+// ==========================================
+// 5. SISTEM COUNTDOWN TARGET WEDDING (AMAN)
+// ==========================================
+// Kita bungkus di dalam DOMContentLoaded agar tidak eror saat membaca dataMempelai
+document.addEventListener("DOMContentLoaded", function() {
+    // Pastikan dataMempelai dan tglCountdown benar-benar ada
+    if (typeof dataMempelai !== 'undefined' && dataMempelai.tglCountdown) {
+        const target = new Date(dataMempelai.tglCountdown).getTime();
+        
+        // Jalankan interval countdown setiap 1 detik
+        const hitungMundur = setInterval(() => {
+            const sekarang = new Date().getTime();
+            const sisa = target - sekarang;
+            
+            // Jika waktu sudah lewat, hentikan countdown
+            if (sisa < 0) {
+                clearInterval(hitungMundur);
+                return;
+            }
+            
+            // Isi angka ke elemen HTML jika elemennya ditemukan
+            if(document.getElementById("days")) document.getElementById("days").innerText = Math.floor(sisa / (1000 * 60 * 60 * 24));
+            if(document.getElementById("hours")) document.getElementById("hours").innerText = Math.floor((sisa % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            if(document.getElementById("minutes")) document.getElementById("minutes").innerText = Math.floor((sisa % (1000 * 60 * 60)) / (1000 * 60));
+            if(document.getElementById("seconds")) document.getElementById("seconds").innerText = Math.floor((sisa % (1000 * 60)) / 1000);
+        }, 1000);
+    }
+});
 
-// Countdown target wedding
-const target = new Date(dataMempelai.tglCountdown).getTime();
-setInterval(() => {
-    const sisa = target - new Date().getTime();
-    if(sisa < 0) return;
-    document.getElementById("days").innerText = Math.floor(sisa / (1000 * 60 * 60 * 24));
-    document.getElementById("hours").innerText = Math.floor((sisa % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    document.getElementById("minutes").innerText = Math.floor((sisa % (1000 * 60 * 60)) / (1000 * 60));
-    document.getElementById("seconds").innerText = Math.floor((sisa % (1000 * 60)) / 1000);
-}, 1000);
-
-// Scroll Monitoring Event
+// ==========================================
+// 6. SCROLL MONITORING & WINDOW ONLOAD
+// ==========================================
 window.addEventListener("scroll", () => {
     document.querySelectorAll(".reveal").forEach(el => {
         const rect = el.getBoundingClientRect();
@@ -1977,10 +1996,10 @@ window.addEventListener("scroll", () => {
 });
 
 // Window Onload Starter
-window.onload = () => {
+window.addEventListener('load', function() {
     ambilNamaTamu();
     setInterval(createPetal, 600);
-};
+});
 </script>
 </body>
 </html>
