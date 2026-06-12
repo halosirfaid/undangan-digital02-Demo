@@ -1365,7 +1365,7 @@
                     <p id="alamat-kado-teks" class="text-[12px] text-stone-300 leading-relaxed mb-3">
                     
                     </p>
-                    <p class="text-[10px] text-amber-200 uppercase tracking-widest mb-4">Penerima: <span id=alamat-penerima"></span></p>
+                    <p class="text-[10px] text-amber-200 uppercase tracking-widest mb-4">Penerima: <span id="alamat-penerima"></span></p>
                     <div class="flex justify-between items-center">
                         <span class="text-[10px] text-[#8696a0] italic">Klik untuk menyalin alamat</span>
                         <button onclick="salinTeks('Jl. Trans Kalimantan No. 123, Kuala Kapuas, Kapuas Murung', 'Alamat', this)" class="wa-transfer-btn-copy">SALIN ALAMAT</button>
@@ -1543,7 +1543,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('resepsi-tanggal').innerText = dataMempelai.resepsi.tanggal;
         document.getElementById('resepsi-jam').innerText = dataMempelai.resepsi.jam;
         document.getElementById('resepsi-tempat').innerText = dataMempelai.resepsi.tempat;
-       /document.getElementById('resepsi-maps-link').href = dataMempelai.maps.tombolRute;
+        document.getElementById('resepsi-maps-link').href = dataMempelai.maps.tombolRute;
     }
 
     // 5. Mengisi Maps Live Location
