@@ -1569,12 +1569,14 @@ document.addEventListener('DOMContentLoaded', function() {
 function bukaUndanganDigital() {
     const coverSection = document.getElementById('cover');
     if (coverSection) {
+        // 1. Berikan class efek memudar yang sudah kamu buat
         coverSection.classList.add('cover-hidden');
+        
+        // 2. Setelah animasi pudar selesai (1 detik), benar-benar hilangkan cover dari layout
         setTimeout(() => {
-            coverSection.style.display = 'hidden';
+            coverSection.style.display = 'none'; // DIUBAH dari 'hidden' menjadi 'none'
         }, 1000);
     }
-
 
     // Munculkan konten utama & menu setelah cover terbuka
     document.getElementById('konten-utama').style.display = 'block';
