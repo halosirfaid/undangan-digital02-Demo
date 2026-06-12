@@ -5,7 +5,6 @@
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    ...
 
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -1117,15 +1116,15 @@
                     </div>
                     <hr class="border-white/10 my-2">
                     <p class="text-xs text-stone-300 flex items-center gap-2 mb-1.5">
-                        <i class="fa-regular fa-calendar text-amber-400 w-4"></i> Minggu, 12 Juli 2026
+                        <i class="fa-regular fa-calendar text-amber-400 w-4"></i> <span id="akad-tanggal"></span>
                     </p>
                     <p class="text-xs text-stone-300 flex items-center gap-2 mb-1.5">
-                        <i class="fa-regular fa-clock text-amber-400 w-4"></i> 08.00 - 10.00 WITA
+                        <i class="fa-regular fa-clock text-amber-400 w-4"></i> <span id="akad-jam"></span>
                     </p>
                     <p class="text-xs text-stone-300 flex items-center gap-2">
-                        <i class="fa-solid fa-location-dot text-amber-400 w-4"></i> Kios Ningsih, Kuala Kapuas
+                        <i class="fa-solid fa-location-dot text-amber-400 w-4"></i> <span id=akad-tempat"></span> 
                     </p>
-                    <a href="https://maps.google.com" target="_blank" class="btn-location shadow-sm mt-4">
+                    <a id="akad-maps-link" href="" target="_blank" class="btn-location shadow-sm mt-4">
                     <i class="fa-solid fa-location-dot"></i> Lihat Lokasi
                 </a>
                 </div>
@@ -1146,15 +1145,15 @@
                     </div>
                     <hr class="border-white/10 my-2">
                     <p class="text-xs text-stone-100 flex items-center gap-2 mb-1.5">
-                        <i class="fa-regular fa-calendar text-amber-300 w-4"></i> Minggu, 12 Juli 2026
+                        <i class="fa-regular fa-calendar text-amber-300 w-4"></i> <span id="resepsi-tanggal"></span>  
                     </p>
                     <p class="text-xs text-stone-100 flex items-center gap-2 mb-1.5">
-                        <i class="fa-regular fa-clock text-amber-300 w-4"></i> 11.00 - Selesai
+                        <i class="fa-regular fa-clock text-amber-300 w-4"></i> <span id="resepsi-jam"></span>
                     </p>
                     <p class="text-xs text-stone-100 flex items-center gap-2">
-                        <i class="fa-solid fa-location-dot text-amber-300 w-4"></i> Kios Ningsih, Kuala Kapuas
+                        <i class="fa-solid fa-location-dot text-amber-300 w-4"></i> <span id="resepsi-tempat"></span>
                     </p>
-                    <a href="https://maps.google.com" target="_blank" class="btn-location shadow-sm mt-4">
+                    <a id="resepsi-maps-link" href=" " target="_blank" class="btn-location shadow-sm mt-4">
                     <i class="fa-solid fa-location-dot"></i> Lihat Lokasi
                 </a>
                 </div>
@@ -1206,7 +1205,7 @@
                 
                 <!-- Peta Google Maps Asli (Tetap dipertahankan agar berfungsi baik) -->
                 <div class="w-full h-52 overflow-hidden rounded-t-lg border-b border-black/20">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2914.315757991008!2d114.45293869238287!3d-3.092351775439721!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2de46b100af7e14d%3A0x84b232b9a80765c6!2sKios%20Ningsih!5e0!3m2!1sid!2sid!4v1776149733951!5m2!1sid!2sid" 
+                    <iframe id="maps-iframe" src=" " 
                             width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
                 
@@ -1216,7 +1215,7 @@
                     <p class="text-[10px] text-stone-400 leading-tight mb-3">Klik tombol di bawah untuk membuka navigasi rute langsung via Google Maps.</p>
                     
                     <!-- Tombol Navigasi Hijau WA -->
-                    <a href="https://maps.app.goo.gl/TgL9angPRcHxiN238" target="_blank" 
+                    <a id="maps-tombol-rute" href=" " target="_blank" 
                        class="block text-center bg-[#00a884] text-white py-2 rounded-lg text-[11px] font-bold tracking-wider active:scale-95 transition-all shadow-md">
                         <i class="fa-solid fa-location-crosshairs mr-1"></i> BUKA PETUNJUK JALAN
                     </a>
@@ -1331,8 +1330,8 @@
                 </div>
                 <div class="p-4">
                     <p class="text-xs text-stone-400 mb-1">Nomor Rekening:</p>
-                    <p class="text-xl font-mono text-amber-200 tracking-wider font-bold mb-2">1234 5678 9012</p>
-                    <p class="text-[11px] text-white uppercase tracking-wider opacity-90 mb-4">a.n Sirajuddin</p>
+                    <p id="mandiri-no" class="text-xl font-mono text-amber-200 tracking-wider font-bold mb-2"></p>
+                    <p id="mandiri-an" class="text-[11px] text-white uppercase tracking-wider opacity-90 mb-4"></p>
                     <div class="flex justify-between items-center">
                         <span class="text-[10px] text-[#8696a0] italic">Klik untuk menyalin</span>
                         <button onclick="salinTeks('123456789012', 'Mandiri', this)" class="wa-transfer-btn-copy">SALIN NOMOR</button>
@@ -1348,8 +1347,8 @@
                 </div>
                 <div class="p-4">
                     <p class="text-xs text-stone-400 mb-1">Nomor Rekening:</p>
-                    <p class="text-xl font-mono text-amber-200 tracking-wider font-bold mb-2">0987 6543 21</p>
-                    <p class="text-[11px] text-white uppercase tracking-wider opacity-90 mb-4">a.n Aulia Rahmah</p>
+                    <p id="bca-no" class="text-xl font-mono text-amber-200 tracking-wider font-bold mb-2"></p>
+                    <p id="bca-an" class="text-[11px] text-white uppercase tracking-wider opacity-90 mb-4"></p>
                     <div class="flex justify-between items-center">
                         <span class="text-[10px] text-[#8696a0] italic">Klik untuk menyalin</span>
                         <button onclick="salinTeks('0987654321', 'BCA', this)" class="wa-transfer-btn-copy">SALIN NOMOR</button>
@@ -1363,10 +1362,10 @@
                     <span class="text-[10px] text-amber-400 font-bold tracking-widest"><i class="fa-solid fa-gift mr-1"></i> ALAMAT KIRIM KADO</span>
                 </div>
                 <div class="p-4">
-                    <p class="text-[12px] text-stone-300 leading-relaxed mb-3">
-                        Jl. Trans Kalimantan No. 123, Kuala Kapuas, Kapuas Murung
+                    <p id="alamat-kado-teks" class="text-[12px] text-stone-300 leading-relaxed mb-3">
+                    
                     </p>
-                    <p class="text-[10px] text-amber-200 uppercase tracking-widest mb-4">Penerima: Rara & Adi</p>
+                    <p class="text-[10px] text-amber-200 uppercase tracking-widest mb-4">Penerima: <span id=alamat-penerima"></span></p>
                     <div class="flex justify-between items-center">
                         <span class="text-[10px] text-[#8696a0] italic">Klik untuk menyalin alamat</span>
                         <button onclick="salinTeks('Jl. Trans Kalimantan No. 123, Kuala Kapuas, Kapuas Murung', 'Alamat', this)" class="wa-transfer-btn-copy">SALIN ALAMAT</button>
@@ -1388,7 +1387,7 @@
     <!-- Tombol Konfirmasi Via WA (Tetap ditaruh di luar box agar jelas terlihat) -->
     <div class="mt-10 reveal">
         <p class="text-[10px] text-stone-500 uppercase tracking-widest mb-4">Sudah mengirim tanda kasih?</p>
-        <a href="https://wa.me/628875754371?text=Halo%20Rara%20%26%20Adi%2C%20saya%20sudah%20mengirimkan%20tanda%20kasih.%20Terima%20kasih." 
+        <a id="btn-konfirmasi-wa" href=" " 
            target="_blank" 
            class="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-full text-[11px] font-bold shadow-lg active:scale-95 transition-all">
             <i class="fa-brands fa-whatsapp text-lg"></i>
