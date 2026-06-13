@@ -1364,7 +1364,7 @@
                     <p class="text-[10px] text-amber-200 uppercase tracking-widest mb-4">Penerima: <span id="alamat-penerima"></span></p>
                     <div class="flex justify-between items-center">
                         <span class="text-[10px] text-[#8696a0] italic">Klik untuk menyalin alamat</span>
-                        <button onclick="salinTeks('Jl. Trans Kalimantan No. 123, Kuala Kapuas, Kapuas Murung', 'Alamat', this)" class="wa-transfer-btn-copy">SALIN ALAMAT</button>
+                        <button onclick="salinTeks(dataMempelai.kado.alamatKirim, 'Alamat', this)" class="wa-transfer-btn-copy">SALIN ALAMAT</button>
                     </div>
                 </div>
             </div>
@@ -1552,21 +1552,24 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById('bca-an').innerText = "A/N " + dataMempelai.kado.bcaAn;
             document.getElementById('alamat-kado-teks').innerText = dataMempelai.kado.alamatKirim;
             document.getElementById('alamat-penerima').innerText = dataMempelai.kado.penerimaPaket;
-        } // <--- SUDAH DITAMBAHKAN TUTUP KURUNG DI SINI
+        } 
 
         if(document.getElementById('cover')) {
             document.getElementById('cover').style.backgroundImage = `linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85)), url('${dataMempelai.media?.fotoCover || "1.jpg"}')`;
         }
-        if(document.getElementById('foto-notif-wa')) {
-            document.getElementById('foto-notif-wa').src = dataMempelai.media?.fotoNotif || "pengantinWanita.jpg";
-        }
+        
+        // PERBAIKAN: Mengisi semua foto profil WhatsApp yang menggunakan class secara massal
+        const semuaFotoNotif = document.querySelectorAll('.foto-notif-wa');
+        semuaFotoNotif.forEach(img => {
+            img.src = dataMempelai.media?.fotoNotif || "pengantinWanita.jpg";
+        });
 
         // Setup Link WhatsApp Konfirmasi
         let teksWa = encodeURIComponent("Halo " + dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + ", saya ingin mengonfirmasi pengiriman kado digital...");
         if(document.getElementById('btn-konfirmasi-wa')) {
             document.getElementById('btn-konfirmasi-wa').href = "https://wa.me/" + dataMempelai.kado.NoWaKonfirmasi + "?text=" + teksWa;
         }
-    } // <--- SUDAH DITAMBAHKAN TUTUP KURUNG PENUTUP SEBAKTI UTAMA
+    } 
 });
 
       
