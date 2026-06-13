@@ -1497,76 +1497,76 @@
 
 
  <script>
-
 // ==========================================
-    // DATA INJECTION (DOMContentLoaded)
-    // ==========================================
-    document.addEventListener("DOMContentLoaded", function() {
-        if(typeof dataMempelai !== 'undefined') {
-            if(document.getElementById('cover-tanggal')) document.getElementById('cover-tanggal').innerText = dataMempelai.akad.tanggal;
-            if(document.getElementById('notif-nama')) document.getElementById('notif-nama').innerText = dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + " (Wedding)";
-     
-    // 2. Mengisi Data Mempelai Wanita
-    if(document.getElementById('nama-lengkap-wanita')) {
-        document.getElementById('nama-lengkap-wanita').innerText = dataMempelai.wanita.namaLengkap;
-        document.getElementById('panggilan-wanita').innerText = 'Sering dipanggil "' + dataMempelai.wanita.panggilan + '"';
-        document.getElementById('ayah-wanita').innerText = dataMempelai.wanita.ayah;
-        document.getElementById('ibu-wanita').innerText = dataMempelai.wanita.ibu;
-        document.getElementById('ig-user-wanita').innerText = '@' + dataMempelai.wanita.instagram;
-        document.getElementById('ig-link-wanita').href = dataMempelai.wanita.linkInstagram;
-    }
+// DATA INJECTION (DOMContentLoaded)
+// ==========================================
+document.addEventListener("DOMContentLoaded", function() {
+    if(typeof dataMempelai !== 'undefined') {
+        if(document.getElementById('cover-tanggal')) document.getElementById('cover-tanggal').innerText = dataMempelai.akad.tanggal;
+        if(document.getElementById('notif-nama')) document.getElementById('notif-nama').innerText = dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + " (Wedding)";
+ 
+        // 2. Mengisi Data Mempelai Wanita
+        if(document.getElementById('nama-lengkap-wanita')) {
+            document.getElementById('nama-lengkap-wanita').innerText = dataMempelai.wanita.namaLengkap;
+            document.getElementById('panggilan-wanita').innerText = 'Sering dipanggil "' + dataMempelai.wanita.panggilan + '"';
+            document.getElementById('ayah-wanita').innerText = dataMempelai.wanita.ayah;
+            document.getElementById('ibu-wanita').innerText = dataMempelai.wanita.ibu;
+            document.getElementById('ig-user-wanita').innerText = '@' + dataMempelai.wanita.instagram;
+            document.getElementById('ig-link-wanita').href = dataMempelai.wanita.linkInstagram;
+        }
 
-    // 3. Mengisi Data Mempelai Pria
-    if(document.getElementById('nama-lengkap-pria')) {
-        document.getElementById('nama-lengkap-pria').innerText = dataMempelai.pria.namaLengkap;
-        document.getElementById('panggilan-pria').innerText = 'Sering dipanggil "' + dataMempelai.pria.panggilan + '"';
-        document.getElementById('ayah-pria').innerText = dataMempelai.pria.ayah;
-        document.getElementById('ibu-pria').innerText = dataMempelai.pria.ibu;
-        document.getElementById('ig-user-pria').innerText = '@' + dataMempelai.pria.instagram;
-        document.getElementById('ig-link-pria').href = dataMempelai.pria.linkInstagram;
-    }
+        // 3. Mengisi Data Mempelai Pria
+        if(document.getElementById('nama-lengkap-pria')) {
+            document.getElementById('nama-lengkap-pria').innerText = dataMempelai.pria.namaLengkap;
+            document.getElementById('panggilan-pria').innerText = 'Sering dipanggil "' + dataMempelai.pria.panggilan + '"';
+            document.getElementById('ayah-pria').innerText = dataMempelai.pria.ayah;
+            document.getElementById('ibu-pria').innerText = dataMempelai.pria.ibu;
+            document.getElementById('ig-user-pria').innerText = '@' + dataMempelai.pria.instagram;
+            document.getElementById('ig-link-pria').href = dataMempelai.pria.linkInstagram;
+        }
 
-    // 4. Mengisi Data Jadwal Acara (Akad & Resepsi)
-    if(document.getElementById('akad-tanggal')) {
-        document.getElementById('akad-tanggal').innerText = dataMempelai.akad.tanggal;
-        document.getElementById('akad-jam').innerText = dataMempelai.akad.jam;
-        document.getElementById('akad-tempat').innerText = dataMempelai.akad.tempat;
-        document.getElementById('akad-maps-link').href = dataMempelai.akad.linkMaps;
+        // 4. Mengisi Data Jadwal Acara (Akad & Resepsi)
+        if(document.getElementById('akad-tanggal')) {
+            document.getElementById('akad-tanggal').innerText = dataMempelai.akad.tanggal;
+            document.getElementById('akad-jam').innerText = dataMempelai.akad.jam;
+            document.getElementById('akad-tempat').innerText = dataMempelai.akad.tempat;
+            document.getElementById('akad-maps-link').href = dataMempelai.akad.linkMaps;
 
-        document.getElementById('resepsi-tanggal').innerText = dataMempelai.resepsi.tanggal;
-        document.getElementById('resepsi-jam').innerText = dataMempelai.resepsi.jam;
-        document.getElementById('resepsi-tempat').innerText = dataMempelai.resepsi.tempat;
-        document.getElementById('resepsi-maps-link').href = dataMempelai.maps.tombolRute;
-    }
+            document.getElementById('resepsi-tanggal').innerText = dataMempelai.resepsi.tanggal;
+            document.getElementById('resepsi-jam').innerText = dataMempelai.resepsi.jam;
+            document.getElementById('resepsi-tempat').innerText = dataMempelai.resepsi.tempat;
+            document.getElementById('resepsi-maps-link').href = dataMempelai.maps.tombolRute;
+        }
 
-    // 5. Mengisi Maps Live Location
-    if(document.getElementById('maps-iframe')) {
-        document.getElementById('maps-iframe').src = dataMempelai.maps.iframeUrl;
-        document.getElementById('maps-tombol-rute').href = dataMempelai.maps.tombolRute;
-    }
+        // 5. Mengisi Maps Live Location
+        if(document.getElementById('maps-iframe')) {
+            document.getElementById('maps-iframe').src = dataMempelai.maps.iframeUrl;
+            document.getElementById('maps-tombol-rute').href = dataMempelai.maps.tombolRute;
+        }
 
-    // 6. Mengisi Data Kado Digital & WA Konfirmasi
-    if(document.getElementById('mandiri-no')) {
-        document.getElementById('mandiri-no').innerText = dataMempelai.kado.mandiriNo;
-        document.getElementById('mandiri-an').innerText = "A/N " + dataMempelai.kado.mandiriAn;
-        document.getElementById('bca-no').innerText = dataMempelai.kado.bcaNo;
-        document.getElementById('bca-an').innerText = "A/N " + dataMempelai.kado.bcaAn;
-        document.getElementById('alamat-kado-teks').innerText = dataMempelai.kado.alamatKirim;
-        document.getElementById('alamat-penerima').innerText = dataMempelai.kado.penerimaPaket;
+        // 6. Mengisi Data Kado Digital & WA Konfirmasi
+        if(document.getElementById('mandiri-no')) {
+            document.getElementById('mandiri-no').innerText = dataMempelai.kado.mandiriNo;
+            document.getElementById('mandiri-an').innerText = "A/N " + dataMempelai.kado.mandiriAn;
+            document.getElementById('bca-no').innerText = dataMempelai.kado.bcaNo;
+            document.getElementById('bca-an').innerText = "A/N " + dataMempelai.kado.bcaAn;
+            document.getElementById('alamat-kado-teks').innerText = dataMempelai.kado.alamatKirim;
+            document.getElementById('alamat-penerima').innerText = dataMempelai.kado.penerimaPaket;
+        } // <--- SUDAH DITAMBAHKAN TUTUP KURUNG DI SINI
 
-    if(document.getElementById('cover')) {
-        // Menembak background image cover
-        document.getElementById('cover').style.backgroundImage = `linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85)), url('${dataMempelai.media.fotoCover}')`;
-    }
-    if(document.getElementById('foto-notif-wa')) {
-        document.getElementById('foto-notif-wa').src = dataMempelai.media.fotoNotif;
-    }
+        if(document.getElementById('cover')) {
+            document.getElementById('cover').style.backgroundImage = `linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85)), url('${dataMempelai.media?.fotoCover || "1.jpg"}')`;
+        }
+        if(document.getElementById('foto-notif-wa')) {
+            document.getElementById('foto-notif-wa').src = dataMempelai.media?.fotoNotif || "pengantinWanita.jpg";
+        }
 
-    // Setup Link WhatsApp Konfirmasi (Sekarang aman berada di dalam satu lingkup)
-    let teksWa = encodeURIComponent("Halo " + dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + ", saya ingin mengonfirmasi pengiriman kado digital...");
-    if(document.getElementById('btn-konfirmasi-wa')) {
-        document.getElementById('btn-konfirmasi-wa').href = "https://wa.me/" + dataMempelai.kado.NoWaKonfirmasi + "?text=" + teksWa;
-    }
+        // Setup Link WhatsApp Konfirmasi
+        let teksWa = encodeURIComponent("Halo " + dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + ", saya ingin mengonfirmasi pengiriman kado digital...");
+        if(document.getElementById('btn-konfirmasi-wa')) {
+            document.getElementById('btn-konfirmasi-wa').href = "https://wa.me/" + dataMempelai.kado.NoWaKonfirmasi + "?text=" + teksWa;
+        }
+    } // <--- SUDAH DITAMBAHKAN TUTUP KURUNG PENUTUP SEBAKTI UTAMA
 });
 
       
