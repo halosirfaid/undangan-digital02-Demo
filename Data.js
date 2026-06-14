@@ -1,6 +1,6 @@
 // FILE DATA MEMPELAI (Klien tinggal diganti di sini)
 const dataMempelai = {
-    idUndangan: "devi-ehsan", // Sesuai ID tujuan Google Sheets kamu
+    idUndangan: "Uul-Julak", // Sesuai ID tujuan Google Sheets kamu
     tglCountdown: "June 15, 2026 12:00:00", // Format: Bulan Tanggal, Tahun Jam:Menit:Detik
     
     // 1. Data Mempelai Wanita
@@ -10,8 +10,8 @@ const dataMempelai = {
         ayah: "H. Tani",
         ibu: "Hj. Aslam",
         foto: "1.jpg", // Nama file foto atau link url foto
-        instagram: "rara_rahmah",
-        linkInstagram: "https://instagram.com/sirfa.id"
+        instagram: "aulrah__",
+        linkInstagram: "https://instagram.com/aulrah__"
     },
     
     // 2. Data Mempelai Pria
@@ -21,7 +21,7 @@ const dataMempelai = {
         ayah: "Asul",
         ibu: "Arta",
         foto: "2.jpg", // Nama file foto atau link url foto
-        instagram: "adi_sirajuddin",
+        instagram: "sirfa.id",
         linkInstagram: "https://instagram.com/sirfa.id"
     },
 
@@ -31,7 +31,7 @@ const dataMempelai = {
         jam: "12.00 - 12.10 WITA",
         tempat: "Alfamart, Kuala Kapuas",
         foto: "1.jpg",
-        linkMaps: "https://maps.google.com"
+        linkMaps: "https://maps.app.goo.gl/YeVJc3Tkg9pM6d7c7"
     },
 
     // 4. Data Acara Resepsi
@@ -40,7 +40,7 @@ const dataMempelai = {
         jam: "11.50 - Selesai",
         tempat: "Indomaret, Kuala Kapuas",
         foto: "2.jpg",
-        linkMaps: "https://maps.google.com"
+        linkMaps: "https://maps.app.goo.gl/XaFpSVr2BcCwbbiV7"
     },
 
     // 5. Data Peta (Maps Embed)
@@ -55,9 +55,9 @@ const dataMempelai = {
         "2.jpg",
         "3.jpg",
         "4.jpg",
-        "3.jpg",
         "5.jpg",
-        "3.jpg" 
+        "1.jpg",
+        "2.jpg" 
     ],
 
     // 7. Data Kado Digital (Rekening & Alamat)
@@ -67,7 +67,7 @@ const dataMempelai = {
         mandiriNo: "1234 5678 9012",
         mandiriAn: "Julak",
         alamatKirim: "Jl. Trans Kalimantan No. 123, Kuala Kapuas, Kapuas Murung",
-        penerimaPaket: "Rara & Adi",
+        penerimaPaket: "Uul & Julak",
         NoWaKonfirmasi: "628875754371"
     },
 
