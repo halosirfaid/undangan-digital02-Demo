@@ -1,14 +1,14 @@
 // FILE DATA MEMPELAI (Klien tinggal diganti di sini)
 const dataMempelai = {
     idUndangan: "devi-ehsan", // Sesuai ID tujuan Google Sheets kamu
-    tglCountdown: "July 12, 2026 08:00:00", // Format: Bulan Tanggal, Tahun Jam:Menit:Detik
+    tglCountdown: "June 15, 2026 12:00:00", // Format: Bulan Tanggal, Tahun Jam:Menit:Detik
     
     // 1. Data Mempelai Wanita
     wanita: {
-        namaLengkap: "ABC, S.Pd.",
-        panggilan: "ABC",
-        ayah: "H. ABC",
-        ibu: "Hj. ABCD",
+        namaLengkap: "Aulia Rahmah, S.Pd.",
+        panggilan: "Uul",
+        ayah: "H. Tani",
+        ibu: "Hj. Aslam",
         foto: "1.jpg", // Nama file foto atau link url foto
         instagram: "rara_rahmah",
         linkInstagram: "https://instagram.com/sirfa.id"
@@ -16,30 +16,30 @@ const dataMempelai = {
     
     // 2. Data Mempelai Pria
     pria: {
-        namaLengkap: "DOP, S.T.",
-        panggilan: "DOP",
-        ayah: "Budi DOP",
-        ibu: "DOP",
-        foto: "PengantinPria.jpg", // Nama file foto atau link url foto
+        namaLengkap: "Sirajuddin Fajri, S.T.",
+        panggilan: "Julak Anum",
+        ayah: "Asul",
+        ibu: "Arta",
+        foto: "2.jpg", // Nama file foto atau link url foto
         instagram: "adi_sirajuddin",
         linkInstagram: "https://instagram.com/sirfa.id"
     },
 
     // 3. Data Acara Akad Nikah
     akad: {
-        tanggal: "Minggu, 12 Juli 2026",
-        jam: "08.00 - 10.00 WITA",
-        tempat: "Kios Ningsih, Kuala Kapuas",
-        foto: "3.jpg",
+        tanggal: "Senin, 15 Juli 2026",
+        jam: "12.00 - 12.10 WITA",
+        tempat: "Alfamart, Kuala Kapuas",
+        foto: "1.jpg",
         linkMaps: "https://maps.google.com"
     },
 
     // 4. Data Acara Resepsi
     resepsi: {
-        tanggal: "Minggu, 12 Juli 2026",
-        jam: "11.00 - Selesai",
-        tempat: "Kios Ningsih, Kuala Kapuas",
-        foto: "4.jpg",
+        tanggal: "Senin, 15 Juli 2026",
+        jam: "11.50 - Selesai",
+        tempat: "Indomaret, Kuala Kapuas",
+        foto: "2.jpg",
         linkMaps: "https://maps.google.com"
     },
 
@@ -63,9 +63,9 @@ const dataMempelai = {
     // 7. Data Kado Digital (Rekening & Alamat)
     kado: {
         bcaNo: "0987 6543 21",
-        bcaAn: "Aulia Rahmah",
+        bcaAn: "Uul",
         mandiriNo: "1234 5678 9012",
-        mandiriAn: "Sirajuddin",
+        mandiriAn: "Julak",
         alamatKirim: "Jl. Trans Kalimantan No. 123, Kuala Kapuas, Kapuas Murung",
         penerimaPaket: "Rara & Adi",
         NoWaKonfirmasi: "628875754371"
