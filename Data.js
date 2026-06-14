@@ -5,21 +5,21 @@ const dataMempelai = {
     
     // 1. Data Mempelai Wanita
     wanita: {
-        namaLengkap: "Aulia Rahmah, S.Pd.",
-        panggilan: "Rara",
-        ayah: "H. Ahmad",
-        ibu: "Hj. Siti Aminah",
-        foto: "pengantinWanita.jpg", // Nama file foto atau link url foto
+        namaLengkap: "ABC, S.Pd.",
+        panggilan: "ABC",
+        ayah: "H. ABC",
+        ibu: "Hj. ABCD",
+        foto: "1.jpg", // Nama file foto atau link url foto
         instagram: "rara_rahmah",
         linkInstagram: "https://instagram.com/sirfa.id"
     },
     
     // 2. Data Mempelai Pria
     pria: {
-        namaLengkap: "Sirajuddin, S.T.",
-        panggilan: "Adi",
-        ayah: "Budi Santoso",
-        ibu: "Sri Wahyuni",
+        namaLengkap: "DOP, S.T.",
+        panggilan: "DOP",
+        ayah: "Budi DOP",
+        ibu: "DOP",
         foto: "PengantinPria.jpg", // Nama file foto atau link url foto
         instagram: "adi_sirajuddin",
         linkInstagram: "https://instagram.com/sirfa.id"
@@ -56,7 +56,7 @@ const dataMempelai = {
         "3.jpg",
         "4.jpg",
         "5.jpg",
-        "5.jpg" 
+        "3.jpg" 
     ],
 
     // 7. Data Kado Digital (Rekening & Alamat)
@@ -72,7 +72,7 @@ const dataMempelai = {
 
     // 8. Media Cover & Notifikasi Pop-up
     media: {
-        fotoCover: "1.jpg",
-        fotoNotif: "pengantinWanita.jpg"
+        fotoCover: "4.jpg",
+        fotoNotif: "3.jpg"
     }
 };
