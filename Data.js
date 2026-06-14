@@ -49,7 +49,17 @@ const dataMempelai = {
         tombolRute: "https://maps.app.goo.gl/TgL9angPRcHxiN238"
     },
 
-    // 6. Data Kado Digital (Rekening & Alamat)
+    // 6. Data Galeri Foto untuk Status WA / Slide
+    galeri: [
+        "galeri1.jpg",
+        "galeri2.jpg",
+        "galeri3.jpg",
+        "galeri4.jpg",
+        "galeri5.jpg",
+        "galeri6.jpg" 
+    ],
+
+    // 7. Data Kado Digital (Rekening & Alamat)
     kado: {
         bcaNo: "0987 6543 21",
         bcaAn: "Aulia Rahmah",
@@ -58,5 +68,11 @@ const dataMempelai = {
         alamatKirim: "Jl. Trans Kalimantan No. 123, Kuala Kapuas, Kapuas Murung",
         penerimaPaket: "Rara & Adi",
         NoWaKonfirmasi: "628875754371"
+    },
+
+    // 8. Media Cover & Notifikasi Pop-up
+    media: {
+        fotoCover: "1.jpg",
+        fotoNotif: "pengantinWanita.jpg"
     }
 };
