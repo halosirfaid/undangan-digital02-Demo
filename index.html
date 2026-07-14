@@ -1234,434 +1234,122 @@
 
     <audio id="musik" loop><source src="lagupenganti.mp3" type="audio/mpeg"></audio>
     <audio id="notif-sound" preload="auto"><source src="notifundangan.mp3" type="audio/mpeg"></audio>
-
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            if(typeof dataMempelai !== 'undefined') {
-                if(document.getElementById('cover-tanggal')) document.getElementById('cover-tanggal').innerText = dataMempelai.akad.tanggal;
-                if(document.getElementById('notif-nama')) document.getElementById('notif-nama').innerText = dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + " (Wedding)";
-         
-                if(document.getElementById('nama-lengkap-wanita')) {
-                    document.getElementById('nama-lengkap-wanita').innerText = dataMempelai.wanita.namaLengkap;
-                    document.getElementById('panggilan-wanita').innerText = 'Sering dipanggil "' + dataMempelai.wanita.panggilan + '"';
-                    document.getElementById('ayah-wanita').innerText = dataMempelai.wanita.ayah;
-                    document.getElementById('ibu-wanita').innerText = dataMempelai.wanita.ibu;
-                    document.getElementById('ig-user-wanita').innerText = '@' + dataMempelai.wanita.instagram;
-                    document.getElementById('ig-link-wanita').href = dataMempelai.wanita.linkInstagram;
-                }
+    // Deklarasi variabel global agar bisa diakses semua fungsi status/story
+    let isAutoScrolling = false;
+    let currentStatus = 0;
+    let totalStatus = 0; 
+    let statusInterval;
+    const duration = 5000;
+    const captions = ["Momen tak terlupakan ❤️", "Cinta sejati berawal di sini...", "Bersyukur atas segalanya 🙏", "Menuju hari bahagia ✨", "Sampai bertemu di lokasi! 😍", "Bahagia selamanya 💖"];
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
+    const idUndanganStr = typeof dataMempelai !== 'undefined' ? dataMempelai.idUndangan : '';
 
-                const coverTanggal = document.getElementById("cover-tanggal");
-        if (coverTanggal) {
-            // Jika di data.js kamu menggunakan nama 'tglAcara'
-            if (dataMempelai.tglAcara) {
-                coverTanggal.innerText = dataMempelai.tglAcara;
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. Memuat Data Mempelai dari Data.js
+        if(typeof dataMempelai !== 'undefined') {
+            if(document.getElementById('cover-tanggal')) document.getElementById('cover-tanggal').innerText = dataMempelai.akad.tanggal;
+            if(document.getElementById('notif-nama')) document.getElementById('notif-nama').innerText = dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + " (Wedding)";
+     
+            if(document.getElementById('nama-lengkap-wanita')) {
+                document.getElementById('nama-lengkap-wanita').innerText = dataMempelai.wanita.namaLengkap;
+                document.getElementById('panggilan-wanita').innerText = 'Sering dipanggil "' + dataMempelai.wanita.panggilan + '"';
+                document.getElementById('ayah-wanita').innerText = dataMempelai.wanita.ayah;
+                document.getElementById('ibu-wanita').innerText = dataMempelai.wanita.ibu;
+                document.getElementById('ig-user-wanita').innerText = '@' + dataMempelai.wanita.instagram;
+                document.getElementById('ig-link-wanita').href = dataMempelai.wanita.linkInstagram;
+            }
+
+            if (document.getElementById("cover-tanggal") && dataMempelai.tglAcara) {
+                document.getElementById("cover-tanggal").innerText = dataMempelai.tglAcara;
             } 
-                if(document.getElementById('nama-lengkap-pria')) {
-                    document.getElementById('nama-lengkap-pria').innerText = dataMempelai.pria.namaLengkap;
-                    document.getElementById('panggilan-pria').innerText = 'Sering dipanggil "' + dataMempelai.pria.panggilan + '"';
-                    document.getElementById('ayah-pria').innerText = dataMempelai.pria.ayah;
-                    document.getElementById('ibu-pria').innerText = dataMempelai.pria.ibu;
-                    document.getElementById('ig-user-pria').innerText = '@' + dataMempelai.pria.instagram;
-                    document.getElementById('ig-link-pria').href = dataMempelai.pria.linkInstagram;
-                }
 
-                if(document.getElementById('akad-tanggal')) {
-                    document.getElementById('akad-tanggal').innerText = dataMempelai.akad.tanggal;
-                    document.getElementById('akad-jam').innerText = dataMempelai.akad.jam;
-                    document.getElementById('akad-tempat').innerText = dataMempelai.akad.tempat;
-                    document.getElementById('akad-maps-link').href = dataMempelai.akad.linkMaps;
+            if(document.getElementById('nama-lengkap-pria')) {
+                document.getElementById('nama-lengkap-pria').innerText = dataMempelai.pria.namaLengkap;
+                document.getElementById('panggilan-pria').innerText = 'Sering dipanggil "' + dataMempelai.pria.panggilan + '"';
+                document.getElementById('ayah-pria').innerText = dataMempelai.pria.ayah;
+                document.getElementById('ibu-pria').innerText = dataMempelai.pria.ibu;
+                document.getElementById('ig-user-pria').innerText = '@' + dataMempelai.pria.instagram;
+                document.getElementById('ig-link-pria').href = dataMempelai.pria.linkInstagram;
+            }
+            
+            if(document.getElementById('akad-tanggal')) {
+                document.getElementById('akad-tanggal').innerText = dataMempelai.akad.tanggal;
+                document.getElementById('akad-jam').innerText = dataMempelai.akad.jam;
+                document.getElementById('akad-tempat').innerText = dataMempelai.akad.tempat;
+                document.getElementById('akad-maps-link').href = dataMempelai.akad.linkMaps;
 
-                    document.getElementById('resepsi-tanggal').innerText = dataMempelai.resepsi.tanggal;
-                    document.getElementById('resepsi-jam').innerText = dataMempelai.resepsi.jam;
-                    document.getElementById('resepsi-tempat').innerText = dataMempelai.resepsi.tempat;
-                    document.getElementById('resepsi-maps-link').href = dataMempelai.resepsi.linkMaps; 
-                }
+                document.getElementById('resepsi-tanggal').innerText = dataMempelai.resepsi.tanggal;
+                document.getElementById('resepsi-jam').innerText = dataMempelai.resepsi.jam;
+                document.getElementById('resepsi-tempat').innerText = dataMempelai.resepsi.tempat;
+                document.getElementById('resepsi-maps-link').href = dataMempelai.resepsi.linkMaps; 
+            }
 
-                if(document.getElementById('maps-iframe')) {
-                    document.getElementById('maps-iframe').src = dataMempelai.maps.iframeUrl;
-                    document.getElementById('maps-tombol-rute').href = dataMempelai.maps.tombolRute;
-                }
+            if(document.getElementById('maps-iframe')) {
+                document.getElementById('maps-iframe').src = dataMempelai.maps.iframeUrl;
+                document.getElementById('maps-tombol-rute').href = dataMempelai.maps.tombolRute;
+            }
 
-                if(document.getElementById('mandiri-no')) {
-                    document.getElementById('mandiri-no').innerText = dataMempelai.kado.mandiriNo;
-                    document.getElementById('mandiri-an').innerText = "A/N " + dataMempelai.kado.mandiriAn;
-                    document.getElementById('bca-no').innerText = dataMempelai.kado.bcaNo;
-                    document.getElementById('bca-an').innerText = "A/N " + dataMempelai.kado.bcaAn;
-                    document.getElementById('alamat-kado-teks').innerText = dataMempelai.kado.alamatKirim;
-                    document.getElementById('alamat-penerima').innerText = dataMempelai.kado.penerimaPaket;
-                } 
+            if(document.getElementById('mandiri-no')) {
+                document.getElementById('mandiri-no').innerText = dataMempelai.kado.mandiriNo;
+                document.getElementById('mandiri-an').innerText = "A/N " + dataMempelai.kado.mandiriAn;
+                document.getElementById('bca-no').innerText = dataMempelai.kado.bcaNo;
+                document.getElementById('bca-an').innerText = "A/N " + dataMempelai.kado.bcaAn;
+                document.getElementById('alamat-kado-teks').innerText = dataMempelai.kado.alamatKirim;
+                document.getElementById('alamat-penerima').innerText = dataMempelai.kado.penerimaPaket;
+            } 
 
-                if(document.getElementById('cover')) {
-                    document.getElementById('cover').style.backgroundImage = `linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85)), url('${dataMempelai.media?.fotoCover || "1.jpg"}')`;
-                }
+            if(document.getElementById('cover')) {
+                document.getElementById('cover').style.backgroundImage = `linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85)), url('${dataMempelai.media?.fotoCover || "1.jpg"}')`;
+            }
+            
+            if(dataMempelai.story) {
+                if(document.getElementById('story-date-1')) document.getElementById('story-date-1').innerText = dataMempelai.story.bulanTahun1;
+                if(document.getElementById('story-msg-1')) document.getElementById('story-msg-1').innerText = dataMempelai.story.pesanWanita1;
+                if(document.getElementById('story-time-1')) document.getElementById('story-time-1').innerHTML = dataMempelai.story.waktuWanita1;
+
+                if(document.getElementById('story-date-2')) document.getElementById('story-date-2').innerText = dataMempelai.story.bulanTahun2;
+                if(document.getElementById('story-msg-2')) document.getElementById('story-msg-2').innerText = dataMempelai.story.pesanPria1;
+                if(document.getElementById('story-time-2')) document.getElementById('story-time-2').innerHTML = dataMempelai.story.waktuPria1 + ' <i class="fa-solid fa-check-double text-[#53bdeb]"></i>';
+
+                if(document.getElementById('story-date-3')) document.getElementById('story-date-3').innerText = dataMempelai.story.bulanTahun3;
+                if(document.getElementById('story-img-3')) document.getElementById('story-img-3').src = dataMempelai.story.fotoPertunangan;
+                if(document.getElementById('story-msg-3')) document.getElementById('story-msg-3').innerText = dataMempelai.story.pesanWanita2;
+                if(document.getElementById('story-time-3')) document.getElementById('story-time-3').innerHTML = dataMempelai.story.waktuWanita2;
+            }
+
+            const semuaFotoNotif = document.querySelectorAll('.foto-notif-wa');
+            semuaFotoNotif.forEach(img => {
+                img.src = dataMempelai.media?.fotoNotif || "pengantinWanita.jpg";
+            });
+
+            let teksWa = encodeURIComponent("Halo " + dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + ", saya ingin mengonfirmasi pengiriman kado digital...");
+            if(document.getElementById('btn-konfirmasi-wa')) {
+                document.getElementById('btn-konfirmasi-wa').href = "https://wa.me/" + dataMempelai.kado.NoWaKonfirmasi + "?text=" + teksWa;
+            }
+
+            // Integrasi Status Bar Galeri
+            const statusSlides = document.getElementById('status-slides');
+            const statusBarsContainer = document.querySelector('.wa-status-bars');
+            
+            if (statusSlides && dataMempelai.galeri && dataMempelai.galeri.length > 0) {
+                statusSlides.innerHTML = '';
+                if (statusBarsContainer) statusBarsContainer.innerHTML = '';
                 
-                if(dataMempelai.story) {
-                    if(document.getElementById('story-date-1')) document.getElementById('story-date-1').innerText = dataMempelai.story.bulanTahun1;
-                    if(document.getElementById('story-msg-1')) document.getElementById('story-msg-1').innerText = dataMempelai.story.pesanWanita1;
-                    if(document.getElementById('story-time-1')) document.getElementById('story-time-1').innerHTML = dataMempelai.story.waktuWanita1;
-
-                    if(document.getElementById('story-date-2')) document.getElementById('story-date-2').innerText = dataMempelai.story.bulanTahun2;
-                    if(document.getElementById('story-msg-2')) document.getElementById('story-msg-2').innerText = dataMempelai.story.pesanPria1;
-                    if(document.getElementById('story-time-2')) document.getElementById('story-time-2').innerHTML = dataMempelai.story.waktuPria1 + ' <i class="fa-solid fa-check-double text-[#53bdeb]"></i>';
-
-                    if(document.getElementById('story-date-3')) document.getElementById('story-date-3').innerText = dataMempelai.story.bulanTahun3;
-                    if(document.getElementById('story-img-3')) document.getElementById('story-img-3').src = dataMempelai.story.fotoPertunangan;
-                    if(document.getElementById('story-msg-3')) document.getElementById('story-msg-3').innerText = dataMempelai.story.pesanWanita2;
-                    if(document.getElementById('story-time-3')) document.getElementById('story-time-3').innerHTML = dataMempelai.story.waktuWanita2;
-                }
-
-                const semuaFotoNotif = document.querySelectorAll('.foto-notif-wa');
-                semuaFotoNotif.forEach(img => {
-                    img.src = dataMempelai.media?.fotoNotif || "pengantinWanita.jpg";
+                totalStatus = dataMempelai.galeri.length; 
+                
+                dataMempelai.galeri.forEach((fotoUrl, index) => {
+                    const hiddenClass = index === 0 ? 'block' : 'hidden';
+                    statusSlides.insertAdjacentHTML('beforeend', `<img src="${fotoUrl}" class="status-img w-full h-full object-cover ${hiddenClass}" alt="Galeri ${index}">`);
+                    
+                    if (statusBarsContainer) {
+                        statusBarsContainer.insertAdjacentHTML('beforeend', `<div class="wa-status-bar"><div class="wa-status-progress" id="bar-${index}"></div></div>`);
+                    }
                 });
-
-                let teksWa = encodeURIComponent("Halo " + dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + ", saya ingin mengonfirmasi pengiriman kado digital...");
-                if(document.getElementById('btn-konfirmasi-wa')) {
-                    document.getElementById('btn-konfirmasi-wa').href = "https://wa.me/" + dataMempelai.kado.NoWaKonfirmasi + "?text=" + teksWa;
-                }
-
-                const statusSlides = document.getElementById('status-slides');
-                const statusBarsContainer = document.querySelector('.wa-status-bars');
-                
-                if (statusSlides && dataMempelai.galeri && dataMempelai.galeri.length > 0) {
-                    statusSlides.innerHTML = '';
-                    if (statusBarsContainer) statusBarsContainer.innerHTML = '';
-                    
-                    totalStatus = dataMempelai.galeri.length; 
-                    
-                    dataMempelai.galeri.forEach((fotoUrl, index) => {
-                        const hiddenClass = index === 0 ? 'block' : 'hidden';
-                        statusSlides.insertAdjacentHTML('beforeend', `<img src="${fotoUrl}" class="status-img w-full h-full object-cover ${hiddenClass}" alt="Galeri ${index}">`);
-                        
-                        if (statusBarsContainer) {
-                            statusBarsContainer.insertAdjacentHTML('beforeend', `<div class="wa-status-bar"><div class="wa-status-progress" id="bar-${index}"></div></div>`);
-                        }
-                    });
-                }
-            } 
-        });
-
-        window.addEventListener('load', function() {
-            const loader = document.getElementById('loading-screen');
-            const musik = document.getElementById('musik');
-            const notifSound = document.getElementById('notif-sound');
-
-            if (musik) musik.load();
-            if (notifSound) notifSound.load();
-
-            if (loader) {
-                loader.style.opacity = '0';
-                loader.style.pointerEvents = 'none';
-                setTimeout(() => { loader.remove(); }, 700);
-            }
-        });
-
-        function bukaKunciSidikJari() {
-            const waNotif = document.getElementById('wa-notif-pop');
-            const notifSound = document.getElementById('notif-sound');
-            const fpWrapper = document.getElementById('fingerprint-wrapper');
-
-            if (notifSound) {
-                notifSound.currentTime = 0;
-                notifSound.volume = 1.0;
-                notifSound.play().catch(err => console.log("Gagal putar suara:", err));
             }
 
-            if (waNotif) {
-                waNotif.classList.remove('opacity-0', '-translate-y-10', 'scale-95', 'pointer-events-none');
-                waNotif.classList.add('opacity-100', 'translate-y-0', 'scale-100', 'pointer-events-auto');
-            }
-
-            if (fpWrapper) {
-                fpWrapper.style.opacity = '0';
-                fpWrapper.style.pointerEvents = 'none';
-            }
-        }
-
-        function bukaUndanganDigital() {
-            const coverSection = document.getElementById('cover');
-            if (coverSection) { coverSection.style.display = 'none'; }
-
-            document.getElementById('konten-utama').style.display = 'block';
-            document.getElementById('nav-menu').classList.remove('hidden');
-            document.getElementById('music-btn').classList.remove('hidden');
-
-            new Swiper(".swiper-salam", {
-                loop: true,
-                effect: "fade",
-                autoplay: { delay: 4000, disableOnInteraction: false },
-            });
-            
-            const audio = document.getElementById('musik');
-            if (audio) {
-                audio.play().catch(err => console.log("Autoplay dicegah browser"));
-                document.getElementById('music-btn').classList.add('spinning');
-            }
-            
-            startStatus();
-            muatUcapan();
-
-            setTimeout(() => { jalankanAnimasiMengetik(); }, 4000);
-            isAutoScrolling = true;
-            autoScroll();
-        }
-
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
-        const idUndanganStr = typeof dataMempelai !== 'undefined' ? dataMempelai.idUndangan : '';
-        let isAutoScrolling = false;
-        let currentStatus = 0;
-        let totalStatus = 5; 
-        const duration = 5000;
-        let statusInterval;
-        const captions = ["Momen tak terlupakan ❤️", "Cinta sejati berawal di sini...", "Bersyukur atas segalanya 🙏", "Menuju hari bahagia ✨", "Sampai bertemu di lokasi! 😍", "Bahagia selamanya 💖"];
-
-        function dapatkanWarnaNama(nama) {
-            const warnaWAGrup = ['#1f7aec', '#df5044', '#e57c06', '#05a665', '#b852cc', '#9c6644', '#00a5cf', '#e05780'];
-            let hash = 0;
-            for (let i = 0; i < nama.length; i++) { hash = nama.charCodeAt(i) + ((hash << 5) - hash); }
-            return warnaWAGrup[Math.abs(hash) % warnaWAGrup.length];
-        }
-
-        function muatUcapan() {
-            fetch(scriptURL + "?tujuan=" + idUndanganStr)
-            .then(res => res.json())
-            .then(data => {
-                const wadahUtama = document.getElementById('daftar-ucapan-container'); 
-                if (!wadahUtama) return;
-
-                const headerHtml = `
-                    <div class="text-center my-2 sticky-header bg-transparent">
-                        <span class="bg-[#182229] text-[#8696a0] text-[9px] px-3 py-1 rounded shadow-sm tracking-widest uppercase font-mono">
-                            TOTAL: ${data.length} PESAN DOA TERKIRIM
-                        </span>
-                    </div>
-                    <div id="daftar-ucapan" class="flex flex-col gap-3 max-h-[400px] overflow-y-auto pr-1 wa-scrollbar">
-                `;
-                
-                let isiUcapanHtml = "";
-                if (data.length === 0) {
-                    isiUcapanHtml += `<p class="text-center text-[#8696a0] text-[11px] py-10 italic">Belum ada obrolan ucapan.</p>`;
-                } else {
-                    const dataTerbalik = [...data].reverse();
-                    dataTerbalik.forEach(row => {
-                        const namaTamu = row[1];
-                        const waktuLalu = formatWaktuLalu(row[0]);
-                        const statusHadir = row[3] || 'Hadir';
-                        const warnaNamaTamu = dapatkanWarnaNama(namaTamu);
-                        
-                        let badgeColor = "text-green-400 bg-green-500/10";
-                        if(statusHadir === "Tidak Hadir") badgeColor = "text-red-400 bg-red-500/10";
-                        if(statusHadir === "Masih Ragu") badgeColor = "text-yellow-400 bg-yellow-500/10";
-
-                        isiUcapanHtml += `
-                            <div class="wa-bubble wa-bubble-left w-[88%] !bg-[#202c33] rounded-xl p-3 shadow-md border border-white/5 flex flex-col gap-0.5 relative">
-                                <div class="flex justify-between items-baseline mb-1">
-                                    <span class="font-bold text-[12.5px] tracking-wide text-left" style="color: ${warnaNamaTamu};">${namaTamu}</span>
-                                    <span class="text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${badgeColor}">${statusHadir}</span>
-                                </div>
-                                <p class="text-[12.5px] text-stone-200 leading-relaxed pr-6 text-left">${row[2]}</p>
-                                <span class="text-[9px] text-[#8696a0] self-end mt-1 block">${waktuLalu}</span>
-                            </div>`;
-                    });
-                }
-                isiUcapanHtml += `</div>`;
-                wadahUtama.innerHTML = headerHtml + isiUcapanHtml;
-            })
-            .catch(err => console.error("Gagal memuat data:", err));
-        }
-
-        function kirimKeSheets() {
-            const btn = document.getElementById('btn-kirim');
-            const namaInput = document.getElementById('nama-input');
-            const pesanInput = document.getElementById('pesan-input');
-            const hadirInput = document.getElementById('hadir-input');
-
-            const nama = namaInput ? namaInput.value.trim() : "";
-            const ucapan = pesanInput ? pesanInput.value.trim() : "";
-            const hadir = hadirInput ? hadirInput.value : "Hadir";
-
-            if (!nama || !ucapan) {
-                alert("Mohon isi nama dan ucapan Anda terlebih dahulu!");
-                return; 
-            }
-
-            btn.disabled = true;
-            btn.innerText = "MENGIRIM...";
-
-            fetch(scriptURL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify({ "nama": nama, "ucapan": ucapan, "kehadiran": hadir, "tujuan": idUndanganStr })
-            })
-            .then(() => {
-                btn.innerText = "TERKIRIM! 🟢";
-                btn.style.backgroundColor = "#059669";
-                if(namaInput) namaInput.value = "";
-                if(pesanInput) pesanInput.value = "";
-                
-                setTimeout(() => {
-                    muatUcapan();
-                    btn.disabled = false;
-                    btn.innerText = "KIRIM UCAPAN";
-                    btn.style.backgroundColor = "";
-                }, 2000);
-            })
-            .catch(error => {
-                btn.disabled = false;
-                btn.innerText = "KIRIM UCAPAN";
-            });
-        }
-
-        function jalankanAnimasiMengetik() {
-            const typingBubble = document.getElementById('typing-bubble');
-            const typingStatus = document.getElementById('typing-status');
-            if (!typingBubble || !typingStatus) return;
-            typingStatus.innerText = "Mengetik...";
-            typingStatus.style.color = '#00a884'; 
-            typingBubble.classList.remove('hidden');
-        }
-
-        function toggleLike(btn) {
-            const icon = btn.querySelector('i');
-            if (icon.classList.contains('fa-regular')) {
-                icon.classList.replace('fa-regular', 'fa-solid');
-                icon.classList.add('active', 'text-red-500');
-            } else {
-                icon.classList.replace('fa-solid', 'fa-regular');
-                icon.classList.remove('active', 'text-red-500');
-            }
-        }
-
-        function startStatus() {
-            resetBars();
-            animateBar(currentStatus);
-            statusInterval = setInterval(() => { nextStatus(); }, duration);
-        }
-
-        function animateBar(index) {
-            const bar = document.getElementById(`bar-${index}`);
-            if (bar) {
-                bar.style.transition = `width ${duration}ms linear`;
-                setTimeout(() => bar.style.width = '100%', 50);
-            }
-        }
-
-        function resetBars() {
-            for (let i = 0; i < totalStatus; i++) {
-                const bar = document.getElementById(`bar-${i}`);
-                if(bar) {
-                    bar.style.transition = 'none';
-                    bar.style.width = i < currentStatus ? '100%' : '0%';
-                }
-            }
-        }
-
-        function showStatus(index) {
-            const images = document.querySelectorAll('.status-img');
-            images.forEach((img, i) => { img.classList.toggle('hidden', i !== index); });
-            if(document.getElementById('status-caption')) {
-                document.getElementById('status-caption').innerText = captions[index] || "Momen Bahagia ✨";
-            }
-            currentStatus = index;
-            resetBars();
-            animateBar(currentStatus);
-        }
-
-        function nextStatus() {
-            clearInterval(statusInterval);
-            currentStatus = (currentStatus < totalStatus - 1) ? currentStatus + 1 : 0;
-            showStatus(currentStatus);
-            statusInterval = setInterval(nextStatus, duration);
-        }
-
-        function prevStatus() {
-            clearInterval(statusInterval);
-            currentStatus = (currentStatus > 0) ? currentStatus - 1 : totalStatus - 1;
-            showStatus(currentStatus);
-            statusInterval = setInterval(nextStatus, duration);
-        }
-
-        function formatWaktuLalu(tanggal) {
-            const detik = Math.floor((new Date() - new Date(tanggal)) / 1000);
-            if (isNaN(detik) || detik < 0) return "Baru saja";
-            let interval = detik / 3600;
-            if (interval > 1) return Math.floor(interval) + " jam lalu";
-            interval = detik / 60;
-            if (interval > 1) return Math.floor(interval) + " menit lalu";
-            return "Baru saja";
-        }
-
-        function ambilNamaTamu() {
-            const urlParams = new URLSearchParams(window.location.search);
-            let nama = urlParams.get('to') || urlParams.get('nama') || "Tamu Undangan";
-            nama = decodeURIComponent(nama);
-            const elemenNamaKotak = document.getElementById('nama-tamu') || document.querySelector('.kepada-yth-nama');
-            if (elemenNamaKotak) elemenNamaKotak.innerText = nama;
-        }
-
-        function toggleMusik() {
-            const audio = document.getElementById('musik');
-            const btn = document.getElementById('music-btn');
-            const icon = document.getElementById('music-icon');
-            if (audio.paused) { 
-                audio.play(); 
-                btn.classList.add('spinning'); 
-                icon.className = "fa-solid fa-compact-disc text-lg";
-            } else { 
-                audio.pause(); 
-                btn.classList.remove('spinning'); 
-                icon.className = "fa-solid fa-play text-lg";
-            }
-        }
-
-        function createPetal() {
-            const petal = document.createElement('div');
-            petal.className = 'petal';
-            petal.innerHTML = '🌸';
-            petal.style.left = Math.random() * 100 + 'vw';
-            petal.style.animationDuration = Math.random() * 3 + 2 + 's'; 
-            petal.style.fontSize = Math.random() * 10 + 10 + 'px';
-            document.body.appendChild(petal);
-            setTimeout(() => petal.remove(), 5000);
-        }
-
-        function toggleAutoScroll() {
-            isAutoScrolling = !isAutoScrolling;
-            const icon = document.getElementById('scroll-icon');
-            if (isAutoScrolling) { 
-                icon.classList.replace('fa-play', 'fa-pause'); 
-                autoScroll(); 
-            } else { 
-                icon.classList.replace('fa-pause', 'fa-play'); 
-            }
-        }
-
-        function autoScroll() {
-            if (!isAutoScrolling) return;
-            window.scrollBy(0, 0.6);
-            if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
-                requestAnimationFrame(autoScroll);
-            } else {
-                isAutoScrolling = false;
-                const icon = document.getElementById('scroll-icon');
-                if(icon) icon.classList.replace('fa-pause', 'fa-play');
-            }
-        }
-
-        function salinTeks(nomor, label, elemen) {
-            const teksAsli = elemen.innerText;
-            navigator.clipboard.writeText(nomor).then(() => {
-                elemen.innerText = "BERHASIL DISALIN!";
-                elemen.classList.add('bg-green-600');
-                setTimeout(() => {
-                    elemen.innerText = teksAsli;
-                    elemen.classList.remove('bg-green-600');
-                }, 2000);
-            });
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            if (typeof dataMempelai !== 'undefined' && dataMempelai.tglCountdown) {
+            // 2. Logika Hitung Mundur (Countdown)
+            if (dataMempelai.tglCountdown) {
                 const target = new Date(dataMempelai.tglCountdown).getTime();
                 const hitungMundur = setInterval(() => {
                     const sekarang = new Date().getTime();
@@ -1673,1712 +1361,334 @@
                     if(document.getElementById("seconds")) document.getElementById("seconds").innerText = Math.floor((sisa % (1000 * 60)) / 1000);
                 }, 1000);
             }
+        } 
+    });
+
+    // 3. Efek Loading Screen Selesai
+    window.addEventListener('load', function() {
+        const loader = document.getElementById('loading-screen');
+        const musik = document.getElementById('musik');
+        const notifSound = document.getElementById('notif-sound');
+
+        if (musik) musik.load();
+        if (notifSound) notifSound.load();
+
+        if (loader) {
+            loader.style.opacity = '0';
+            loader.style.pointerEvents = 'none';
+            setTimeout(() => { loader.remove(); }, 700);
+        }
+        ambilNamaTamu();
+        setInterval(createPetal, 600);
+    });
+
+    // 4. Deteksi Event Scroll untuk animasi mengetik WhatsApp
+    window.addEventListener('scroll', function() {
+        const storySec = document.getElementById('story');
+        if (storySec) {
+            const rectStory = storySec.getBoundingClientRect();
+            if (rectStory.top < window.innerHeight - 100 && rectStory.bottom > 0) { 
+                jalankanAnimasiMengetik(); 
+            }
+        }
+    });
+
+    function bukaKunciSidikJari() {
+        const waNotif = document.getElementById('wa-notif-pop');
+        const notifSound = document.getElementById('notif-sound');
+        const fpWrapper = document.getElementById('fingerprint-wrapper');
+
+        if (notifSound) {
+            notifSound.currentTime = 0;
+            notifSound.volume = 1.0;
+            notifSound.play().catch(err => console.log("Gagal putar suara:", err));
+        }
+
+        if (waNotif) {
+            waNotif.classList.remove('opacity-0', '-translate-y-10', 'scale-95', 'pointer-events-none');
+            waNotif.classList.add('opacity-100', 'translate-y-0', 'scale-100', 'pointer-events-auto');
+        }
+
+        if (fpWrapper) {
+            fpWrapper.style.opacity = '0';
+            fpWrapper.style.pointerEvents = 'none';
+        }
+    }
+
+    function bukaUndanganDigital() {
+        const coverSection = document.getElementById('cover');
+        if (coverSection) { coverSection.style.display = 'none'; }
+
+        document.getElementById('konten-utama').style.display = 'block';
+        document.getElementById('nav-menu').classList.remove('hidden');
+        document.getElementById('music-btn').classList.remove('hidden');
+
+        new Swiper(".swiper-salam", {
+            loop: true,
+            effect: "fade",
+            autoplay: { delay: 4000, disableOnInteraction: false },
         });
-
-
-
-        <!DOCTYPE html>
-<html lang="id">
-<head>
-    <script src="Data.js"></script>
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <meta property="og:title" content="Undangan Pernikahan Rara & Adi">
-    <meta id="meta-deskripsi" property="og:description" content="Kami mengundang Anda untuk berbagi kebahagiaan bersama kami.">
-    <meta property="og:image" content="https://sirfaid.github.io/Undangan-saya/3.jpg">
-    <meta property="og:url" content="https://sirfaid.github.io/Undangan-saya/">
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Undangan Pernikahan - Rara & Adi</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/luminous-lightbox/2.3.2/luminous-basic.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/luminous-lightbox/2.3.2/Luminous.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Reem+Kufi&family=Noto+Naskh+Arabic&family=Scheherazade+New&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .cover {
-            transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
-        }
-
-        .cover.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .wa-dot-animation {
-            animation: waTyping 1.4s infinite ease-in-out both;
-        }
-
-        @keyframes waTyping {
-            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-            40% { transform: scale(1); opacity: 1; }
-        }
-
-        .wa-scrollbar::-webkit-scrollbar,
-        #daftar-ucapan-container::-webkit-scrollbar,
-        #daftar-ucapan::-webkit-scrollbar {
-            width: 4px !important;
-            height: 4px !important;
-        }
-
-        .wa-scrollbar::-webkit-scrollbar-track,
-        #daftar-ucapan-container::-webkit-scrollbar-track,
-        #daftar-ucapan::-webkit-scrollbar-track {
-            background: transparent !important;
-        }
-
-        .wa-scrollbar::-webkit-scrollbar-thumb,
-        #daftar-ucapan-container::-webkit-scrollbar-thumb,
-        #daftar-ucapan::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.25) !important;
-            border-radius: 10px !important;
-        }
-
-        .wa-scrollbar, #daftar-ucapan-container, #daftar-ucapan {
-            scrollbar-width: thin !important;
-            scrollbar-color: rgba(255, 255, 255, 0.25) transparent !important;
-        }
-
-        .cover-hidden {
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(1.05);
-        }
-
-        @keyframes bounceGentle {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-        .animate-bounce-gentle {
-            animation: bounceGentle 3s ease-in-out infinite;
-        }
-
-        .wa-transfer-bubble {
-            background: #202c33 !important;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-
-        .wa-transfer-card-header {
-            background: rgba(255, 255, 255, 0.03);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 12px 16px;
-        }
-
-        .wa-transfer-btn-copy {
-            background: #00a884;
-            color: white;
-            font-size: 11px;
-            font-weight: bold;
-            padding: 6px 14px;
-            border-radius: 20px;
-            transition: all 0.2s ease;
-        }
-        .wa-transfer-btn-copy:active {
-            transform: scale(0.95);
-        }
-
-        .wa-caption-area {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
-            padding: 20px 15px 15px 15px;
-            z-index: 60;
-            text-align: center;
-        }
-
-        .wa-reply-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .wa-reply-box {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 30px;
-            padding: 8px 15px;
-            color: white;
-            font-size: 13px;
-            text-align: left;
-            backdrop-filter: blur(5px);
-        }
-
-        .wa-like-btn {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            backdrop-filter: blur(5px);
-        }
-
-        .wa-like-btn i.active {
-            color: #ff3b30;
-            animation: heartBeat 0.3s ease-in-out;
-        }
-
-        @keyframes heartBeat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.3); }
-            100% { transform: scale(1); }
-        }
-
-        .wa-status-container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            height: 600px;
-            background: #000;
-            border-radius: 20px;
-            overflow: hidden;
-            margin: 0 auto;
-        }
-
-        .wa-status-bars {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            display: flex;
-            gap: 4px;
-            z-index: 50;
-        }
-
-        .wa-status-bar {
-            height: 2px;
-            background: rgba(255, 255, 255, 0.3);
-            flex: 1;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .wa-status-progress {
-            height: 100%;
-            background: #fff;
-            width: 0%;
-        }
-
-        .wa-status-header {
-            position: absolute;
-            top: 25px;
-            left: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 50;
-            color: white;
-        }
-
-        .wa-status-pp {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            border: 1px solid #fff;
-        }
-
-        .wa-status-name {
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .wa-status-time {
-            font-size: 11px;
-            opacity: 0.7;
-        }
-
-        .status-nav {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 50%;
-            z-index: 40;
-        }
-        .status-prev { left: 0; }
-        .status-next { right: 0; }
-
-        #daftar-ucapan {
-            max-height: 400px;
-            overflow-y: auto;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 15px;
-            mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
-        }
-
-        .ucapan-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 12px;
-            color: #e5e5e5;
-            transition: all 0.3s ease;
-        }
-
-        #daftar-ucapan::-webkit-scrollbar {
-            width: 3px;
-        }
-        #daftar-ucapan::-webkit-scrollbar-thumb {
-            background: #fcd34d;
-            border-radius: 10px;
-        }
-
-        .sticky-header {
-            position: sticky;
-            top: 0;
-            z-index: 20;
-            background-color: #1a1a1a;
-            padding-bottom: 10px;
-            display: flex;
-            justify-content: flex-start;
-        }
-
-        .badge-jumlah {
-            background-color: #fcd34d;
-            color: #1a1a1a;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 10px;
-            text-transform: uppercase;
-        }
-
-        .event-image-frame {
-            width: 100%;
-            height: 320px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .event-image-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .frame-arch-left img {
-            border-radius: 400px 0 0 0 !important; 
-        }
-
-        .frame-arch-right img {
-            border-radius: 0 400px 0 0 !important; 
-        }
-
-        .vertical-text-container {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.2rem;
-            line-height: 1;
-        }
-
-        .rotate-text {
-            transform: rotate(180deg);
-        }
-     
-        .event-section {
-            width: 100%;
-            padding: 20px 0;
-        }
-
-        .event-info {
-            padding: 30px 25px;
-            position: relative;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .event-text-left { flex: 1; }
-
-        .vertical-title {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            font-family: 'Great Vibes', cursive;
-            font-size: 1.8rem;
-            color: #222;
-            margin-left: 15px;
-            display: flex;
-            align-items: center;
-            line-height: 1;
-            opacity: 0.7;
-        }
-
-        .dark-event {
-            background: #000 !important;
-            color: #fff !important;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-        }
-
-        .dark-event .vertical-title, 
-        .dark-event p {
-            color: #fff !important;
-        }
-
-        .btn-location {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #fff;
-            color: #000;
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 9px;
-            font-weight: bold;
-            margin-top: 15px;
-            border: 1px solid #ddd;
-            transition: background 0.3s ease;
-        }
-
-        .dark-event .btn-location {
-            background: #fff;
-            color: #000;
-        }
-
-        .wa-profile-pic {
-            width: 40px !important;
-            height: 40px !important;
-            margin-right: 15px !important;
-            border-radius: 50% !important;
-            object-fit: cover !important;
-        }
-
-        .wa-header h1 {
-            font-size: 15px !important;
-            margin-bottom: -2px;
-        }
-
-        .wa-profile-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-        }
-
-        .wa-chat-meta {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        #typing-status {
-            color: #ffffff !important;
-            font-size: 11px;
-            opacity: 0.8;
-        }
-
-        .wa-chat-container {
-            background-color: #0b141a; 
-            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
-            background-blend-mode: overlay;
-            background-size: 400px;
-            border-radius: 15px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            border: 0.5px solid #222;
-        }
-
-        .wa-header {
-            background: #202c33;
-            padding: 10px 12px;
-            display: flex;
-            align-items: center;
-            border-bottom: 0.5px solid #2a3942;
-        }
-
-        .wa-bubble {
-            position: relative;
-            max-width: 80%;
-            padding: 6px 10px 14px 10px;
-            margin-bottom: 8px;
-            font-size: 13.5px;
-            line-height: 1.5;
-        }
-
-        .wa-bubble-left {
-            background: #202c33 !important;
-            color: #ffffff !important;
-            border-radius: 0 8px 8px 8px;
-            align-self: flex-start;
-            box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
-        }
-
-        .wa-bubble-right {
-            background: #005c4b !important;
-            color: #e1ffd7 !important;
-            border-radius: 8px 0 8px 8px;
-            align-self: flex-end;
-            box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
-        }
-
-        .wa-time-meta {
-            position: absolute;
-            bottom: 3px;
-            right: 7px;
-            font-size: 10px;
-            color: rgba(233, 237, 239, 0.6) !important;
-            display: flex;
-            align-items: center;
-            gap: 2px;
-        }
-
-        .wa-footer-input {
-            background: #0b141a;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .wa-input-box {
-            background: #2a3942;
-            border-radius: 24px;
-            padding: 8px 12px;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #8696a0;
-            font-size: 14px;
-        }
-
-        .wa-mic-btn {
-            background: #00a884;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-        }
-
-        #salam {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            background-color: #000;
-        }
-
-        #salam .swiper-salam {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        #salam .swiper-slide-salam {
-            background-size: cover;
-            background-position: center;
-        }
-
-        #salam .overlay-dark {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2;
-        }
-
-        #salam .salam-content {
-            position: relative;
-            z-index: 10;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            color: #ffffff;
-            text-align: center;
-        }
-
-        #salam .salam-content h3, 
-        #salam .salam-content p, 
-        #salam .salam-content span,
-        #salam .salam-content #countdown .text-white {
-            color: #ffffff !important;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-        }
-
-        #salam .salam-content .text-amber-700 {
-            color: #fcd34d !important;
-        }
-
-        #salam .salam-content #countdown .bg-stone-800 {
-             background-color: rgba(255, 255, 255, 0.15) !important;
-             backdrop-filter: blur(8px);
-             border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .photo-frame {
-            position: relative;
-            width: 240px;
-            height: 320px;
-            margin: 0 auto;
-        }
-
-        .photo-frame::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            right: -15px;
-            width: 100%;
-            height: 100%;
-            border: 1px solid #b4975a;
-            z-index: 0;
-        }
-
-        .photo-frame img {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1;
-        }
-
-        .wa-bg {
-            background-color: #e5ddd5;
-            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
-            background-blend-mode: overlay;
-        }
-
-        .petal {
-            position: fixed;
-            top: -10%;
-            pointer-events: none;
-            z-index: 999;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-        }
-
-        @keyframes kenBurns {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .zoom-anim {
-            animation: kenBurns 15s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-
-        .floating {
-            animation: float 4s ease-in-out infinite;
-        }
-
-        @keyframes slowRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .spinning-slow {
-            animation: slowRotate 20s linear infinite;
-        }
-
-        html {
-            -webkit-text-size-adjust: 100%;
-            text-size-adjust: 100%;
-        }
-
-        @media (max-width: 380px) {
-            .text-4xl { font-size: 1.8rem !important; }
-            .text-2xl { font-size: 1.2rem !important; }
-            p { font-size: 11px !important; }
-        }
-
-        .gigi-haruan {
-            width: 100%;
-            height: 15px;
-            background: #b4975a;
-            clip-path: polygon(0 0, 5% 100%, 10% 0, 15% 100%, 20% 0, 25% 100%, 30% 0, 35% 100%, 40% 0, 45% 100%, 50% 0, 55% 100%, 60% 0, 65% 100%, 70% 0, 75% 100%, 80% 0, 85% 100%, 90% 0, 95% 100%, 100% 0);
-            margin: 20px 0;
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease-out;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .ornamen-banjar {
-            position: absolute;
-            width: 80px;
-            opacity: 0.3;
-            pointer-events: none;
-        }
-        .font-aesthetic { font-family: 'Great Vibes', cursive; }
-        body { font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
-        .img-arch { width: 160px; height: 220px; border-radius: 100px 100px 0 0; object-fit: cover; border: 4px solid white; }
-        .nav-bottom {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            display: flex; gap: 15px; background: rgba(255, 255, 255, 0.9);
-            padding: 12px 25px; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 99;
-        }
-        .music-control {
-            position: fixed; bottom: 90px; right: 20px; width: 45px; height: 45px;
-            background: #b4975a; color: white; border-radius: 50%; display: flex;
-            align-items: center; justify-content: center; z-index: 100;
-        }
-        .spinning { animation: spin 4s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        #konten-utama { display: none; }
-        .chat-bubble { position: relative; background: #f3f4f6; padding: 15px; border-radius: 15px; margin-bottom: 10px; max-width: 80%; }
-        .chat-bubble::after { content: ''; position: absolute; left: -10px; top: 10px; border-width: 10px; border-style: solid; border-color: transparent #f3f4f6 transparent transparent; }
-    </style>
-</head>
-<body class="bg-stone-50">
-    <div id="music-btn" class="music-control hidden spinning" onclick="toggleMusik()"><i id="music-icon" class="fa-solid fa-music"></i></div>
-    
-    <div id="loading-screen" class="fixed inset-0 bg-[#0b141a] z-[9999] flex flex-col items-center justify-center transition-opacity duration-700 ease-in-out">
-        <div class="text-center flex flex-col items-center animate-pulse"> 
-            <div class="w-20 h-20 rounded-full border-2 border-amber-500/30 flex items-center justify-center mb-4 bg-stone-900/50 shadow-lg relative">
-                <div class="absolute inset-0 rounded-full border-2 border-t-amber-400 border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
-                <span class="text-xl font-serif text-amber-400 tracking-wider font-bold">R & A</span>
-            </div>
-            <p class="text-[10px] tracking-[0.4em] uppercase text-stone-400 animate-pulse">Menyiapkan Undangan</p>
-        </div>
-    </div>
-
-    <section id="cover" class="relative min-h-screen w-full flex flex-col items-center justify-between py-12 px-6 overflow-hidden bg-cover bg-center transition-all duration-1000 ease-in-out" 
-             style="background-image: linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85));">
-        <div class="text-center mt-6 z-10 text-white select-none">
-            <p class="text-[10px] tracking-[0.3em] uppercase opacity-70 mb-1">Undangan Pernikahan</p>
-            <h1 class="text-6xl font-light tracking-wide mb-1">08:00</h1>
-            <p id="cover-tanggal" class="text-xs opacity-90 tracking-wide"></p>
-        </div>
-
-        <div id="wa-notif-pop" class="w-full max-w-md my-auto z-20 opacity-0 -translate-y-10 scale-95 transition-all duration-700 ease-out cursor-pointer active:scale-95 pointer-events-none">
-            <div onclick="bukaUndanganDigital()" class="bg-[#202c33]/90 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/5 flex gap-3">
-                <img src="pengantinWanita.jpg" class="foto-notif-wa w-10 h-10 rounded-full object-cover border border-white/20" alt="Notif PP">
-                <div class="flex-1 min-w-0 text-left">
-                    <div class="flex justify-between items-center mb-0.5">
-                        <h3 id="notif-nama" class="text-sm font-semibold text-white truncate"></h3>
-                        <span class="text-[10px] text-stone-400">Sekarang</span>
-                    </div>
-                    <p class="text-[11px] font-bold text-[#00a884] mb-0.5">Spesial Undangan Berharga</p>
-                    <p class="text-[11px] text-stone-300 leading-tight">Halo, kami mengundang Anda untuk hadir di hari bahagia kami. Klik untuk membuka pesan...</p>
+        
+        const audio = document.getElementById('musik');
+        if (audio) {
+            audio.play().catch(err => console.log("Autoplay dicegah browser"));
+            document.getElementById('music-btn').classList.add('spinning');
+        }
+        
+        startStatus();
+        muatUcapan();
+
+        setTimeout(() => { jalankanAnimasiMengetik(); }, 4000);
+        isAutoScrolling = true;
+        autoScroll();
+    }
+
+    function dapatkanWarnaNama(nama) {
+        const warnaWAGrup = ['#1f7aec', '#df5044', '#e57c06', '#05a665', '#b852cc', '#9c6644', '#00a5cf', '#e05780'];
+        let hash = 0;
+        for (let i = 0; i < nama.length; i++) { hash = nama.charCodeAt(i) + ((hash << 5) - hash); }
+        return warnaWAGrup[Math.abs(hash) % warnaWAGrup.length];
+    }
+
+    function muatUcapan() {
+        fetch(scriptURL + "?tujuan=" + idUndanganStr)
+        .then(res => res.json())
+        .then(data => {
+            const wadahUtama = document.getElementById('daftar-ucapan-container'); 
+            if (!wadahUtama) return;
+
+            const headerHtml = `
+                <div class="text-center my-2 sticky-header bg-transparent">
+                    <span class="bg-[#182229] text-[#8696a0] text-[9px] px-3 py-1 rounded shadow-sm tracking-widest uppercase font-mono">
+                        TOTAL: ${data.length} PESAN DOA TERKIRIM
+                    </span>
                 </div>
-            </div>
-        </div>
-
-        <div class="w-full max-w-md z-10 flex flex-col items-center gap-6">
-            <div id="fingerprint-wrapper" class="flex flex-col items-center transition-all duration-500">
-                <button onclick="bukaKunciSidikJari()" class="relative w-16 h-16 bg-stone-900/60 backdrop-blur-sm rounded-full flex items-center justify-center border border-amber-500/30 group active:scale-90 transition-transform duration-200 shadow-lg">
-                    <div class="absolute inset-0 bg-amber-500/20 rounded-full animate-ping"></div>
-                    <i class="fa-solid fa-fingerprint text-3xl text-amber-400"></i>
-                </button>
-                <p class="text-[10px] text-stone-400 mt-3 tracking-widest uppercase">Sentuh Sidik Jari</p>
-            </div>
-
-            <div class="w-full flex justify-between items-center px-4 mt-2 text-white/60 text-lg">
-                <div class="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md">
-                    <i class="fa-solid fa-phone text-sm"></i>
-                </div>
-                <div class="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md">
-                    <i class="fa-solid fa-camera text-sm"></i>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div id="nav-menu" class="nav-bottom hidden">
-        <a href="#salam" class="text-stone-600"><i class="fa-solid fa-heart text-lg"></i></a>
-        <a href="#mempelai" class="text-stone-600"><i class="fa-solid fa-user-friends text-lg"></i></a>
-        <a href="#story" class="text-stone-600"><i class="fa-solid fa-comments text-lg"></i></a>
-        <a href="#acara" class="text-stone-600"><i class="fa-solid fa-calendar-alt text-lg"></i></a>
-        <a href="#lokasi" class="text-stone-600"><i class="fa-solid fa-map-location-dot"></i></a>
-        <a href="#galeri" class="text-stone-600"><i class="fa-solid fa-image text-lg"></i></a>
-        <a href="#kado" class="text-stone-600"><i class="fa-solid fa-gift text-lg"></i></a>
-        <a href="#rsvp" class="text-stone-600"><i class="fa-solid fa-envelope text-lg"></i></a>
-        <button onclick="toggleAutoScroll()" id="scroll-btn" class="text-stone-600">
-            <i id="scroll-icon" class="fa-solid fa-pause text-xs"></i>
-        </button>
-    </div>
-
-    <div id="konten-utama">
-        <section id="salam">
-            <div class="swiper swiper-salam">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide swiper-slide-salam" style="background-image: url('1.jpg');"></div>
-                    <div class="swiper-slide swiper-slide-salam" style="background-image: url('2.jpg');"></div>
-                    <div class="swiper-slide swiper-slide-salam" style="background-image: url('3.jpg');"></div>
-                </div>
-            </div>
-            <div class="overlay-dark"></div>
-            <div class="salam-content">
-                <h3 class="font-aesthetic text-4xl mb-8 tracking-wide leading-relaxed">Assalamu'alaikum Wr. Wb.</h3>
-                <div class="arabic-container mb-6 px-4">
-                    <p class="text-2xl" style="font-family: 'Reem Kufi', sans-serif;" dir="rtl">
-                        وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً ۗاِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ 
-                    </p>
-                </div>
-                <p class="text-xs leading-relaxed mb-8 italic">
-                    "Dan diantara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu merasa tenteram kepadanya. Dia menjadikan di antaramu rasa cinta dan kasih sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir."
-                    <span class="block mt-3 font-bold not-italic text-[10px] tracking-widest">(QS. AR-RUM: 21)</span>
-                </p>
-                <div id="countdown" class="flex justify-center gap-2">
-                    <div class="bg-stone-800 p-3 rounded-xl w-14"><span id="days" class="text-lg font-bold block text-white">00</span><p class="text-[7px] uppercase text-white">Hari</p></div>
-                    <div class="bg-stone-800 p-3 rounded-xl w-14"><span id="hours" class="text-lg font-bold block text-white">00</span><p class="text-[7px] uppercase text-white">Jam</p></div>
-                    <div class="bg-stone-800 p-3 rounded-xl w-14"><span id="minutes" class="text-lg font-bold block text-white">00</span><p class="text-[7px] uppercase text-white">Menit</p></div>
-                    <div class="bg-amber-700 p-3 rounded-xl w-14 animate-pulse"><span id="seconds" class="text-lg font-bold block text-white">00</span><p class="text-[7px] uppercase text-white">Detik</p></div>
-                </div>
-            </div>
-        </section>
-
-        <section id="mempelai" class="py-20 px-6 bg-[#0b141a] text-center">
-            <h2 class="text-4xl font-aesthetic text-amber-200 mb-2">Profil Mempelai</h2>
-            <p class="text-[10px] text-stone-500 mb-10 tracking-[0.2em] uppercase px-4">Mengenal Lebih Dekat Kedua Pengantin</p>
-
-            <div class="max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 justify-center items-start text-left">
-                <div class="w-full max-w-sm mx-auto bg-[#111b21] rounded-2xl overflow-hidden shadow-2xl border border-white/5 reveal">
-                   <div class="flex justify-center pt-6 bg-[#111b21]">
-    <div class="w-40 h-40 bg-stone-900 relative rounded-full overflow-hidden border-4 border-amber-500/30">
-        <img src="pengantinWanita.jpg" class="w-full h-full object-cover" alt="Rara">
-        <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm py-1 text-center text-white text-[9px] font-medium tracking-wide">
-            <i class="fa-solid fa-camera text-amber-400"></i> Profil
-        </div>
-    </div>
-</div>
-                    <div class="p-5 flex flex-col gap-4">
-                        <div class="border-b border-white/5 pb-3">
-                            <p class="text-[10px] text-[#00a884] uppercase tracking-wider font-semibold mb-1">Nama / Info</p>
-                            <h3 id="nama-lengkap-wanita" class="text-xl font-bold text-white font-aesthetic tracking-wide"></h3>
-                            <p id="panggilan-wanita" class="text-xs text-amber-200 mt-1"></p>
-                        </div>
-                        <div class="border-b border-white/5 pb-3">
-                            <p class="text-[10px] text-[#8696a0] uppercase tracking-wider mb-1">Tentang / Silsilah</p>
-                            <p class="text-xs text-stone-300 leading-relaxed">
-                                Putri tercinta dari Bapak <span id="ayah-wanita" class="text-white font-medium"></span> & Ibu <span id="ibu-wanita" class="text-white font-medium"></span>
-                            </p>
-                        </div>
-                        <div>
-                            <p class="text-[10px] text-[#8696a0] uppercase tracking-wider mb-2">Tautan Sosial</p>
-                            <a id="ig-link-wanita" href="#" target="_blank" class="inline-flex items-center gap-2 bg-[#202c33] text-stone-300 text-xs px-3 py-1.5 rounded-full hover:text-white transition-all active:scale-95">
-                                <i class="fa-brands fa-instagram text-pink-500 text-sm"></i> <span id="ig-user-wanita"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="w-full max-w-sm mx-auto bg-[#111b21] rounded-2xl overflow-hidden shadow-2xl border border-white/5 reveal">
-             <div class="flex justify-center pt-6 bg-[#111b21]">
-                <div class="w-40 h-40 bg-stone-900 relative rounded-full overflow-hidden border-4 border-amber-500/30">
-                <img src="PengantinPria.jpg" class="w-full h-full object-cover" alt="Adi">
-                <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm py-1 text-center text-white text-[9px] font-medium tracking-wide">
-                <i class="fa-solid fa-camera text-amber-400"></i> Profil
-                </div>
-            </div>
-        </div>
-
-                    <div class="p-5 flex flex-col gap-4">
-                        <div class="border-b border-white/5 pb-3">
-                            <p class="text-[10px] text-[#00a884] uppercase tracking-wider font-semibold mb-1">Nama / Info</p>
-                            <h3 id="nama-lengkap-pria" class="text-xl font-bold text-white font-aesthetic tracking-wide"></h3>
-                            <p id="panggilan-pria" class="text-xs text-amber-200 mt-1"></p>
-                        </div>
-                        <div class="border-b border-white/5 pb-3">
-                            <p class="text-[10px] text-[#8696a0] uppercase tracking-wider mb-1">Tentang / Silsilah</p>
-                            <p class="text-xs text-stone-300 leading-relaxed">
-                                Putra sulung dari Bapak <span id="ayah-pria" class="text-white font-medium"></span> & Ibu <span id="ibu-pria" class="text-white font-medium"></span>
-                            </p>
-                        </div>
-                        <div>
-                            <p class="text-[10px] text-[#8696a0] uppercase tracking-wider mb-2">Tautan Sosial</p>
-                            <a id="ig-link-pria" href="#" target="_blank" class="inline-flex items-center gap-2 bg-[#202c33] text-stone-300 text-xs px-3 py-1.5 rounded-full hover:text-white transition-all active:scale-95">
-                                <i class="fa-brands fa-instagram text-pink-500 text-sm"></i> <span id="ig-user-pria"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="story" class="py-20 px-6 bg-[#0b141a]">
-            <h2 class="text-4xl font-aesthetic text-center text-amber-200 mb-10">Our Love Story</h2>
-            <div class="max-w-md mx-auto wa-chat-container shadow-2xl reveal">
-                <div class="wa-header flex items-center p-3 bg-[#202c33] text-white">
-                    <i class="fa-solid fa-arrow-left text-[#8696a0] mr-3"></i>
-                    <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic rounded-full object-cover" alt="Story PP">
-                    <div class="flex flex-col justify-center">
-                        <h1 class="text-[15px] font-medium leading-tight">Rara</h1>
-                        <span id="typing-status">Online</span>
-                    </div>
-                    <div class="flex ml-auto gap-5 text-[#8696a0]">
-                        <i class="fa-solid fa-video"></i>
-                        <i class="fa-solid fa-phone"></i>
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </div>
-                </div>
-
-                <div class="p-4 flex flex-col min-h-[500px] max-h-[600px] overflow-y-auto">
-                    <!-- Bubble 1 -->
-                    <div class="text-center mb-6">
-                        <span id="story-date-1" class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest uppercase"></span>
-                    </div>
-                    <div class="wa-bubble wa-bubble-left">
-                        <span id="story-msg-1"></span>
-                        <span id="story-time-1" class="wa-time-meta"></span>
-                    </div>
-
-                    <!-- Bubble 2 -->
-                    <div class="text-center my-6">
-                        <span id="story-date-2" class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest uppercase"></span>
-                    </div>
-                    <div class="wa-bubble wa-bubble-right">
-                        <span id="story-msg-2"></span>
-                        <span id="story-time-2" class="wa-time-meta"></span>
-                    </div>
-
-                    <!-- Bubble 3 -->
-                    <div class="text-center my-6">
-                        <span id="story-date-3" class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest uppercase"></span>
-                    </div>
-                    <div class="wa-bubble wa-bubble-left" style="padding: 4px;">
-                        <img id="story-img-3" src="" class="rounded-lg w-full h-auto object-cover mb-1" alt="Momen">
-                        <div class="px-2 pb-1">
-                            <span id="story-msg-3"></span>
-                            <span id="story-time-3" class="wa-time-meta"></span>
-                        </div>
-                    </div>
+                <div id="daftar-ucapan" class="flex flex-col gap-3 max-h-[400px] overflow-y-auto pr-1 wa-scrollbar">
+            `;
+            
+            let isiUcapanHtml = "";
+            if (data.length === 0) {
+                isiUcapanHtml += `<p class="text-center text-[#8696a0] text-[11px] py-10 italic">Belum ada obrolan ucapan.</p>`;
+            } else {
+                const dataTerbalik = [...data].reverse();
+                dataTerbalik.forEach(row => {
+                    const namaTamu = row[1];
+                    const waktuLalu = formatWaktuLalu(row[0]);
+                    const statusHadir = row[3] || 'Hadir';
+                    const warnaNamaTamu = dapatkanWarnaNama(namaTamu);
                     
-                    <div id="typing-bubble" class="wa-bubble wa-bubble-left hidden">
-                        <div class="typing py-1 flex gap-1">
-                            <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
-                            <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
-                            <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
-                        </div>
-                    </div>
-                </div>
-                                <div class="wa-footer-input">
-                    <div class="wa-input-box">
-                        <i class="fa-regular fa-face-smile text-xl"></i>
-                        <span class="flex-1">Ketik pesan</span>
-                        <i class="fa-solid fa-paperclip text-xl rotate-45"></i>
-                        <i class="fa-solid fa-camera text-xl"></i>
-                    </div>
-                    <div class="bg-[#00a884] w-11 h-11 rounded-full flex items-center justify-center shadow-lg">
-                        <i class="fa-solid fa-microphone text-white text-lg"></i>
-                    </div> <!-- Menutup div mikrofon -->
-                </div> <!-- Menutup wa-footer-input -->
-            </div> <!-- Menutup wa-chat-container -->
-        </section> <!-- Menutup section id="story" dengan benar -->
+                    let badgeColor = "text-green-400 bg-green-500/10";
+                    if(statusHadir === "Tidak Hadir") badgeColor = "text-red-400 bg-red-500/10";
+                    if(statusHadir === "Masih Ragu") badgeColor = "text-yellow-400 bg-yellow-500/10";
 
-        <section id="acara" class="py-20 px-6 bg-[#0b141a] text-center">
-            <h2 class="text-4xl font-aesthetic text-amber-200 mb-2">Wedding Schedule</h2>
-            <p class="text-[10px] text-stone-500 mb-10 tracking-[0.2em] uppercase px-4">Rangkaian Acara Kebahagiaan Kami</p>
-
-            <div class="max-w-md mx-auto wa-chat-container shadow-2xl reveal text-left">
-                <div class="wa-header flex items-center p-3 bg-[#202c33] text-white">
-                    <i class="fa-solid fa-arrow-left text-[#8696a0] mr-3"></i>
-                    <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic rounded-full object-cover" alt="Acara PP">
-                    <div class="flex flex-col justify-center">
-                        <h1 class="text-[15px] font-medium leading-tight">Rara & Adi</h1>
-                        <span class="text-[11px] text-[#00a884]">Typing...</span>
-                    </div>
-                    <div class="flex ml-auto gap-5 text-[#8696a0]">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </div>
-                </div>
-
-                <div class="p-4 flex flex-col gap-6 bg-[#0b141a]">
-                    <div class="text-center my-2">
-                        <span class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded tracking-widest uppercase">HARI BAHAGIA</span>
-                    </div>
-
-                    <div class="wa-bubble wa-bubble-left w-[85%] !bg-[#202c33] !p-0 overflow-hidden rounded-xl shadow-md">
-                        <div class="w-full bg-stone-900">
-                            <img src="3.jpg" class="w-full h-full object-cover object-center" alt="Ilustrasi Akad">
-                        </div>
-                        <div class="p-4 text-white">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="bg-amber-500/20 text-amber-300 text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Momen Intim</span>
-                                <h3 class="text-base font-bold font-aesthetic text-amber-200">Akad Nikah</h3>
+                    isiUcapanHtml += `
+                        <div class="wa-bubble wa-bubble-left w-[88%] !bg-[#202c33] rounded-xl p-3 shadow-md border border-white/5 flex flex-col gap-0.5 relative">
+                            <div class="flex justify-between items-baseline mb-1">
+                                <span class="font-bold text-[12.5px] tracking-wide text-left" style="color: ${warnaNamaTamu};">${namaTamu}</span>
+                                <span class="text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${badgeColor}">${statusHadir}</span>
                             </div>
-                            <hr class="border-white/10 my-2">
-                            <p class="text-xs text-stone-300 flex items-center gap-2 mb-1.5">
-                                <i class="fa-regular fa-calendar text-amber-400 w-4"></i> <span id="akad-tanggal"></span>
-                            </p>
-                            <p class="text-xs text-stone-300 flex items-center gap-2 mb-1.5">
-                                <i class="fa-regular fa-clock text-amber-400 w-4"></i> <span id="akad-jam"></span>
-                            </p>
-                            <p class="text-xs text-stone-300 flex items-center gap-2">
-                                <i class="fa-solid fa-location-dot text-amber-400 w-4"></i> <span id="akad-tempat"></span> 
-                            </p>
-                            <a id="akad-maps-link" href="#" target="_blank" class="btn-location shadow-sm mt-4">
-                                <i class="fa-solid fa-location-dot"></i> Lihat Lokasi
-                            </a>
-                        </div>
-                        <span class="wa-time-meta !right-3 !bottom-1">08:00</span>
-                    </div>
-
-                    <div class="wa-bubble wa-bubble-right w-[85%] !bg-[#005c4b] !p-0 overflow-hidden rounded-xl shadow-md align-self-end text-right">
-                        <div class="w-full bg-stone-900">
-                            <img src="2.jpg" class="w-full h-full object-cover object-center" alt="Ilustrasi Resepsi">
-                        </div>
-                        <div class="p-4 text-left text-white">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="bg-white/20 text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Perayaan</span>
-                                <h3 class="text-base font-bold font-aesthetic text-amber-200">Resepsi Pernikahan</h3>
-                            </div>
-                            <hr class="border-white/10 my-2">
-                            <p class="text-xs text-stone-100 flex items-center gap-2 mb-1.5">
-                                <i class="fa-regular fa-calendar text-amber-300 w-4"></i> <span id="resepsi-tanggal"></span>  
-                            </p>
-                            <p class="text-xs text-stone-100 flex items-center gap-2 mb-1.5">
-                                <i class="fa-regular fa-clock text-amber-300 w-4"></i> <span id="resepsi-jam"></span>
-                            </p>
-                            <p class="text-xs text-stone-100 flex items-center gap-2">
-                                <i class="fa-solid fa-location-dot text-amber-300 w-4"></i> <span id="resepsi-tempat"></span>
-                            </p>
-                            <a id="resepsi-maps-link" href="#" target="_blank" class="btn-location shadow-sm mt-4">
-                                <i class="fa-solid fa-location-dot"></i> Lihat Lokasi
-                            </a>
-                        </div>
-                        <span class="wa-time-meta !right-3 !bottom-1 !text-white/60">08:01 <i class="fa-solid fa-check-double text-blue-400 ml-0.5"></i></span>
-                    </div>
-                </div>
-
-                <div class="wa-footer-input">
-                    <div class="wa-input-box">
-                        <i class="fa-regular fa-face-smile text-xl"></i>
-                        <span class="flex-1">Catat tanggalnya ya...</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="lokasi" class="py-20 px-6 bg-[#0b141a] text-center">
-            <h2 class="text-4xl font-aesthetic text-amber-200 mb-2">Maps Location</h2>
-            <p class="text-[10px] text-stone-500 mb-10 tracking-[0.2em] uppercase px-4">Lokasi Acara via Live Location</p>
-
-            <div class="max-w-md mx-auto wa-chat-container shadow-2xl reveal text-left">
-                <div class="wa-header flex items-center p-3 bg-[#202c33] text-white">
-                    <i class="fa-solid fa-arrow-left text-[#8696a0] mr-3"></i>
-                    <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic rounded-full object-cover" alt="Maps PP">
-                    <div class="flex flex-col justify-center">
-                        <h1 class="text-[15px] font-medium leading-tight">Rara & Adi</h1>
-                        <span class="text-[11px] text-[#00a884]">Live location aktif</span>
-                    </div>
-                    <div class="flex ml-auto gap-5 text-[#8696a0]">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </div>
-                </div>
-
-                <div class="p-4 flex flex-col bg-[#0b141a]">
-                    <div class="wa-bubble wa-bubble-left w-[90%] !p-1 !bg-[#202c33] overflow-hidden rounded-xl shadow-md">
-                        <div class="w-full h-52 overflow-hidden rounded-t-lg border-b border-black/20">
-                            <iframe id="maps-iframe" src="about:blank" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        </div>
-                        <div class="p-3 bg-[#202c33]">
-                            <h3 class="text-xs font-bold text-white mb-0.5">Lokasi Pernikahan Rara & Adi</h3>
-                            <p class="text-[10px] text-stone-400 leading-tight mb-3">Klik tombol di bawah untuk membuka navigasi rute langsung via Google Maps.</p>
-                            <a id="maps-tombol-rute" href="#" target="_blank" class="block text-center bg-[#00a884] text-white py-2 rounded-lg text-[11px] font-bold tracking-wider active:scale-95 transition-all shadow-md">
-                                <i class="fa-solid fa-location-crosshairs mr-1"></i> BUKA PETUNJUK JALAN
-                            </a>
-                        </div>
-                        <span class="wa-time-meta !right-2 !bottom-1">08:15</span>
-                    </div>
-                </div>
-
-                <div class="wa-footer-input">
-                    <div class="wa-input-box">
-                        <i class="fa-regular fa-face-smile text-xl"></i>
-                        <span class="flex-1">Bagikan lokasi acara...</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-            
-        <section id="galeri" class="py-20 px-6 bg-[#0b141a] flex flex-col items-center">
-            <h2 class="text-4xl font-aesthetic text-amber-200 mb-6 text-center w-full">Galeri Kebahagiaan</h2>
-            
-            <div class="wa-status-container shadow-2xl reveal w-full max-w-md">
-                <div class="wa-status-bars"></div>
-
-                <div class="wa-status-header">
-                    <img src="pengantinWanita.jpg" class="wa-status-pp foto-notif-wa" alt="Status PP">
-                    <div>
-                        <p class="wa-status-name">Rara & Adi</p>
-                        <p class="wa-status-time">Baru saja</p>
-                    </div>
-                </div>
-
-                <div class="status-nav status-prev" onclick="prevStatus()"></div>
-                <div class="status-nav status-next" onclick="nextStatus()"></div>
-
-                <div id="status-slides" class="w-full h-full"></div>
-                
-                <div class="wa-caption-area">
-                    <p id="status-caption" class="text-white text-sm mb-4">Momen tak terlupakan ❤️</p>
-                    <div class="wa-reply-container">
-                        <div class="wa-reply-box">Balas</div>
-                        <button class="wa-like-btn" onclick="toggleLike(this)">
-                            <i class="fa-regular fa-heart text-xl"></i>
-                        </button>
-                    </div>
-                    <div class="mt-4 flex flex-col items-center opacity-50">
-                        <i class="fa-solid fa-chevron-up text-white text-[10px] animate-bounce"></i>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="kado" class="py-20 px-6 bg-[#0b141a] text-center">
-            <h2 class="text-4xl font-aesthetic text-amber-200 mb-2">Kado Digital</h2>
-            <p class="text-[10px] text-stone-500 mb-10 tracking-[0.2em] uppercase px-4">Tanda Kasih Melalui Fitur Transfer</p>
-
-            <div class="max-w-md mx-auto wa-chat-container shadow-2xl reveal text-left">
-                <div class="wa-header flex items-center p-3 bg-[#202c33] text-white">
-                    <i class="fa-solid fa-arrow-left text-[#8696a0] mr-3"></i>
-                    <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic rounded-full object-cover" alt="Kado PP">
-                    <div class="flex flex-col justify-center">
-                        <h1 class="text-[15px] font-medium leading-tight">Rara & Adi</h1>
-                        <span class="text-[11px] text-[#00a884]">Online</span>
-                    </div>
-                    <div class="flex ml-auto gap-5 text-[#8696a0]">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </div>
-                </div>
-
-                <div class="p-4 flex flex-col gap-4 bg-[#0b141a] min-h-[400px]">
-                    <div class="text-center my-2">
-                        <span class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded tracking-widest uppercase">PILIHAN REKENING</span>
-                    </div>
-
-                    <div class="wa-transfer-bubble w-[85%] align-self-start">
-                        <div class="wa-transfer-card-header flex justify-between items-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Bank_Mandiri_logo_2016.svg" class="h-3 brightness-200" alt="Mandiri">
-                            <span class="text-[9px] text-[#8696a0] tracking-widest font-mono">MANDIRI TRANSFER</span>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-xs text-stone-400 mb-1">Nomor Rekening:</p>
-                            <p id="mandiri-no" class="text-xl font-mono text-amber-200 tracking-wider font-bold mb-2"></p>
-                            <p id="mandiri-an" class="text-[11px] text-white uppercase tracking-wider opacity-90 mb-4"></p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-[10px] text-[#8696a0] italic">Klik untuk menyalin</span>
-                                <button onclick="salinTeks(dataMempelai.kado.mandiriNo, 'Mandiri', this)" class="wa-transfer-btn-copy">SALIN NOMOR</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="wa-transfer-bubble w-[85%] align-self-start">
-                        <div class="wa-transfer-card-header flex justify-between items-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" class="h-4 brightness-200" alt="BCA">
-                            <span class="text-[9px] text-[#8696a0] tracking-widest font-mono">BCA TRANSFER</span>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-xs text-stone-400 mb-1">Nomor Rekening:</p>
-                            <p id="bca-no" class="text-xl font-mono text-amber-200 tracking-wider font-bold mb-2"></p>
-                            <p id="bca-an" class="text-[11px] text-white uppercase tracking-wider opacity-90 mb-4"></p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-[10px] text-[#8696a0] italic">Klik untuk menyalin</span>
-                                <button onclick="salinTeks(dataMempelai.kado.bcaNo, 'BCA', this)" class="wa-transfer-btn-copy">SALIN NOMOR</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="wa-transfer-bubble w-[85%] align-self-start">
-                        <div class="wa-transfer-card-header flex justify-between items-center">
-                            <span class="text-[10px] text-amber-400 font-bold tracking-widest"><i class="fa-solid fa-gift mr-1"></i> ALAMAT KIRIM KADO</span>
-                        </div>
-                        <div class="p-4">
-                            <p id="alamat-kado-teks" class="text-[12px] text-stone-300 leading-relaxed mb-3"></p>
-                            <p class="text-[10px] text-amber-200 uppercase tracking-widest mb-4">Penerima: <span id="alamat-penerima"></span></p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-[10px] text-[#8696a0] italic">Klik untuk menyalin alamat</span>
-                                <button onclick="salinTeks(dataMempelai.kado.alamatKirim, 'Alamat', this)" class="wa-transfer-btn-copy">SALIN ALAMAT</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="wa-footer-input">
-                    <div class="wa-input-box">
-                        <i class="fa-regular fa-face-smile text-xl"></i>
-                        <span class="flex-1">Kado Anda sangat berarti...</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-10 reveal">
-                <p class="text-[10px] text-stone-500 uppercase tracking-widest mb-4">Sudah mengirim tanda kasih?</p>
-                <a id="btn-konfirmasi-wa" href="#" target="_blank" class="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-full text-[11px] font-bold shadow-lg active:scale-95 transition-all">
-                    <i class="fa-brands fa-whatsapp text-lg"></i> KONFIRMASI VIA WHATSAPP
-                </a>
-            </div>
-        </section>
-
-        <section id="rsvp" class="py-20 px-6 bg-[#0b141a]">
-            <h2 class="text-4xl font-aesthetic text-center text-amber-200 mb-2">Buku Tamu Digital</h2>
-            <p class="text-[10px] text-stone-500 text-center mb-10 tracking-[0.2em] uppercase px-4">Berikan Ucapan Doa Restu Anda</p>
-            
-            <div class="max-w-md mx-auto wa-chat-container shadow-2xl reveal text-left">
-                <div class="wa-header flex items-center p-3 bg-[#202c33] text-white">
-                    <i class="fa-solid fa-arrow-left text-[#8696a0] mr-3"></i>
-                    <div class="w-10 h-10 rounded-full bg-[#00a884] flex items-center justify-center mr-3 text-white font-bold text-sm shadow-inner">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <div class="flex flex-col justify-center">
-                        <h1 class="text-[15px] font-medium leading-tight">Keluarga & Sahabat Rara & Adi</h1>
-                        <span class="text-[11px] text-[#8696a0] opacity-90">Grup Undangan Pernikahan</span>
-                    </div>
-                    <div class="flex ml-auto gap-5 text-[#8696a0]">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </div>
-                </div>
-
-                <div class="p-6 bg-[#111b21] border-b border-white/5">
-                    <p class="text-[11px] text-[#00a884] font-bold uppercase tracking-wider mb-4"><i class="fa-solid fa-pen-to-square mr-1"></i> Tulis Ucapan & Konfirmasi</p>
-                    <div class="space-y-4">
-                        <div>
-                            <input type="text" id="nama-input" class="w-full bg-[#2a3942] border-none rounded-xl p-3 text-white text-xs focus:ring-1 focus:ring-[#00a884] outline-none placeholder-[#8696a0]" placeholder="Nama Lengkap Anda...">
-                        </div>
-                        <div>
-                            <textarea id="pesan-input" rows="2" class="w-full bg-[#2a3942] border-none rounded-xl p-3 text-white text-xs focus:ring-1 focus:ring-[#00a884] outline-none placeholder-[#8696a0]" placeholder="Tuliskan doa terbaik untuk kedua mempelai..."></textarea>
-                        </div>
-                        <div class="flex gap-2 items-center">
-                            <select id="hadir-input" class="flex-1 bg-[#2a3942] border-none p-3 rounded-xl text-white text-xs outline-none focus:ring-1 focus:ring-[#00a884]">
-                                <option value="Hadir">🟢 Hadir</option>
-                                <option value="Tidak Hadir">🔴 Tidak Hadir</option>
-                                <option value="Masih Ragu">🟡 Masih Ragu</option>
-                            </select>
-                            <button onclick="kirimKeSheets()" id="btn-kirim" class="bg-[#00a884] hover:bg-[#008f72] text-white px-5 py-3 rounded-xl font-bold text-xs shadow-md active:scale-95 transition-all flex items-center gap-1.5 whitespace-nowrap">
-                                KIRIM <i class="fa-solid fa-paper-plane text-[10px]"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="daftar-ucapan-container" class="p-4 flex flex-col gap-1 bg-[#0b141a] min-h-[350px] max-h-[450px] overflow-y-auto wa-scrollbar"></div>
-            </div>
-        </section>
-
-        <footer class="pt-10 pb-32 text-center bg-[#fffcf5]">
-            <div class="max-w-xs mx-auto mb-6">
-                <p class="text-stone-400 text-[10px] tracking-[0.3em] uppercase mb-4">Created by Sirfa.id</p>
-                <div class="flex justify-center items-center gap-6">
-                    <a href="https://wa.me/628875754371" class="text-center group relative" target="_blank">
-                        <div class="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-20 group-hover:hidden"></div>
-                        <i class="fa-brands fa-whatsapp text-3xl relative text-[#25D366]"></i>
-                    </a>
-                    <a href="https://instagram.com/sirfa.id" class="text-center group relative" target="_blank">
-                        <div class="absolute inset-0 bg-pink-500 rounded-full animate-ping opacity-20 group-hover:hidden" style="animation-delay: 0.5s;"></div>
-                        <i class="fa-brands fa-instagram text-3xl relative" style="background: -webkit-linear-gradient(#405DE6, #833AB4, #E1306C, #FD1D1D); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
-                    </a>
-                    <a href="https://sirfa.id" class="text-center group relative" target="_blank">
-                        <div class="absolute inset-0 bg-blue-400 rounded-full animate-ping opacity-20 group-hover:hidden" style="animation-delay: 1s;"></div>
-                        <i class="fa-solid fa-link text-2xl relative text-[#0077b5]"></i>
-                    </a>
-                </div>         
-                <p class="text-stone-400 text-[9px] tracking-widest uppercase mt-5 border-t border-stone-200/50 pt-4">
-                    © 2026 sirfa.id Invitation
-                </p>
-                <a href="https://sirfa.id" target="_blank" class="inline-block mt-2">
-                    <img src="logosirfa.png" class="w-28 h-auto mx-auto hover:scale-105 transition-transform duration-300" alt="sirfa.id Logo">
-                </a>
-            </div>
-        </footer>
-      </div>
-
-    <audio id="musik" loop><source src="lagupenganti.mp3" type="audio/mpeg"></audio>
-    <audio id="notif-sound" preload="auto"><source src="notifundangan.mp3" type="audio/mpeg"></audio>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            if(typeof dataMempelai !== 'undefined') {
-                if(document.getElementById('cover-tanggal')) document.getElementById('cover-tanggal').innerText = dataMempelai.akad.tanggal;
-                if(document.getElementById('notif-nama')) document.getElementById('notif-nama').innerText = dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + " (Wedding)";
-         
-                if(document.getElementById('nama-lengkap-wanita')) {
-                    document.getElementById('nama-lengkap-wanita').innerText = dataMempelai.wanita.namaLengkap;
-                    document.getElementById('panggilan-wanita').innerText = 'Sering dipanggil "' + dataMempelai.wanita.panggilan + '"';
-                    document.getElementById('ayah-wanita').innerText = dataMempelai.wanita.ayah;
-                    document.getElementById('ibu-wanita').innerText = dataMempelai.wanita.ibu;
-                    document.getElementById('ig-user-wanita').innerText = '@' + dataMempelai.wanita.instagram;
-                    document.getElementById('ig-link-wanita').href = dataMempelai.wanita.linkInstagram;
-                }
-
-                const coverTanggal = document.getElementById("cover-tanggal");
-        if (coverTanggal) {
-            // Jika di data.js kamu menggunakan nama 'tglAcara'
-            if (dataMempelai.tglAcara) {
-                coverTanggal.innerText = dataMempelai.tglAcara;
-            } 
-                if(document.getElementById('nama-lengkap-pria')) {
-                    document.getElementById('nama-lengkap-pria').innerText = dataMempelai.pria.namaLengkap;
-                    document.getElementById('panggilan-pria').innerText = 'Sering dipanggil "' + dataMempelai.pria.panggilan + '"';
-                    document.getElementById('ayah-pria').innerText = dataMempelai.pria.ayah;
-                    document.getElementById('ibu-pria').innerText = dataMempelai.pria.ibu;
-                    document.getElementById('ig-user-pria').innerText = '@' + dataMempelai.pria.instagram;
-                    document.getElementById('ig-link-pria').href = dataMempelai.pria.linkInstagram;
-                }
-
-                if(document.getElementById('akad-tanggal')) {
-                    document.getElementById('akad-tanggal').innerText = dataMempelai.akad.tanggal;
-                    document.getElementById('akad-jam').innerText = dataMempelai.akad.jam;
-                    document.getElementById('akad-tempat').innerText = dataMempelai.akad.tempat;
-                    document.getElementById('akad-maps-link').href = dataMempelai.akad.linkMaps;
-
-                    document.getElementById('resepsi-tanggal').innerText = dataMempelai.resepsi.tanggal;
-                    document.getElementById('resepsi-jam').innerText = dataMempelai.resepsi.jam;
-                    document.getElementById('resepsi-tempat').innerText = dataMempelai.resepsi.tempat;
-                    document.getElementById('resepsi-maps-link').href = dataMempelai.resepsi.linkMaps; 
-                }
-
-                if(document.getElementById('maps-iframe')) {
-                    document.getElementById('maps-iframe').src = dataMempelai.maps.iframeUrl;
-                    document.getElementById('maps-tombol-rute').href = dataMempelai.maps.tombolRute;
-                }
-
-                if(document.getElementById('mandiri-no')) {
-                    document.getElementById('mandiri-no').innerText = dataMempelai.kado.mandiriNo;
-                    document.getElementById('mandiri-an').innerText = "A/N " + dataMempelai.kado.mandiriAn;
-                    document.getElementById('bca-no').innerText = dataMempelai.kado.bcaNo;
-                    document.getElementById('bca-an').innerText = "A/N " + dataMempelai.kado.bcaAn;
-                    document.getElementById('alamat-kado-teks').innerText = dataMempelai.kado.alamatKirim;
-                    document.getElementById('alamat-penerima').innerText = dataMempelai.kado.penerimaPaket;
-                } 
-
-                if(document.getElementById('cover')) {
-                    document.getElementById('cover').style.backgroundImage = `linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85)), url('${dataMempelai.media?.fotoCover || "1.jpg"}')`;
-                }
-                
-                if(dataMempelai.story) {
-                    if(document.getElementById('story-date-1')) document.getElementById('story-date-1').innerText = dataMempelai.story.bulanTahun1;
-                    if(document.getElementById('story-msg-1')) document.getElementById('story-msg-1').innerText = dataMempelai.story.pesanWanita1;
-                    if(document.getElementById('story-time-1')) document.getElementById('story-time-1').innerHTML = dataMempelai.story.waktuWanita1;
-
-                    if(document.getElementById('story-date-2')) document.getElementById('story-date-2').innerText = dataMempelai.story.bulanTahun2;
-                    if(document.getElementById('story-msg-2')) document.getElementById('story-msg-2').innerText = dataMempelai.story.pesanPria1;
-                    if(document.getElementById('story-time-2')) document.getElementById('story-time-2').innerHTML = dataMempelai.story.waktuPria1 + ' <i class="fa-solid fa-check-double text-[#53bdeb]"></i>';
-
-                    if(document.getElementById('story-date-3')) document.getElementById('story-date-3').innerText = dataMempelai.story.bulanTahun3;
-                    if(document.getElementById('story-img-3')) document.getElementById('story-img-3').src = dataMempelai.story.fotoPertunangan;
-                    if(document.getElementById('story-msg-3')) document.getElementById('story-msg-3').innerText = dataMempelai.story.pesanWanita2;
-                    if(document.getElementById('story-time-3')) document.getElementById('story-time-3').innerHTML = dataMempelai.story.waktuWanita2;
-                }
-
-                const semuaFotoNotif = document.querySelectorAll('.foto-notif-wa');
-                semuaFotoNotif.forEach(img => {
-                    img.src = dataMempelai.media?.fotoNotif || "pengantinWanita.jpg";
+                            <p class="text-[12.5px] text-stone-200 leading-relaxed pr-6 text-left">${row[2]}</p>
+                            <span class="text-[9px] text-[#8696a0] self-end mt-1 block">${waktuLalu}</span>
+                        </div>`;
                 });
-
-                let teksWa = encodeURIComponent("Halo " + dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + ", saya ingin mengonfirmasi pengiriman kado digital...");
-                if(document.getElementById('btn-konfirmasi-wa')) {
-                    document.getElementById('btn-konfirmasi-wa').href = "https://wa.me/" + dataMempelai.kado.NoWaKonfirmasi + "?text=" + teksWa;
-                }
-
-                const statusSlides = document.getElementById('status-slides');
-                const statusBarsContainer = document.querySelector('.wa-status-bars');
-                
-                if (statusSlides && dataMempelai.galeri && dataMempelai.galeri.length > 0) {
-                    statusSlides.innerHTML = '';
-                    if (statusBarsContainer) statusBarsContainer.innerHTML = '';
-                    
-                    totalStatus = dataMempelai.galeri.length; 
-                    
-                    dataMempelai.galeri.forEach((fotoUrl, index) => {
-                        const hiddenClass = index === 0 ? 'block' : 'hidden';
-                        statusSlides.insertAdjacentHTML('beforeend', `<img src="${fotoUrl}" class="status-img w-full h-full object-cover ${hiddenClass}" alt="Galeri ${index}">`);
-                        
-                        if (statusBarsContainer) {
-                            statusBarsContainer.insertAdjacentHTML('beforeend', `<div class="wa-status-bar"><div class="wa-status-progress" id="bar-${index}"></div></div>`);
-                        }
-                    });
-                }
-            } 
-        });
-
-        window.addEventListener('load', function() {
-            const loader = document.getElementById('loading-screen');
-            const musik = document.getElementById('musik');
-            const notifSound = document.getElementById('notif-sound');
-
-            if (musik) musik.load();
-            if (notifSound) notifSound.load();
-
-            if (loader) {
-                loader.style.opacity = '0';
-                loader.style.pointerEvents = 'none';
-                setTimeout(() => { loader.remove(); }, 700);
             }
-        });
+            isiUcapanHtml += `</div>`;
+            wadahUtama.innerHTML = headerHtml + isiUcapanHtml;
+        })
+        .catch(err => console.error("Gagal memuat data:", err));
+    }
 
-        function bukaKunciSidikJari() {
-            const waNotif = document.getElementById('wa-notif-pop');
-            const notifSound = document.getElementById('notif-sound');
-            const fpWrapper = document.getElementById('fingerprint-wrapper');
+    function kirimKeSheets() {
+        const btn = document.getElementById('btn-kirim');
+        const namaInput = document.getElementById('nama-input');
+        const pesanInput = document.getElementById('pesan-input');
+        const hadirInput = document.getElementById('hadir-input');
 
-            if (notifSound) {
-                notifSound.currentTime = 0;
-                notifSound.volume = 1.0;
-                notifSound.play().catch(err => console.log("Gagal putar suara:", err));
-            }
+        const nama = namaInput ? namaInput.value.trim() : "";
+        const ucapan = pesanInput ? pesanInput.value.trim() : "";
+        const hadir = hadirInput ? hadirInput.value : "Hadir";
 
-            if (waNotif) {
-                waNotif.classList.remove('opacity-0', '-translate-y-10', 'scale-95', 'pointer-events-none');
-                waNotif.classList.add('opacity-100', 'translate-y-0', 'scale-100', 'pointer-events-auto');
-            }
-
-            if (fpWrapper) {
-                fpWrapper.style.opacity = '0';
-                fpWrapper.style.pointerEvents = 'none';
-            }
+        if (!nama || !ucapan) {
+            alert("Mohon isi nama dan ucapan Anda terlebih dahulu!");
+            return; 
         }
 
-        function bukaUndanganDigital() {
-            const coverSection = document.getElementById('cover');
-            if (coverSection) { coverSection.style.display = 'none'; }
+        btn.disabled = true;
+        btn.innerText = "MENGIRIM...";
 
-            document.getElementById('konten-utama').style.display = 'block';
-            document.getElementById('nav-menu').classList.remove('hidden');
-            document.getElementById('music-btn').classList.remove('hidden');
-
-            new Swiper(".swiper-salam", {
-                loop: true,
-                effect: "fade",
-                autoplay: { delay: 4000, disableOnInteraction: false },
-            });
+        fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({ "nama": nama, "ucapan": ucapan, "kehadiran": hadir, "tujuan": idUndanganStr })
+        })
+        .then(() => {
+            btn.innerText = "TERKIRIM! 🟢";
+            btn.style.backgroundColor = "#059669";
+            if(namaInput) namaInput.value = "";
+            if(pesanInput) pesanInput.value = "";
             
-            const audio = document.getElementById('musik');
-            if (audio) {
-                audio.play().catch(err => console.log("Autoplay dicegah browser"));
-                document.getElementById('music-btn').classList.add('spinning');
-            }
-            
-            startStatus();
-            muatUcapan();
-
-            setTimeout(() => { jalankanAnimasiMengetik(); }, 4000);
-            isAutoScrolling = true;
-            autoScroll();
-        }
-
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
-        const idUndanganStr = typeof dataMempelai !== 'undefined' ? dataMempelai.idUndangan : '';
-        let isAutoScrolling = false;
-        let currentStatus = 0;
-        let totalStatus = 5; 
-        const duration = 5000;
-        let statusInterval;
-        const captions = ["Momen tak terlupakan ❤️", "Cinta sejati berawal di sini...", "Bersyukur atas segalanya 🙏", "Menuju hari bahagia ✨", "Sampai bertemu di lokasi! 😍", "Bahagia selamanya 💖"];
-
-        function dapatkanWarnaNama(nama) {
-            const warnaWAGrup = ['#1f7aec', '#df5044', '#e57c06', '#05a665', '#b852cc', '#9c6644', '#00a5cf', '#e05780'];
-            let hash = 0;
-            for (let i = 0; i < nama.length; i++) { hash = nama.charCodeAt(i) + ((hash << 5) - hash); }
-            return warnaWAGrup[Math.abs(hash) % warnaWAGrup.length];
-        }
-
-        function muatUcapan() {
-            fetch(scriptURL + "?tujuan=" + idUndanganStr)
-            .then(res => res.json())
-            .then(data => {
-                const wadahUtama = document.getElementById('daftar-ucapan-container'); 
-                if (!wadahUtama) return;
-
-                const headerHtml = `
-                    <div class="text-center my-2 sticky-header bg-transparent">
-                        <span class="bg-[#182229] text-[#8696a0] text-[9px] px-3 py-1 rounded shadow-sm tracking-widest uppercase font-mono">
-                            TOTAL: ${data.length} PESAN DOA TERKIRIM
-                        </span>
-                    </div>
-                    <div id="daftar-ucapan" class="flex flex-col gap-3 max-h-[400px] overflow-y-auto pr-1 wa-scrollbar">
-                `;
-                
-                let isiUcapanHtml = "";
-                if (data.length === 0) {
-                    isiUcapanHtml += `<p class="text-center text-[#8696a0] text-[11px] py-10 italic">Belum ada obrolan ucapan.</p>`;
-                } else {
-                    const dataTerbalik = [...data].reverse();
-                    dataTerbalik.forEach(row => {
-                        const namaTamu = row[1];
-                        const waktuLalu = formatWaktuLalu(row[0]);
-                        const statusHadir = row[3] || 'Hadir';
-                        const warnaNamaTamu = dapatkanWarnaNama(namaTamu);
-                        
-                        let badgeColor = "text-green-400 bg-green-500/10";
-                        if(statusHadir === "Tidak Hadir") badgeColor = "text-red-400 bg-red-500/10";
-                        if(statusHadir === "Masih Ragu") badgeColor = "text-yellow-400 bg-yellow-500/10";
-
-                        isiUcapanHtml += `
-                            <div class="wa-bubble wa-bubble-left w-[88%] !bg-[#202c33] rounded-xl p-3 shadow-md border border-white/5 flex flex-col gap-0.5 relative">
-                                <div class="flex justify-between items-baseline mb-1">
-                                    <span class="font-bold text-[12.5px] tracking-wide text-left" style="color: ${warnaNamaTamu};">${namaTamu}</span>
-                                    <span class="text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${badgeColor}">${statusHadir}</span>
-                                </div>
-                                <p class="text-[12.5px] text-stone-200 leading-relaxed pr-6 text-left">${row[2]}</p>
-                                <span class="text-[9px] text-[#8696a0] self-end mt-1 block">${waktuLalu}</span>
-                            </div>`;
-                    });
-                }
-                isiUcapanHtml += `</div>`;
-                wadahUtama.innerHTML = headerHtml + isiUcapanHtml;
-            })
-            .catch(err => console.error("Gagal memuat data:", err));
-        }
-
-        function kirimKeSheets() {
-            const btn = document.getElementById('btn-kirim');
-            const namaInput = document.getElementById('nama-input');
-            const pesanInput = document.getElementById('pesan-input');
-            const hadirInput = document.getElementById('hadir-input');
-
-            const nama = namaInput ? namaInput.value.trim() : "";
-            const ucapan = pesanInput ? pesanInput.value.trim() : "";
-            const hadir = hadirInput ? hadirInput.value : "Hadir";
-
-            if (!nama || !ucapan) {
-                alert("Mohon isi nama dan ucapan Anda terlebih dahulu!");
-                return; 
-            }
-
-            btn.disabled = true;
-            btn.innerText = "MENGIRIM...";
-
-            fetch(scriptURL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify({ "nama": nama, "ucapan": ucapan, "kehadiran": hadir, "tujuan": idUndanganStr })
-            })
-            .then(() => {
-                btn.innerText = "TERKIRIM! 🟢";
-                btn.style.backgroundColor = "#059669";
-                if(namaInput) namaInput.value = "";
-                if(pesanInput) pesanInput.value = "";
-                
-                setTimeout(() => {
-                    muatUcapan();
-                    btn.disabled = false;
-                    btn.innerText = "KIRIM UCAPAN";
-                    btn.style.backgroundColor = "";
-                }, 2000);
-            })
-            .catch(error => {
+            setTimeout(() => {
+                muatUcapan();
                 btn.disabled = false;
                 btn.innerText = "KIRIM UCAPAN";
-            });
-        }
+                btn.style.backgroundColor = "";
+            }, 2000);
+        })
+        .catch(error => {
+            btn.disabled = false;
+            btn.innerText = "KIRIM UCAPAN";
+        });
+    }
 
-        function jalankanAnimasiMengetik() {
-            const typingBubble = document.getElementById('typing-bubble');
-            const typingStatus = document.getElementById('typing-status');
-            if (!typingBubble || !typingStatus) return;
-            typingStatus.innerText = "Mengetik...";
-            typingStatus.style.color = '#00a884'; 
-            typingBubble.classList.remove('hidden');
-        }
+    function jalankanAnimasiMengetik() {
+        const typingBubble = document.getElementById('typing-bubble');
+        const typingStatus = document.getElementById('typing-status');
+        if (!typingBubble || !typingStatus) return;
+        typingStatus.innerText = "Mengetik...";
+        typingStatus.style.color = '#00a884'; 
+        typingBubble.classList.remove('hidden');
+    }
 
-        function toggleLike(btn) {
-            const icon = btn.querySelector('i');
-            if (icon.classList.contains('fa-regular')) {
-                icon.classList.replace('fa-regular', 'fa-solid');
-                icon.classList.add('active', 'text-red-500');
-            } else {
-                icon.classList.replace('fa-solid', 'fa-regular');
-                icon.classList.remove('active', 'text-red-500');
+    function toggleLike(btn) {
+        const icon = btn.querySelector('i');
+        if (icon.classList.contains('fa-regular')) {
+            icon.classList.replace('fa-regular', 'fa-solid');
+            icon.classList.add('active', 'text-red-500');
+        } else {
+            icon.classList.replace('fa-solid', 'fa-regular');
+            icon.classList.remove('active', 'text-red-500');
+        }
+    }
+
+    function startStatus() {
+        resetBars();
+        animateBar(currentStatus);
+        statusInterval = setInterval(() => { nextStatus(); }, duration);
+    }
+
+    function animateBar(index) {
+        const bar = document.getElementById(`bar-${index}`);
+        if (bar) {
+            bar.style.transition = `width ${duration}ms linear`;
+            setTimeout(() => bar.style.width = '100%', 50);
+        }
+    }
+
+    function resetBars() {
+        for (let i = 0; i < totalStatus; i++) {
+            const bar = document.getElementById(`bar-${i}`);
+            if(bar) {
+                bar.style.transition = 'none';
+                bar.style.width = i < currentStatus ? '100%' : '0%';
             }
         }
+    }
 
-        function startStatus() {
-            resetBars();
-            animateBar(currentStatus);
-            statusInterval = setInterval(() => { nextStatus(); }, duration);
+    function showStatus(index) {
+        const images = document.querySelectorAll('.status-img');
+        images.forEach((img, i) => { img.classList.toggle('hidden', i !== index); });
+        if(document.getElementById('status-caption')) {
+            document.getElementById('status-caption').innerText = captions[index] || "Momen Bahagia ✨";
         }
+        currentStatus = index;
+        resetBars();
+        animateBar(currentStatus);
+    }
 
-        function animateBar(index) {
-            const bar = document.getElementById(`bar-${index}`);
-            if (bar) {
-                bar.style.transition = `width ${duration}ms linear`;
-                setTimeout(() => bar.style.width = '100%', 50);
-            }
+    function nextStatus() {
+        clearInterval(statusInterval);
+        currentStatus = (currentStatus < totalStatus - 1) ? currentStatus + 1 : 0;
+        showStatus(currentStatus);
+        statusInterval = setInterval(nextStatus, duration);
+    }
+
+    function prevStatus() {
+        clearInterval(statusInterval);
+        currentStatus = (currentStatus > 0) ? currentStatus - 1 : totalStatus - 1;
+        showStatus(currentStatus);
+        statusInterval = setInterval(nextStatus, duration);
+    }
+
+    function formatWaktuLalu(tanggal) {
+        const detik = Math.floor((new Date() - new Date(tanggal)) / 1000);
+        if (isNaN(detik) || detik < 0) return "Baru saja";
+        let interval = detik / 3600;
+        if (interval > 1) return Math.floor(interval) + " jam lalu";
+        interval = detik / 60;
+        if (interval > 1) return Math.floor(interval) + " menit lalu";
+        return "Baru saja";
+    }
+
+    // Mengambil Nama Tamu dari parameter URL (?to=Nama)
+    function ambilNamaTamu() {
+        const urlParams = new URLSearchParams(window.location.search);
+        let nama = urlParams.get('to') || urlParams.get('nama') || "Tamu Undangan";
+        nama = decodeURIComponent(nama);
+        const elemenNamaKotak = document.getElementById('nama-tamu') || document.querySelector('.kepada-yth-nama');
+        if (elemenNamaKotak) elemenNamaKotak.innerText = nama;
+    }
+
+    function toggleMusik() {
+        const audio = document.getElementById('musik');
+        const btn = document.getElementById('music-btn');
+        const icon = document.getElementById('music-icon');
+        if (audio.paused) { 
+            audio.play(); 
+            btn.classList.add('spinning'); 
+            icon.className = "fa-solid fa-compact-disc text-lg";
+        } else { 
+            audio.pause(); 
+            btn.classList.remove('spinning'); 
+            icon.className = "fa-solid fa-play text-lg";
         }
+    }
 
-        function resetBars() {
-            for (let i = 0; i < totalStatus; i++) {
-                const bar = document.getElementById(`bar-${i}`);
-                if(bar) {
-                    bar.style.transition = 'none';
-                    bar.style.width = i < currentStatus ? '100%' : '0%';
-                }
-            }
+    function createPetal() {
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        petal.innerHTML = '🌸';
+        petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.animationDuration = Math.random() * 3 + 2 + 's'; 
+        petal.style.fontSize = Math.random() * 10 + 10 + 'px';
+        document.body.appendChild(petal);
+        setTimeout(() => petal.remove(), 5000);
+    }
+
+    function toggleAutoScroll() {
+        isAutoScrolling = !isAutoScrolling;
+        const icon = document.getElementById('scroll-icon');
+        if (isAutoScrolling) { 
+            icon.classList.replace('fa-play', 'fa-pause'); 
+            autoScroll(); 
+        } else { 
+            icon.classList.replace('fa-pause', 'fa-play'); 
         }
+    }
 
-        function showStatus(index) {
-            const images = document.querySelectorAll('.status-img');
-            images.forEach((img, i) => { img.classList.toggle('hidden', i !== index); });
-            if(document.getElementById('status-caption')) {
-                document.getElementById('status-caption').innerText = captions[index] || "Momen Bahagia ✨";
-            }
-            currentStatus = index;
-            resetBars();
-            animateBar(currentStatus);
-        }
-
-        function nextStatus() {
-            clearInterval(statusInterval);
-            currentStatus = (currentStatus < totalStatus - 1) ? currentStatus + 1 : 0;
-            showStatus(currentStatus);
-            statusInterval = setInterval(nextStatus, duration);
-        }
-
-        function prevStatus() {
-            clearInterval(statusInterval);
-            currentStatus = (currentStatus > 0) ? currentStatus - 1 : totalStatus - 1;
-            showStatus(currentStatus);
-            statusInterval = setInterval(nextStatus, duration);
-        }
-
-        function formatWaktuLalu(tanggal) {
-            const detik = Math.floor((new Date() - new Date(tanggal)) / 1000);
-            if (isNaN(detik) || detik < 0) return "Baru saja";
-            let interval = detik / 3600;
-            if (interval > 1) return Math.floor(interval) + " jam lalu";
-            interval = detik / 60;
-            if (interval > 1) return Math.floor(interval) + " menit lalu";
-            return "Baru saja";
-        }
-
-        function ambilNamaTamu() {
-            const urlParams = new URLSearchParams(window.location.search);
-            let nama = urlParams.get('to') || urlParams.get('nama') || "Tamu Undangan";
-            nama = decodeURIComponent(nama);
-            const elemenNamaKotak = document.getElementById('nama-tamu') || document.querySelector('.kepada-yth-nama');
-            if (elemenNamaKotak) elemenNamaKotak.innerText = nama;
-        }
-
-        function toggleMusik() {
-            const audio = document.getElementById('musik');
-            const btn = document.getElementById('music-btn');
-            const icon = document.getElementById('music-icon');
-            if (audio.paused) { 
-                audio.play(); 
-                btn.classList.add('spinning'); 
-                icon.className = "fa-solid fa-compact-disc text-lg";
-            } else { 
-                audio.pause(); 
-                btn.classList.remove('spinning'); 
-                icon.className = "fa-solid fa-play text-lg";
-            }
-        }
-
-        function createPetal() {
-            const petal = document.createElement('div');
-            petal.className = 'petal';
-            petal.innerHTML = '🌸';
-            petal.style.left = Math.random() * 100 + 'vw';
-            petal.style.animationDuration = Math.random() * 3 + 2 + 's'; 
-            petal.style.fontSize = Math.random() * 10 + 10 + 'px';
-            document.body.appendChild(petal);
-            setTimeout(() => petal.remove(), 5000);
-        }
-
-        function toggleAutoScroll() {
-            isAutoScrolling = !isAutoScrolling;
+    function autoScroll() {
+        if (!isAutoScrolling) return;
+        window.scrollBy(0, 0.6);
+        if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
+            requestAnimationFrame(autoScroll);
+        } else {
+            isAutoScrolling = false;
             const icon = document.getElementById('scroll-icon');
-            if (isAutoScrolling) { 
-                icon.classList.replace('fa-play', 'fa-pause'); 
-                autoScroll(); 
-            } else { 
-                icon.classList.replace('fa-pause', 'fa-play'); 
-            }
+            if(icon) icon.classList.replace('fa-pause', 'fa-play');
         }
+    }
 
-        function autoScroll() {
-            if (!isAutoScrolling) return;
-            window.scrollBy(0, 0.6);
-            if ((window.innerHeight + window.pageYOffset) < document.body.offsetHeight) {
-                requestAnimationFrame(autoScroll);
-            } else {
-                isAutoScrolling = false;
-                const icon = document.getElementById('scroll-icon');
-                if(icon) icon.classList.replace('fa-pause', 'fa-play');
-            }
-        }
+   function salinTeks(teksPilihan, elemen) {
+    const teksAsli = elemen.innerText;
+    navigator.clipboard.writeText(teksPilihan).then(() => {
+        elemen.innerText = "BERHASIL DISALIN!";
+        elemen.style.backgroundColor = "#059669";
+        setTimeout(() => {
+            elemen.innerText = teksAsli;
+            elemen.style.backgroundColor = "";
+        }, 2000);
+    });
+}
 
-            // Perbaikan: "function" menggunakan huruf kecil
-        function salinTeks(nomor, label, elemen) {
-            const teksAsli = elemen.innerText;
-            navigator.clipboard.writeText(nomor).then(() => {
-                elemen.innerText = "BERHASIL DISALIN!";
-                elemen.classList.add('bg-green-600');
-                setTimeout(() => {
-                    elemen.innerText = teksAsli;
-                    elemen.classList.remove('bg-green-600');
-                }, 2000);
-            });
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            if (typeof dataMempelai !== 'undefined' && dataMempelai.tglCountdown) {
-                const target = new Date(dataMempelai.tglCountdown).getTime();
-                const hitungMundur = setInterval(() => {
-                    const sekarang = new Date().getTime();
-                    const sisa = target - sekarang;
-                    
-                    if (sisa < 0) { 
-                        clearInterval(hitungMundur); 
-                        return; 
-                    }
-                    
-                    if(document.getElementById("days")) document.getElementById("days").innerText = Math.floor(sisa / (1000 * 60 * 60 * 24));
-                    if(document.getElementById("hours")) document.getElementById("hours").innerText = Math.floor((sisa % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    if(document.getElementById("minutes")) document.getElementById("minutes").innerText = Math.floor((sisa % (1000 * 60 * 60)) / (1000 * 60));
-                    if(document.getElementById("seconds")) document.getElementById("seconds").innerText = Math.floor((sisa % (1000 * 60)) / 1000);
-                }, 1000);
-            }
-        });
-
-        window.addEventListener("scroll", () => {
-            document.querySelectorAll(".reveal").forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight - 100) el.classList.add("active");
-            });
-            
-            const storySec = document.getElementById('story');
-            if (storySec) {
-                const rectStory = storySec.getBoundingClientRect();
-                if (rectStory.top < window.innerHeight - 100 && rectStory.bottom > 0) { 
-                    jalankanAnimasiMengetik(); 
-                }
-            }
-        });
-
-        window.addEventListener('load', function() {
-            ambilNamaTamu();
-            setInterval(createPetal, 600);
-        });
-    </script>
-</body>
+</script>
+  </body>
 </html>
