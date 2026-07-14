@@ -370,13 +370,11 @@
             color: #000;
         }
 
-      .wa-profile-pic {
-    width: 40px !important;
-    height: 40px !important;
-    margin-right: 15px !important;
-    border-radius: 50% !important;
-    object-fit: cover !important;
-}
+        .wa-profile-pic {
+            width: 40px !important;
+            height: 40px !important;
+            margin-right: 15px !important;
+        }
 
         .wa-header h1 {
             font-size: 15px !important;
@@ -783,15 +781,12 @@
 
             <div class="max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 justify-center items-start text-left">
                 <div class="w-full max-w-sm mx-auto bg-[#111b21] rounded-2xl overflow-hidden shadow-2xl border border-white/5 reveal">
-                   <div class="flex justify-center pt-6 bg-[#111b21]">
-    <div class="w-40 h-40 bg-stone-900 relative rounded-full overflow-hidden border-4 border-amber-500/30">
-        <img src="pengantinWanita.jpg" class="w-full h-full object-cover" alt="Rara">
-        <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm py-1 text-center text-white text-[9px] font-medium tracking-wide">
-            <i class="fa-solid fa-camera text-amber-400"></i> Profil
-        </div>
-    </div>
-</div>
-
+                    <div class="w-full aspect-square bg-stone-900 relative">
+                        <img src="pengantinWanita.jpg" class="w-full h-full object-cover" alt="Rara">
+                        <div class="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full text-white text-[11px] font-medium tracking-wide">
+                            <i class="fa-solid fa-camera mr-1 text-amber-400"></i> Foto Profil
+                        </div>
+                    </div>
                     <div class="p-5 flex flex-col gap-4">
                         <div class="border-b border-white/5 pb-3">
                             <p class="text-[10px] text-[#00a884] uppercase tracking-wider font-semibold mb-1">Nama / Info</p>
@@ -814,15 +809,12 @@
                 </div>
 
                 <div class="w-full max-w-sm mx-auto bg-[#111b21] rounded-2xl overflow-hidden shadow-2xl border border-white/5 reveal">
-                  <div class="flex justify-center pt-6 bg-[#111b21]">
-    <div class="w-40 h-40 bg-stone-900 relative rounded-full overflow-hidden border-4 border-amber-500/30">
-        <img src="PengantinPria.jpg" class="w-full h-full object-cover" alt="Adi">
-        <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm py-1 text-center text-white text-[9px] font-medium tracking-wide">
-            <i class="fa-solid fa-camera text-amber-400"></i> Profil
-        </div>
-    </div>
-</div>
-
+                    <div class="w-full aspect-square bg-stone-900 relative">
+                        <img src="PengantinPria.jpg" class="w-full h-full object-cover" alt="Adi">
+                        <div class="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full text-white text-[11px] font-medium tracking-wide">
+                            <i class="fa-solid fa-camera mr-1 text-amber-400"></i> Foto Profil
+                        </div>
+                    </div>
                     <div class="p-5 flex flex-col gap-4">
                         <div class="border-b border-white/5 pb-3">
                             <p class="text-[10px] text-[#00a884] uppercase tracking-wider font-semibold mb-1">Nama / Info</p>
@@ -851,7 +843,7 @@
             <div class="max-w-md mx-auto wa-chat-container shadow-2xl reveal">
                 <div class="wa-header flex items-center p-3 bg-[#202c33] text-white">
                     <i class="fa-solid fa-arrow-left text-[#8696a0] mr-3"></i>
-                    <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic rounded-full object-cover" alt="Story PP">
+                    <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic" alt="Story PP">
                     <div class="flex flex-col justify-center">
                         <h1 class="text-[15px] font-medium leading-tight">Rara</h1>
                         <span id="typing-status">Online</span>
@@ -867,21 +859,24 @@
                     <div class="text-center mb-6">
                         <span class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest uppercase">Januari 2023</span>
                     </div>
-                    <div id="story-chat-1" class="wa-bubble wa-bubble-left">
-                        <span id="story-tgl-1" class="wa-time-meta">10:00</span>
+                    <div class="wa-bubble wa-bubble-left">
+                        Ingat nggak waktu pertama kali kita nggak sengaja duduk sebelahan di cafe? 🥰
+                        <span class="wa-time-meta">10:00</span>
                     </div>
-                    <div id="story-chat-2" class="wa-bubble wa-bubble-right">
-                        <span id="story-tgl-2" class="wa-time-meta">10:05 <i class="fa-solid fa-check-double text-[#53bdeb]"></i></span>
+                    <div class="wa-bubble wa-bubble-right">
+                        Ingat banget lah! Waktu itu aku gugup mau ajak kenalan haha. Akhirnya berani juga ya ❤️
+                        <span class="wa-time-meta">10:05 <i class="fa-solid fa-check-double text-[#53bdeb]"></i></span>
                     </div>
                     <div class="text-center my-6">
                         <span class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest uppercase">Maret 2025</span>
                     </div>
-                  <div id="story-chat-3" class="wa-bubble wa-bubble-left" style="padding: 4px;">
-        <img src="3.jpg" class="rounded-lg w-full h-auto object-contain mb-1" alt="Pertunangan">
-            <div class="px-2 pb-1">
-            <span class="wa-time-meta">11:42</span>
-            </div>
-        </div>
+                    <div class="wa-bubble wa-bubble-left" style="padding: 4px;">
+                        <img src="1.jpg" class="rounded-lg w-full h-44 object-cover mb-1" alt="Pertunangan">
+                        <div class="px-2 pb-1">
+                            Momen paling haru waktu keluarga kita kumpul semua. Hari pertunangan kita... 😍
+                            <span class="wa-time-meta">11:42</span>
+                        </div>
+                    </div>
                     <div id="typing-bubble" class="wa-bubble wa-bubble-left hidden">
                         <div class="typing py-1 flex gap-1">
                             <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
@@ -912,7 +907,7 @@
             <div class="max-w-md mx-auto wa-chat-container shadow-2xl reveal text-left">
                 <div class="wa-header flex items-center p-3 bg-[#202c33] text-white">
                     <i class="fa-solid fa-arrow-left text-[#8696a0] mr-3"></i>
-                    <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic rounded-full object-cover" alt="Acara PP">
+                    <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic" alt="Acara PP">
                     <div class="flex flex-col justify-center">
                         <h1 class="text-[15px] font-medium leading-tight">Rara & Adi</h1>
                         <span class="text-[11px] text-[#00a884]">Typing...</span>
@@ -928,10 +923,9 @@
                     </div>
 
                     <div class="wa-bubble wa-bubble-left w-[85%] !bg-[#202c33] !p-0 overflow-hidden rounded-xl shadow-md">
-                    <div class="w-full bg-stone-900">
-                    <img src="3.jpg" class="w-full h-auto object-contain" alt="Ilustrasi Akad">
-                    </div>
-
+                        <div class="w-full h-48 bg-stone-900">
+                            <img src="3.jpg" class="w-full h-full object-cover object-center" alt="Ilustrasi Akad">
+                        </div>
                         <div class="p-4 text-white">
                             <div class="flex items-center gap-2 mb-2">
                                 <span class="bg-amber-500/20 text-amber-300 text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Momen Intim</span>
@@ -955,10 +949,9 @@
                     </div>
 
                     <div class="wa-bubble wa-bubble-right w-[85%] !bg-[#005c4b] !p-0 overflow-hidden rounded-xl shadow-md align-self-end text-right">
-                <div class="w-full bg-stone-900">
-                <img src="4.jpg" class="w-full h-auto object-contain" alt="Ilustrasi Resepsi">
-            </div>
-
+                        <div class="w-full h-48 bg-stone-900">
+                            <img src="4.jpg" class="w-full h-full object-cover object-center" alt="Ilustrasi Resepsi">
+                        </div>
                         <div class="p-4 text-left text-white">
                             <div class="flex items-center gap-2 mb-2">
                                 <span class="bg-white/20 text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Perayaan</span>
@@ -998,7 +991,7 @@
             <div class="max-w-md mx-auto wa-chat-container shadow-2xl reveal text-left">
                 <div class="wa-header flex items-center p-3 bg-[#202c33] text-white">
                     <i class="fa-solid fa-arrow-left text-[#8696a0] mr-3"></i>
-                    <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic rounded-full object-cover" alt="Maps PP">
+                    <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic" alt="Maps PP">
                     <div class="flex flex-col justify-center">
                         <h1 class="text-[15px] font-medium leading-tight">Rara & Adi</h1>
                         <span class="text-[11px] text-[#00a884]">Live location aktif</span>
@@ -1074,7 +1067,7 @@
             <div class="max-w-md mx-auto wa-chat-container shadow-2xl reveal text-left">
                 <div class="wa-header flex items-center p-3 bg-[#202c33] text-white">
                     <i class="fa-solid fa-arrow-left text-[#8696a0] mr-3"></i>
-                    <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic rounded-full object-cover" alt="Kado PP">
+                    <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic" alt="Kado PP">
                     <div class="flex flex-col justify-center">
                         <h1 class="text-[15px] font-medium leading-tight">Rara & Adi</h1>
                         <span class="text-[11px] text-[#00a884]">Online</span>
@@ -1163,7 +1156,7 @@
                         <i class="fa-solid fa-users"></i>
                     </div>
                     <div class="flex flex-col justify-center">
-                        <h1 id="grup-rsvp-nama" class="text-[15px] font-medium leading-tight">Keluarga & Sahabat</h1>
+                        <h1 class="text-[15px] font-medium leading-tight">Keluarga & Sahabat Rara & Adi</h1>
                         <span class="text-[11px] text-[#8696a0] opacity-90">Grup Undangan Pernikahan</span>
                     </div>
                     <div class="flex ml-auto gap-5 text-[#8696a0]">
@@ -1224,21 +1217,15 @@
         </footer>
     </div>
 
-    <audio id="musik" loop><source src="lagupenganti.mp3" type="audio/mpeg"></audio>
+    <audio id="musik" loop><source src="lagupengantin.mp3" type="audio/mpeg"></audio>
     <audio id="notif-sound" preload="auto"><source src="notifundangan.mp3" type="audio/mpeg"></audio>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Pastikan objek dataMempelai ada sebelum digunakan
             if(typeof dataMempelai !== 'undefined') {
-                // 1. Pengisian Data Cover & Notifikasi
-                if(document.getElementById('cover-tanggal')) {
-                    document.getElementById('cover-tanggal').innerText = dataMempelai.akad.tanggal;
-                }
-                if(document.getElementById('notif-nama')) {
-                    document.getElementById('notif-nama').innerText = dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + " (Wedding)";
-                }
-
-                // 2. Pengisian Data Mempelai Wanita
+                if(document.getElementById('cover-tanggal')) document.getElementById('cover-tanggal').innerText = dataMempelai.akad.tanggal;
+                if(document.getElementById('notif-nama')) document.getElementById('notif-nama').innerText = dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + " (Wedding)";
+         
                 if(document.getElementById('nama-lengkap-wanita')) {
                     document.getElementById('nama-lengkap-wanita').innerText = dataMempelai.wanita.namaLengkap;
                     document.getElementById('panggilan-wanita').innerText = 'Sering dipanggil "' + dataMempelai.wanita.panggilan + '"';
@@ -1248,7 +1235,6 @@
                     document.getElementById('ig-link-wanita').href = dataMempelai.wanita.linkInstagram;
                 }
 
-                // 3. Pengisian Data Mempelai Pria
                 if(document.getElementById('nama-lengkap-pria')) {
                     document.getElementById('nama-lengkap-pria').innerText = dataMempelai.pria.namaLengkap;
                     document.getElementById('panggilan-pria').innerText = 'Sering dipanggil "' + dataMempelai.pria.panggilan + '"';
@@ -1258,30 +1244,6 @@
                     document.getElementById('ig-link-pria').href = dataMempelai.pria.linkInstagram;
                 }
 
-                // 4. Pengisian Data Love Story Chat
-                if(document.getElementById('story-chat-1')) {
-                    document.getElementById('story-chat-1').innerHTML = dataMempelai.story.chat1 + `<span id="story-tgl-1" class="wa-time-meta">${dataMempelai.story.tanggal1}</span>`;
-                }
-                if(document.getElementById('story-chat-2')) {
-                    document.getElementById('story-chat-2').innerHTML = dataMempelai.story.chat2 + `<span id="story-tgl-2" class="wa-time-meta">${dataMempelai.story.tanggal2} <i class="fa-solid fa-check-double text-[#53bdeb]"></i></span>`;
-                }
-                if(document.getElementById('story-chat-3')) {
-                    // Membuat struktur bubble chat foto agar rapi dan tidak error
-                    document.getElementById('story-chat-3').innerHTML = `
-                        <img src="${dataMempelai.story.foto2}" class="rounded-lg w-full h-auto object-contain mb-1" alt="Pertunangan">
-                        <div class="px-2 pb-1">
-                            <p class="text-[12.5px] text-stone-200 leading-relaxed text-left">${dataMempelai.story.chat3}</p>
-                            <span class="wa-time-meta !right-3 !bottom-1">${dataMempelai.story.tanggal2}</span>
-                        </div>
-                    `;
-                }
-
-                // 5. Nama Grup Buku Tamu (RSVP)
-                if(document.getElementById('grup-rsvp-nama')) {
-                    document.getElementById('grup-rsvp-nama').innerText = "Keluarga & Sahabat " + dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan;
-                }
-
-                // 6. Pengisian Jadwal Acara
                 if(document.getElementById('akad-tanggal')) {
                     document.getElementById('akad-tanggal').innerText = dataMempelai.akad.tanggal;
                     document.getElementById('akad-jam').innerText = dataMempelai.akad.jam;
@@ -1294,13 +1256,11 @@
                     document.getElementById('resepsi-maps-link').href = dataMempelai.resepsi.linkMaps; 
                 }
 
-                // 7. Pengisian Maps Iframe
                 if(document.getElementById('maps-iframe')) {
                     document.getElementById('maps-iframe').src = dataMempelai.maps.iframeUrl;
                     document.getElementById('maps-tombol-rute').href = dataMempelai.maps.tombolRute;
                 }
 
-                // 8. Pengisian Rekening Kado Digital
                 if(document.getElementById('mandiri-no')) {
                     document.getElementById('mandiri-no').innerText = dataMempelai.kado.mandiriNo;
                     document.getElementById('mandiri-an').innerText = "A/N " + dataMempelai.kado.mandiriAn;
@@ -1310,10 +1270,8 @@
                     document.getElementById('alamat-penerima').innerText = dataMempelai.kado.penerimaPaket;
                 } 
 
-                // 9. Gambar Cover & Notif WA
                 if(document.getElementById('cover')) {
-                    const backgroundUrl = dataMempelai.media?.fotoCover || "4.jpg";
-                    document.getElementById('cover').style.backgroundImage = `linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85)), url('${backgroundUrl}')`;
+                    document.getElementById('cover').style.backgroundImage = `linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85)), url('${dataMempelai.media?.fotoCover || "1.jpg"}')`;
                 }
                 
                 const semuaFotoNotif = document.querySelectorAll('.foto-notif-wa');
@@ -1326,7 +1284,6 @@
                     document.getElementById('btn-konfirmasi-wa').href = "https://wa.me/" + dataMempelai.kado.NoWaKonfirmasi + "?text=" + teksWa;
                 }
 
-                // 10. Status Galeri WA
                 const statusSlides = document.getElementById('status-slides');
                 const statusBarsContainer = document.querySelector('.wa-status-bars');
                 
@@ -1414,10 +1371,10 @@
         }
 
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
-        const idUndanganStr = dataMempelai.idUndangan; // Sesuai ID di Google Sheets
+        const idUndanganStr = 'devi-ehsan';
         let isAutoScrolling = false;
-        let currentStatus = 5;
-        let totalStatus = (typeof dataMempelai !== 'undefined' && dataMempelai.galeri) ? dataMempelai.galeri.length : 0;
+        let currentStatus = 0;
+        let totalStatus = 5; 
         const duration = 5000;
         let statusInterval;
         const captions = ["Momen tak terlupakan ❤️", "Cinta sejati berawal di sini...", "Bersyukur atas segalanya 🙏", "Menuju hari bahagia ✨", "Sampai bertemu di lokasi! 😍", "Bahagia selamanya 💖"];
@@ -1700,6 +1657,5 @@
             setInterval(createPetal, 600);
         });
     </script>
-
-  </body>
+</body>
 </html>
