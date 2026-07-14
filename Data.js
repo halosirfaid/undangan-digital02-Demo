@@ -78,17 +78,12 @@ const dataMempelai = {
     }
 };
 
-
-
-const dataMempelai = {
-  // ... (kode data utama, mempelai, akad, resepsi, dll yang sudah ada tetap biarkan)
-
-  // TAMBAHKAN BAGIAN STORY INI DI DALAM OBJEK dataMempelai:
-  story: {
-    tanggal1: "Januari 2023",
-    chat1: "Ingat nggak waktu pertama kali kita nggak sengaja duduk sebelahan di cafe? 🥰",
-    chat2: "Ingat banget lah! Waktu itu aku gugup mau ajak kenalan haha. Akhirnya berani juga ya ❤️",
-    tanggal2: "Maret 2025",
-    chat3: "Momen paling haru waktu keluarga kita kumpul semua. Hari pertunangan kita... 😍"
-  }
+// 9. Data Love Story (Digabungkan langsung di sini)
+    story: {
+        tanggal1: "Januari 2023",
+        chat1: "Ingat nggak waktu pertama kali kita nggak sengaja duduk sebelahan di cafe? 🥰",
+        chat2: "Ingat banget lah! Waktu itu aku gugup mau ajak kenalan haha. Akhirnya berani juga ya ❤️",
+        tanggal2: "Maret 2025",
+        chat3: "Momen paling haru waktu keluarga kita kumpul semua. Hari pertunangan kita... 😍"
+    }
 };
