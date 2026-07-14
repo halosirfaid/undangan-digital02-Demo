@@ -1,7 +1,7 @@
 // FILE DATA MEMPELAI (Klien tinggal diganti di sini)
 const dataMempelai = {
     idUndangan: "Uul-Julak", // Sesuai ID tujuan Google Sheets kamu
-    tglCountdown: "July 15, 2026 12:00:00", // Format: Bulan Tanggal, Tahun Jam:Menit:Detik
+    tglCountdown: "July 16, 2026 12:00:00", // Format: Bulan Tanggal, Tahun Jam:Menit:Detik
     
     // 1. Data Mempelai Wanita
     wanita: {
