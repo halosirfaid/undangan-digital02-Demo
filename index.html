@@ -1248,6 +1248,12 @@
                     document.getElementById('ig-link-wanita').href = dataMempelai.wanita.linkInstagram;
                 }
 
+                const coverTanggal = document.getElementById("cover-tanggal");
+        if (coverTanggal) {
+            // Jika di data.js kamu menggunakan nama 'tglAcara'
+            if (dataMempelai.tglAcara) {
+                coverTanggal.innerText = dataMempelai.tglAcara;
+            } 
                 if(document.getElementById('nama-lengkap-pria')) {
                     document.getElementById('nama-lengkap-pria').innerText = dataMempelai.pria.namaLengkap;
                     document.getElementById('panggilan-pria').innerText = 'Sering dipanggil "' + dataMempelai.pria.panggilan + '"';
