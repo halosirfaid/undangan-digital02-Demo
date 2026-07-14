@@ -75,10 +75,9 @@ const dataMempelai = {
     media: {
         fotoCover: "4.jpg",
         fotoNotif: "3.jpg"
-    }
-};
+    },
 
-// 9. Data Love Story (Digabungkan langsung di sini)
+    // 9. Data Love Story
     story: {
         tanggal1: "Januari 2023",
         chat1: "Ingat nggak waktu pertama kali kita nggak sengaja duduk sebelahan di cafe? 🥰",
