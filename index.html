@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <meta property="og:title" content="Undangan Pernikahan Rara & Adi">
     <meta property="og:description" content="Rabu, 15 July 2026 - Kami mengundang Anda untuk berbagi kebahagiaan bersama kami.">
-    <meta property="og:image" content="https://sirfaid.github.io/Undangan-saya/3.jpg">
+    <meta id="meta-deskripsi" property="og:description" content="Kami mengundang Anda untuk berbagi kebahagiaan bersama kami.">
     <meta property="og:url" content="https://sirfaid.github.io/Undangan-saya/">
 
     <meta charset="UTF-8">
@@ -1399,7 +1399,7 @@
         }
 
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
-        const idUndanganStr = undanganData.idUndangan;
+        const idUndanganStr = typeof dataMempelai !== 'undefined' ? dataMempelai.idUndangan : '';
         let isAutoScrolling = false;
         let currentStatus = 0;
         let totalStatus = 5; 
