@@ -3327,6 +3327,7 @@
             }
         }
 
+            // Perbaikan: "function" menggunakan huruf kecil
         function salinTeks(nomor, label, elemen) {
             const teksAsli = elemen.innerText;
             navigator.clipboard.writeText(nomor).then(() => {
@@ -3339,7 +3340,6 @@
             });
         }
 
-    
         document.addEventListener("DOMContentLoaded", function() {
             if (typeof dataMempelai !== 'undefined' && dataMempelai.tglCountdown) {
                 const target = new Date(dataMempelai.tglCountdown).getTime();
@@ -3360,7 +3360,6 @@
             }
         });
 
-        
         window.addEventListener("scroll", () => {
             document.querySelectorAll(".reveal").forEach(el => {
                 const rect = el.getBoundingClientRect();
@@ -3370,7 +3369,9 @@
             const storySec = document.getElementById('story');
             if (storySec) {
                 const rectStory = storySec.getBoundingClientRect();
-                if (rectStory.top < window.innerHeight - 100 && rectStory.bottom > 0) { jalankanAnimasiMengetik(); }
+                if (rectStory.top < window.innerHeight - 100 && rectStory.bottom > 0) { 
+                    jalankanAnimasiMengetik(); 
+                }
             }
         });
 
