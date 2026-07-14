@@ -863,27 +863,36 @@
                 </div>
 
                 <div class="p-4 flex flex-col min-h-[500px] max-h-[600px] overflow-y-auto">
+                    <!-- Bubble 1 -->
                     <div class="text-center mb-6">
-                        <span class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest uppercase">Januari 2023</span>
+                        <span id="story-date-1" class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest uppercase"></span>
                     </div>
                     <div class="wa-bubble wa-bubble-left">
-                        Ingat nggak waktu pertama kali kita nggak sengaja duduk sebelahan di cafe? 🥰
-                        <span class="wa-time-meta">10:00</span>
+                        <span id="story-msg-1"></span>
+                        <span id="story-time-1" class="wa-time-meta"></span>
+                    </div>
+
+                    <!-- Bubble 2 -->
+                    <div class="text-center my-6">
+                        <span id="story-date-2" class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest uppercase"></span>
                     </div>
                     <div class="wa-bubble wa-bubble-right">
-                        Ingat banget lah! Waktu itu aku gugup mau ajak kenalan haha. Akhirnya berani juga ya ❤️
-                        <span class="wa-time-meta">10:05 <i class="fa-solid fa-check-double text-[#53bdeb]"></i></span>
+                        <span id="story-msg-2"></span>
+                        <span id="story-time-2" class="wa-time-meta"></span>
                     </div>
+
+                    <!-- Bubble 3 -->
                     <div class="text-center my-6">
-                        <span class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest uppercase">Maret 2025</span>
+                        <span id="story-date-3" class="bg-[#182229] text-[#8696a0] text-[10px] px-3 py-1 rounded shadow-sm tracking-widest uppercase"></span>
                     </div>
                     <div class="wa-bubble wa-bubble-left" style="padding: 4px;">
-                        <img src="1.jpg" class="rounded-lg w-full h-auto object-cover mb-1" alt="Pertunangan">
+                        <img id="story-img-3" src="" class="rounded-lg w-full h-auto object-cover mb-1" alt="Momen">
                         <div class="px-2 pb-1">
-                            Momen paling haru waktu keluarga kita kumpul semua. Hari pertunangan kita... 😍
-                            <span class="wa-time-meta">11:42</span>
+                            <span id="story-msg-3"></span>
+                            <span id="story-time-3" class="wa-time-meta"></span>
                         </div>
                     </div>
+                    
                     <div id="typing-bubble" class="wa-bubble wa-bubble-left hidden">
                         <div class="typing py-1 flex gap-1">
                             <div class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
@@ -893,6 +902,19 @@
                     </div>
                 </div>
 
+                <div class="wa-footer-input">
+                    <div class="wa-input-box">
+                        <i class="fa-regular fa-face-smile text-xl"></i>
+                        <span class="flex-1">Ketik pesan</span>
+                        <i class="fa-solid fa-paperclip text-xl rotate-45"></i>
+                        <i class="fa-solid fa-camera text-xl"></i>
+                    </div>
+                    <div class="bg-[#00a884] w-11 h-11 rounded-full flex items-center justify-center shadow-lg">
+                        <i class="fa-solid fa-microphone text-white text-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
                 <div class="wa-footer-input">
                     <div class="wa-input-box">
                         <i class="fa-regular fa-face-smile text-xl"></i>
@@ -1280,6 +1302,22 @@
                 if(document.getElementById('cover')) {
                     document.getElementById('cover').style.backgroundImage = `linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85)), url('${dataMempelai.media?.fotoCover || "1.jpg"}')`;
                 }
+                                // Menghubungkan teks cerita cinta dari Data.js ke elemen HTML
+                if(dataMempelai.story) {
+                    if(document.getElementById('story-date-1')) document.getElementById('story-date-1').innerText = dataMempelai.story.bulanTahun1;
+                    if(document.getElementById('story-msg-1')) document.getElementById('story-msg-1').innerText = dataMempelai.story.pesanWanita1;
+                    if(document.getElementById('story-time-1')) document.getElementById('story-time-1').innerHTML = dataMempelai.story.waktuWanita1;
+
+                    if(document.getElementById('story-date-2')) document.getElementById('story-date-2').innerText = dataMempelai.story.bulanTahun2;
+                    if(document.getElementById('story-msg-2')) document.getElementById('story-msg-2').innerText = dataMempelai.story.pesanPria1;
+                    if(document.getElementById('story-time-2')) document.getElementById('story-time-2').innerHTML = dataMempelai.story.waktuPria1 + ' <i class="fa-solid fa-check-double text-[#53bdeb]"></i>';
+
+                    if(document.getElementById('story-date-3')) document.getElementById('story-date-3').innerText = dataMempelai.story.bulanTahun3;
+                    if(document.getElementById('story-img-3')) document.getElementById('story-img-3').src = dataMempelai.story.fotoPertunangan;
+                    if(document.getElementById('story-msg-3')) document.getElementById('story-msg-3').innerText = dataMempelai.story.pesanWanita2;
+                    if(document.getElementById('story-time-3')) document.getElementById('story-time-3').innerHTML = dataMempelai.story.waktuWanita2;
+                }
+
                 
                 const semuaFotoNotif = document.querySelectorAll('.foto-notif-wa');
                 semuaFotoNotif.forEach(img => {
