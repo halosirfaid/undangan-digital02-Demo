@@ -1226,28 +1226,19 @@
 
     <audio id="musik" loop><source src="lagupenganti.mp3" type="audio/mpeg"></audio>
     <audio id="notif-sound" preload="auto"><source src="notifundangan.mp3" type="audio/mpeg"></audio>
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Pastikan objek dataMempelai ada sebelum digunakan
             if(typeof dataMempelai !== 'undefined') {
-                if(document.getElementById('cover-tanggal')) document.getElementById('cover-tanggal').innerText = dataMempelai.akad.tanggal;
-                if(document.getElementById('notif-nama')) document.getElementById('notif-nama').innerText = dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + " (Wedding)";
+                // 1. Pengisian Data Cover & Notifikasi
+                if(document.getElementById('cover-tanggal')) {
+                    document.getElementById('cover-tanggal').innerText = dataMempelai.akad.tanggal;
+                }
+                if(document.getElementById('notif-nama')) {
+                    document.getElementById('notif-nama').innerText = dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + " (Wedding)";
+                }
 
-                // Menghubungkan Teks Konten Love Story dari Data.js ke HTML
-if(document.getElementById('story-tgl-1')) {
-    document.getElementById('story-tgl-1').prepend(dataMempelai.story.tanggal1);
-    document.getElementById('story-chat-1').prepend(dataMempelai.story.chat1);
-    document.getElementById('story-chat-2').prepend(dataMempelai.story.chat2);
-    document.getElementById('story-tgl-2').prepend(dataMempelai.story.tanggal2);
-    document.getElementById('story-chat-3').innerText = dataMempelai.story.chat3;
-}
-
-// Menghubungkan Judul Nama Grup di Buku Tamu
-if(document.getElementById('grup-rsvp-nama')) {
-    document.getElementById('grup-rsvp-nama').innerText = "Keluarga & Sahabat " + dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan;
-}
-
-                
+                // 2. Pengisian Data Mempelai Wanita
                 if(document.getElementById('nama-lengkap-wanita')) {
                     document.getElementById('nama-lengkap-wanita').innerText = dataMempelai.wanita.namaLengkap;
                     document.getElementById('panggilan-wanita').innerText = 'Sering dipanggil "' + dataMempelai.wanita.panggilan + '"';
@@ -1257,6 +1248,7 @@ if(document.getElementById('grup-rsvp-nama')) {
                     document.getElementById('ig-link-wanita').href = dataMempelai.wanita.linkInstagram;
                 }
 
+                // 3. Pengisian Data Mempelai Pria
                 if(document.getElementById('nama-lengkap-pria')) {
                     document.getElementById('nama-lengkap-pria').innerText = dataMempelai.pria.namaLengkap;
                     document.getElementById('panggilan-pria').innerText = 'Sering dipanggil "' + dataMempelai.pria.panggilan + '"';
@@ -1266,6 +1258,30 @@ if(document.getElementById('grup-rsvp-nama')) {
                     document.getElementById('ig-link-pria').href = dataMempelai.pria.linkInstagram;
                 }
 
+                // 4. Pengisian Data Love Story Chat
+                if(document.getElementById('story-chat-1')) {
+                    document.getElementById('story-chat-1').innerHTML = dataMempelai.story.chat1 + `<span id="story-tgl-1" class="wa-time-meta">${dataMempelai.story.tanggal1}</span>`;
+                }
+                if(document.getElementById('story-chat-2')) {
+                    document.getElementById('story-chat-2').innerHTML = dataMempelai.story.chat2 + `<span id="story-tgl-2" class="wa-time-meta">${dataMempelai.story.tanggal2} <i class="fa-solid fa-check-double text-[#53bdeb]"></i></span>`;
+                }
+                if(document.getElementById('story-chat-3')) {
+                    // Membuat struktur bubble chat foto agar rapi dan tidak error
+                    document.getElementById('story-chat-3').innerHTML = `
+                        <img src="${dataMempelai.story.foto2}" class="rounded-lg w-full h-auto object-contain mb-1" alt="Pertunangan">
+                        <div class="px-2 pb-1">
+                            <p class="text-[12.5px] text-stone-200 leading-relaxed text-left">${dataMempelai.story.chat3}</p>
+                            <span class="wa-time-meta !right-3 !bottom-1">${dataMempelai.story.tanggal2}</span>
+                        </div>
+                    `;
+                }
+
+                // 5. Nama Grup Buku Tamu (RSVP)
+                if(document.getElementById('grup-rsvp-nama')) {
+                    document.getElementById('grup-rsvp-nama').innerText = "Keluarga & Sahabat " + dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan;
+                }
+
+                // 6. Pengisian Jadwal Acara
                 if(document.getElementById('akad-tanggal')) {
                     document.getElementById('akad-tanggal').innerText = dataMempelai.akad.tanggal;
                     document.getElementById('akad-jam').innerText = dataMempelai.akad.jam;
@@ -1278,11 +1294,13 @@ if(document.getElementById('grup-rsvp-nama')) {
                     document.getElementById('resepsi-maps-link').href = dataMempelai.resepsi.linkMaps; 
                 }
 
+                // 7. Pengisian Maps Iframe
                 if(document.getElementById('maps-iframe')) {
                     document.getElementById('maps-iframe').src = dataMempelai.maps.iframeUrl;
                     document.getElementById('maps-tombol-rute').href = dataMempelai.maps.tombolRute;
                 }
 
+                // 8. Pengisian Rekening Kado Digital
                 if(document.getElementById('mandiri-no')) {
                     document.getElementById('mandiri-no').innerText = dataMempelai.kado.mandiriNo;
                     document.getElementById('mandiri-an').innerText = "A/N " + dataMempelai.kado.mandiriAn;
@@ -1292,8 +1310,10 @@ if(document.getElementById('grup-rsvp-nama')) {
                     document.getElementById('alamat-penerima').innerText = dataMempelai.kado.penerimaPaket;
                 } 
 
+                // 9. Gambar Cover & Notif WA
                 if(document.getElementById('cover')) {
-                    document.getElementById('cover').style.backgroundImage = `linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85)), url('${dataMempelai.media?.fotoCover || "1.jpg"}')`;
+                    const backgroundUrl = dataMempelai.media?.fotoCover || "4.jpg";
+                    document.getElementById('cover').style.backgroundImage = `linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85)), url('${backgroundUrl}')`;
                 }
                 
                 const semuaFotoNotif = document.querySelectorAll('.foto-notif-wa');
@@ -1306,6 +1326,7 @@ if(document.getElementById('grup-rsvp-nama')) {
                     document.getElementById('btn-konfirmasi-wa').href = "https://wa.me/" + dataMempelai.kado.NoWaKonfirmasi + "?text=" + teksWa;
                 }
 
+                // 10. Status Galeri WA
                 const statusSlides = document.getElementById('status-slides');
                 const statusBarsContainer = document.querySelector('.wa-status-bars');
                 
@@ -1392,14 +1413,14 @@ if(document.getElementById('grup-rsvp-nama')) {
             autoScroll();
         }
 
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
-const idUndanganStr = 'datamempelai.idUndangan';
-let isAutoScrolling = false;
-let currentStatus = 0;
-let totalStatus = (typeof dataMempelai !== 'undefined' && dataMempelai.galeri) ? dataMempelai.galeri.length : 0;
-const duration = 5000;
-let statusInterval;
-const captions = ["Momen tak terlupakan ❤️", "Cinta sejati berawal di sini...", "Bersyukur atas segalanya 🙏", "Menuju hari bahagia ✨", "Sampai bertemu di lokasi! 😍", "Bahagia selamanya 💖"];
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxYIouWgN8_HH1uYSFlHP7d9JqSIInqntBH3x5EuuM9nqv_d_AU5cczyzr4vmbo1pFToA/exec';
+        const idUndanganStr = 'datamempelai.idUndangan'; // Sesuai ID di Google Sheets
+        let isAutoScrolling = false;
+        let currentStatus = 0;
+        let totalStatus = (typeof dataMempelai !== 'undefined' && dataMempelai.galeri) ? dataMempelai.galeri.length : 0;
+        const duration = 5000;
+        let statusInterval;
+        const captions = ["Momen tak terlupakan ❤️", "Cinta sejati berawal di sini...", "Bersyukur atas segalanya 🙏", "Menuju hari bahagia ✨", "Sampai bertemu di lokasi! 😍", "Bahagia selamanya 💖"];
 
         function dapatkanWarnaNama(nama) {
             const warnaWAGrup = ['#1f7aec', '#df5044', '#e57c06', '#05a665', '#b852cc', '#9c6644', '#00a5cf', '#e05780'];
@@ -1679,5 +1700,6 @@ const captions = ["Momen tak terlupakan ❤️", "Cinta sejati berawal di sini..
             setInterval(createPetal, 600);
         });
     </script>
-</body>
+
+  </body>
 </html>
