@@ -1244,7 +1244,7 @@
                 </a>
             </div>
         </footer>
-    </div>
+      </div>
 
     <audio id="musik" loop><source src="lagupenganti.mp3" type="audio/mpeg"></audio>
     <audio id="notif-sound" preload="auto"><source src="notifundangan.mp3" type="audio/mpeg"></audio>
@@ -1302,7 +1302,7 @@
                 if(document.getElementById('cover')) {
                     document.getElementById('cover').style.backgroundImage = `linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85)), url('${dataMempelai.media?.fotoCover || "1.jpg"}')`;
                 }
-                                // Menghubungkan teks cerita cinta dari Data.js ke elemen HTML
+                
                 if(dataMempelai.story) {
                     if(document.getElementById('story-date-1')) document.getElementById('story-date-1').innerText = dataMempelai.story.bulanTahun1;
                     if(document.getElementById('story-msg-1')) document.getElementById('story-msg-1').innerText = dataMempelai.story.pesanWanita1;
@@ -1318,7 +1318,6 @@
                     if(document.getElementById('story-time-3')) document.getElementById('story-time-3').innerHTML = dataMempelai.story.waktuWanita2;
                 }
 
-                
                 const semuaFotoNotif = document.querySelectorAll('.foto-notif-wa');
                 semuaFotoNotif.forEach(img => {
                     img.src = dataMempelai.media?.fotoNotif || "pengantinWanita.jpg";
@@ -1701,7 +1700,6 @@
             ambilNamaTamu();
             setInterval(createPetal, 600);
         });
-        }
     </script>
 </body>
 </html>
