@@ -1108,7 +1108,7 @@
                             <p id="mandiri-an" class="text-[11px] text-white uppercase tracking-wider opacity-90 mb-4"></p>
                             <div class="flex justify-between items-center">
                                 <span class="text-[10px] text-[#8696a0] italic">Klik untuk menyalin</span>
-                                <button onclick="salinTeks(dataMempelai.kado.mandiriNo, 'Mandiri', this)" class="wa-transfer-btn-copy">SALIN NOMOR</button>
+                              <button onclick="salinTeks(dataMempelai.kado.mandiriNo, this)" class="wa-transfer-btn-copy">SALIN NOMOR</button>
                             </div>
                         </div>
                     </div>
@@ -1124,7 +1124,7 @@
                             <p id="bca-an" class="text-[11px] text-white uppercase tracking-wider opacity-90 mb-4"></p>
                             <div class="flex justify-between items-center">
                                 <span class="text-[10px] text-[#8696a0] italic">Klik untuk menyalin</span>
-                                <button onclick="salinTeks(dataMempelai.kado.bcaNo, 'BCA', this)" class="wa-transfer-btn-copy">SALIN NOMOR</button>
+                               <button onclick="salinTeks(dataMempelai.kado.bcaNo, this)" class="wa-transfer-btn-copy">SALIN NOMOR</button>
                             </div>
                         </div>
                     </div>
@@ -1138,7 +1138,7 @@
                             <p class="text-[10px] text-amber-200 uppercase tracking-widest mb-4">Penerima: <span id="alamat-penerima"></span></p>
                             <div class="flex justify-between items-center">
                                 <span class="text-[10px] text-[#8696a0] italic">Klik untuk menyalin alamat</span>
-                                <button onclick="salinTeks(dataMempelai.kado.alamatKirim, 'Alamat', this)" class="wa-transfer-btn-copy">SALIN ALAMAT</button>
+                                <button onclick="salinTeks(dataMempelai.kado.alamatKirim, this)" class="wa-transfer-btn-copy">SALIN ALAMAT</button>
                             </div>
                         </div>
                     </div>
@@ -1677,7 +1677,7 @@
         }
     }
 
-   function salinTeks(teksPilihan, elemen) {
+function salinTeks(teksPilihan, elemen) {
     const teksAsli = elemen.innerText;
     navigator.clipboard.writeText(teksPilihan).then(() => {
         elemen.innerText = "BERHASIL DISALIN!";
