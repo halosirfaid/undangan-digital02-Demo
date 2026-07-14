@@ -77,3 +77,18 @@ const dataMempelai = {
         fotoNotif: "3.jpg"
     }
 };
+    // Tambahkan ini di dalam dataMempelai pada file Data.js
+    story: {
+        bulanTahun1: "JANUARI 2023",
+        pesanWanita1: "Ingat nggak waktu pertama kali kita nggak sengaja duduk sebelahan di cafe? 🥰",
+        waktuWanita1: "10:00",
+        
+        bulanTahun2: "MARET 2025",
+        pesanPria1: "Ingat banget lah! Waktu itu aku gugup mau ajak kenalan haha. Akhirnya berani juga ya ❤️",
+        waktuPria1: "10:05",
+        
+        bulanTahun3: "FEBRUARI 2026",
+        pesanWanita2: "Momen paling haru waktu keluarga kita kumpul semua. Hari pertunangan kita... 😍",
+        waktuWanita2: "11:42",
+        fotoPertunangan: "1.jpg" // Gambar untuk momen tunangan
+    },
