@@ -1238,18 +1238,18 @@
 
     <script>
 
-                document.addEventListener("DOMContentLoaded", function() {
+               document.addEventListener("DOMContentLoaded", function() {
     if(typeof dataMempelai !== 'undefined') {
         
         // ====================================================================
-        // OPTIONAL / LOGIKA OTOMATISASI TANGGAL DARI DATA.JS (tglCountdown)
+        // LOGIKA OTOMATISASI TANGGAL RESEPSI & COVER DARI tglCountdown
         // ====================================================================
         const opsiTanggal = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         const tanggalObjek = new Date(dataMempelai.tglCountdown);
         const tanggalFormatIndo = tanggalObjek.toLocaleDateString('id-ID', opsiTanggal);
         // ====================================================================
 
-        // Tanggal Cover sekarang otomatis mengikuti tglCountdown
+        // Cover otomatis mengikuti tanggal Resepsi (dari tglCountdown)
         if(document.getElementById('cover-tanggal')) document.getElementById('cover-tanggal').innerText = tanggalFormatIndo;
         
         if(document.getElementById('notif-nama')) document.getElementById('notif-nama').innerText = dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + " (Wedding)";
@@ -1273,12 +1273,13 @@
         }
 
         if(document.getElementById('akad-tanggal')) {
-            // Tanggal Akad dan Resepsi diganti dengan variabel tanggalFormatIndo otomatis
-            document.getElementById('akad-tanggal').innerText = tanggalFormatIndo;
+            // AKAD: Membaca teks manual dari Data.js (Bisa bebas disetel beda hari)
+            document.getElementById('akad-tanggal').innerText = dataMempelai.akad.tanggal;
             document.getElementById('akad-jam').innerText = dataMempelai.akad.jam;
             document.getElementById('akad-tempat').innerText = dataMempelai.akad.tempat;
             document.getElementById('akad-maps-link').href = dataMempelai.akad.linkMaps;
 
+            // RESEPSI: Otomatis berubah mengikuti tglCountdown
             document.getElementById('resepsi-tanggal').innerText = tanggalFormatIndo;
             document.getElementById('resepsi-jam').innerText = dataMempelai.resepsi.jam;
             document.getElementById('resepsi-tempat').innerText = dataMempelai.resepsi.tempat;
