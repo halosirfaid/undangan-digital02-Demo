@@ -10,7 +10,7 @@ const dataMempelai = {
         panggilan: "Uul",
         ayah: "H. Tani",
         ibu: "Hj. Aslam",
-        foto: "1.jpg", // Nama file foto atau link url foto
+        foto: "5.jpg", // Nama file foto atau link url foto
         instagram: "aulrah__",
         linkInstagram: "https://instagram.com/aulrah__"
     },
@@ -21,7 +21,7 @@ const dataMempelai = {
         panggilan: "Julak Anum",
         ayah: "Asul",
         ibu: "Arta",
-        foto: "2.jpg", // Nama file foto atau link url foto
+        foto: "5.jpg", // Nama file foto atau link url foto
         instagram: "sirfa.id",
         linkInstagram: "https://instagram.com/sirfa.id"
     },
@@ -31,7 +31,7 @@ const dataMempelai = {
         tanggal: "Senin, 15 Juli 2026",
         jam: "12.00 - 12.10 WITA",
         tempat: "Alfamart, Kuala Kapuas",
-        foto: "1.jpg",
+        foto: "5.jpg",
         linkMaps: "https://maps.app.goo.gl/YeVJc3Tkg9pM6d7c7"
     },
 
@@ -39,7 +39,7 @@ const dataMempelai = {
     resepsi: {
         jam: "11.50 - Selesai",
         tempat: "Indomaret, Kuala Kapuas",
-        foto: "1.jpg",
+        foto: "5.jpg",
         linkMaps: "https://maps.app.goo.gl/XaFpSVr2BcCwbbiV7"
     },
 
@@ -52,12 +52,12 @@ const dataMempelai = {
     // 6. Data Galeri Foto untuk Status WA / Slide
     galeri: [
         "1.jpg",
-        "2.jpg",
-        "3.jpg",
-        "4.jpg",
-        "5.jpg",
         "1.jpg",
-        "2.jpg" 
+        "1.jpg",
+        "1.jpg",
+        "1.jpg",
+        "1.jpg",
+        "1.jpg" 
     ],
 
     // 7. Data Kado Digital (Rekening & Alamat)
@@ -73,8 +73,8 @@ const dataMempelai = {
 
     // 8. Media Cover & Notifikasi Pop-up
     media: {
-        fotoCover: "4.jpg",
-        fotoNotif: "3.jpg"
+        fotoCover: "5.jpg",
+        fotoNotif: "5.jpg"
     },
       story: {
         bulanTahun1: "JANUARI 2023",
@@ -88,6 +88,6 @@ const dataMempelai = {
         bulanTahun3: "FEBRUARI 2026",
         pesanWanita2: "Momen paling haru waktu keluarga kita kumpul semua. Hari pertunangan kita... 😍",
         waktuWanita2: "11:42",
-        fotoPertunangan: "2.jpg" // Gambar untuk momen tunangan
+        fotoPertunangan: "5.jpg" // Gambar untuk momen tunangan
     },
 };
