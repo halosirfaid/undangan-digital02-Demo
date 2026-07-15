@@ -39,7 +39,7 @@ const dataMempelai = {
         tanggal: "Senin, 15 Juli 2026",
         jam: "11.50 - Selesai",
         tempat: "Indomaret, Kuala Kapuas",
-        foto: "4.jpg",
+        foto: "1.jpg",
         linkMaps: "https://maps.app.goo.gl/XaFpSVr2BcCwbbiV7"
     },
 
