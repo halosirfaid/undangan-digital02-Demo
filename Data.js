@@ -88,6 +88,6 @@ const dataMempelai = {
         bulanTahun3: "FEBRUARI 2026",
         pesanWanita2: "Momen paling haru waktu keluarga kita kumpul semua. Hari pertunangan kita... 😍",
         waktuWanita2: "11:42",
-        fotoPertunangan: "5.jpg" // Gambar untuk momen tunangan
+        fotoPertunangan: "1.jpg" // Gambar untuk momen tunangan
     },
 };
