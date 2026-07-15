@@ -1241,17 +1241,17 @@
                document.addEventListener("DOMContentLoaded", function() {
     if(typeof dataMempelai !== 'undefined') {
               // Kode Penghubung Foto Profil & Ilustrasi (Sinkronisasi Data.js)
-        if(document.getElementById("foto-profil-wanita") && dataMempelai.wanita.fotoProfil) {
-            document.getElementById("foto-profil-wanita").src = dataMempelai.wanita.fotoProfil;
+        if(document.getElementById("foto-profil-wanita") && dataMempelai.wanita.foto) {
+            document.getElementById("foto-profil-wanita").src = dataMempelai.wanita.foto;
         }
-        if(document.getElementById("foto-profil-pria") && dataMempelai.pria.fotoProfil) {
-            document.getElementById("foto-profil-pria").src = dataMempelai.pria.fotoProfil;
+        if(document.getElementById("foto-profil-pria") && dataMempelai.pria.foto) {
+            document.getElementById("foto-profil-pria").src = dataMempelai.pria.foto;
         }
-        if(document.getElementById("foto-ilustrasi-akad") && dataMempelai.media?.fotoAkad) {
-            document.getElementById("foto-ilustrasi-akad").src = dataMempelai.media.fotoAkad;
+        if(document.getElementById("foto-ilustrasi-akad") && dataMempelai.fotoAkad) {
+            document.getElementById("foto-ilustrasi-akad").src = dataMempelai.fotoAkad;
         }
-        if(document.getElementById("foto-ilustrasi-resepsi") && dataMempelai.media?.fotoResepsi) {
-            document.getElementById("foto-ilustrasi-resepsi").src = dataMempelai.media.fotoResepsi;
+        if(document.getElementById("foto-ilustrasi-resepsi") && dataMempelai.fotoResepsi) {
+            document.getElementById("foto-ilustrasi-resepsi").src = dataMempelai.fotoResepsi;
         }
 
         // Kode penghubung nama chat header (Sinkronisasi Data.js)
