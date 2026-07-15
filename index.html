@@ -1237,74 +1237,88 @@
     <audio id="notif-sound" preload="auto"><source src="notifundangan.mp3" type="audio/mpeg"></audio>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            if(typeof dataMempelai !== 'undefined') {
-                if(document.getElementById('cover-tanggal')) document.getElementById('cover-tanggal').innerText = dataMempelai.akad.tanggal;
-                if(document.getElementById('notif-nama')) document.getElementById('notif-nama').innerText = dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + " (Wedding)";
-         
-                if(document.getElementById('nama-lengkap-wanita')) {
-                    document.getElementById('nama-lengkap-wanita').innerText = dataMempelai.wanita.namaLengkap;
-                    document.getElementById('panggilan-wanita').innerText = 'Sering dipanggil "' + dataMempelai.wanita.panggilan + '"';
-                    document.getElementById('ayah-wanita').innerText = dataMempelai.wanita.ayah;
-                    document.getElementById('ibu-wanita').innerText = dataMempelai.wanita.ibu;
-                    document.getElementById('ig-user-wanita').innerText = '@' + dataMempelai.wanita.instagram;
-                    document.getElementById('ig-link-wanita').href = dataMempelai.wanita.linkInstagram;
-                }
 
-                if(document.getElementById('nama-lengkap-pria')) {
-                    document.getElementById('nama-lengkap-pria').innerText = dataMempelai.pria.namaLengkap;
-                    document.getElementById('panggilan-pria').innerText = 'Sering dipanggil "' + dataMempelai.pria.panggilan + '"';
-                    document.getElementById('ayah-pria').innerText = dataMempelai.pria.ayah;
-                    document.getElementById('ibu-pria').innerText = dataMempelai.pria.ibu;
-                    document.getElementById('ig-user-pria').innerText = '@' + dataMempelai.pria.instagram;
-                    document.getElementById('ig-link-pria').href = dataMempelai.pria.linkInstagram;
-                }
+                document.addEventListener("DOMContentLoaded", function() {
+    if(typeof dataMempelai !== 'undefined') {
+        
+        // ====================================================================
+        // OPTIONAL / LOGIKA OTOMATISASI TANGGAL DARI DATA.JS (tglCountdown)
+        // ====================================================================
+        const opsiTanggal = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const tanggalObjek = new Date(dataMempelai.tglCountdown);
+        const tanggalFormatIndo = tanggalObjek.toLocaleDateString('id-ID', opsiTanggal);
+        // ====================================================================
 
-                if(document.getElementById('akad-tanggal')) {
-                    document.getElementById('akad-tanggal').innerText = dataMempelai.akad.tanggal;
-                    document.getElementById('akad-jam').innerText = dataMempelai.akad.jam;
-                    document.getElementById('akad-tempat').innerText = dataMempelai.akad.tempat;
-                    document.getElementById('akad-maps-link').href = dataMempelai.akad.linkMaps;
+        // Tanggal Cover sekarang otomatis mengikuti tglCountdown
+        if(document.getElementById('cover-tanggal')) document.getElementById('cover-tanggal').innerText = tanggalFormatIndo;
+        
+        if(document.getElementById('notif-nama')) document.getElementById('notif-nama').innerText = dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan + " (Wedding)";
+ 
+        if(document.getElementById('nama-lengkap-wanita')) {
+            document.getElementById('nama-lengkap-wanita').innerText = dataMempelai.wanita.namaLengkap;
+            document.getElementById('panggilan-wanita').innerText = 'Sering dipanggil "' + dataMempelai.wanita.panggilan + '"';
+            document.getElementById('ayah-wanita').innerText = dataMempelai.wanita.ayah;
+            document.getElementById('ibu-wanita').innerText = dataMempelai.wanita.ibu;
+            document.getElementById('ig-user-wanita').innerText = '@' + dataMempelai.wanita.instagram;
+            document.getElementById('ig-link-wanita').href = dataMempelai.wanita.linkInstagram;
+        }
 
-                    document.getElementById('resepsi-tanggal').innerText = dataMempelai.resepsi.tanggal;
-                    document.getElementById('resepsi-jam').innerText = dataMempelai.resepsi.jam;
-                    document.getElementById('resepsi-tempat').innerText = dataMempelai.resepsi.tempat;
-                    document.getElementById('resepsi-maps-link').href = dataMempelai.resepsi.linkMaps; 
-                }
+        if(document.getElementById('nama-lengkap-pria')) {
+            document.getElementById('nama-lengkap-pria').innerText = dataMempelai.pria.namaLengkap;
+            document.getElementById('panggilan-pria').innerText = 'Sering dipanggil "' + dataMempelai.pria.panggilan + '"';
+            document.getElementById('ayah-pria').innerText = dataMempelai.pria.ayah;
+            document.getElementById('ibu-pria').innerText = dataMempelai.pria.ibu;
+            document.getElementById('ig-user-pria').innerText = '@' + dataMempelai.pria.instagram;
+            document.getElementById('ig-link-pria').href = dataMempelai.pria.linkInstagram;
+        }
 
-                if(document.getElementById('maps-iframe')) {
-                    document.getElementById('maps-iframe').src = dataMempelai.maps.iframeUrl;
-                    document.getElementById('maps-tombol-rute').href = dataMempelai.maps.tombolRute;
-                }
+        if(document.getElementById('akad-tanggal')) {
+            // Tanggal Akad dan Resepsi diganti dengan variabel tanggalFormatIndo otomatis
+            document.getElementById('akad-tanggal').innerText = tanggalFormatIndo;
+            document.getElementById('akad-jam').innerText = dataMempelai.akad.jam;
+            document.getElementById('akad-tempat').innerText = dataMempelai.akad.tempat;
+            document.getElementById('akad-maps-link').href = dataMempelai.akad.linkMaps;
 
-                if(document.getElementById('mandiri-no')) {
-                    document.getElementById('mandiri-no').innerText = dataMempelai.kado.mandiriNo;
-                    document.getElementById('mandiri-an').innerText = "A/N " + dataMempelai.kado.mandiriAn;
-                    document.getElementById('bca-no').innerText = dataMempelai.kado.bcaNo;
-                    document.getElementById('bca-an').innerText = "A/N " + dataMempelai.kado.bcaAn;
-                    document.getElementById('alamat-kado-teks').innerText = dataMempelai.kado.alamatKirim;
-                    document.getElementById('alamat-penerima').innerText = dataMempelai.kado.penerimaPaket;
-                } 
+            document.getElementById('resepsi-tanggal').innerText = tanggalFormatIndo;
+            document.getElementById('resepsi-jam').innerText = dataMempelai.resepsi.jam;
+            document.getElementById('resepsi-tempat').innerText = dataMempelai.resepsi.tempat;
+            document.getElementById('resepsi-maps-link').href = dataMempelai.resepsi.linkMaps; 
+        }
 
-                if(document.getElementById('cover')) {
-                    document.getElementById('cover').style.backgroundImage = `linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85)), url('${dataMempelai.media?.fotoCover || "1.jpg"}')`;
-                }
-                
-                if(dataMempelai.story) {
-                    if(document.getElementById('story-date-1')) document.getElementById('story-date-1').innerText = dataMempelai.story.bulanTahun1;
-                    if(document.getElementById('story-msg-1')) document.getElementById('story-msg-1').innerText = dataMempelai.story.pesanWanita1;
-                    if(document.getElementById('story-time-1')) document.getElementById('story-time-1').innerHTML = dataMempelai.story.waktuWanita1;
+        if(document.getElementById('maps-iframe')) {
+            document.getElementById('maps-iframe').src = dataMempelai.maps.iframeUrl;
+            document.getElementById('maps-tombol-rute').href = dataMempelai.maps.tombolRute;
+        }
 
-                    if(document.getElementById('story-date-2')) document.getElementById('story-date-2').innerText = dataMempelai.story.bulanTahun2;
-                    if(document.getElementById('story-msg-2')) document.getElementById('story-msg-2').innerText = dataMempelai.story.pesanPria1;
-                    if(document.getElementById('story-time-2')) document.getElementById('story-time-2').innerHTML = dataMempelai.story.waktuPria1 + ' <i class="fa-solid fa-check-double text-[#53bdeb]"></i>';
+        if(document.getElementById('mandiri-no')) {
+            document.getElementById('mandiri-no').innerText = dataMempelai.kado.mandiriNo;
+            document.getElementById('mandiri-an').innerText = "A/N " + dataMempelai.kado.mandiriAn;
+            document.getElementById('bca-no').innerText = dataMempelai.kado.bcaNo;
+            document.getElementById('bca-an').innerText = "A/N " + dataMempelai.kado.bcaAn;
+            document.getElementById('alamat-kado-teks').innerText = dataMempelai.kado.alamatKirim;
+            document.getElementById('alamat-penerima').innerText = dataMempelai.kado.penerimaPaket;
+        } 
 
-                    if(document.getElementById('story-date-3')) document.getElementById('story-date-3').innerText = dataMempelai.story.bulanTahun3;
-                    if(document.getElementById('story-img-3')) document.getElementById('story-img-3').src = dataMempelai.story.fotoPertunangan;
-                    if(document.getElementById('story-msg-3')) document.getElementById('story-msg-3').innerText = dataMempelai.story.pesanWanita2;
-                    if(document.getElementById('story-time-3')) document.getElementById('story-time-3').innerHTML = dataMempelai.story.waktuWanita2;
-                }
+        if(document.getElementById('cover')) {
+            document.getElementById('cover').style.backgroundImage = `linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85)), url('${dataMempelai.media?.fotoCover || "1.jpg"}')`;
+        }
+        
+        if(dataMempelai.story) {
+            if(document.getElementById('story-date-1')) document.getElementById('story-date-1').innerText = dataMempelai.story.bulanTahun1;
+            if(document.getElementById('story-msg-1')) document.getElementById('story-msg-1').innerText = dataMempelai.story.pesanWanita1;
+            if(document.getElementById('story-time-1')) document.getElementById('story-time-1').innerHTML = dataMempelai.story.waktuWanita1;
 
+            if(document.getElementById('story-date-2')) document.getElementById('story-date-2').innerText = dataMempelai.story.bulanTahun2;
+            if(document.getElementById('story-msg-2')) document.getElementById('story-msg-2').innerText = dataMempelai.story.pesanPria1;
+            if(document.getElementById('story-time-2')) document.getElementById('story-time-2').innerHTML = dataMempelai.story.waktuPria1 + ' <i class="fa-solid fa-check-double text-[#53bdeb]"></i>';
+
+            if(document.getElementById('story-date-3')) document.getElementById('story-date-3').innerText = dataMempelai.story.bulanTahun3;
+            if(document.getElementById('story-img-3')) document.getElementById('story-img-3').src = dataMempelai.story.fotoPertunangan;
+            if(document.getElementById('story-msg-3')) document.getElementById('story-msg-3').innerText = dataMempelai.story.pesanWanita2;
+            if(document.getElementById('story-time-3')) document.getElementById('story-time-3').innerHTML = dataMempelai.story.waktuWanita2;
+        }
+
+            
                 const semuaFotoNotif = document.querySelectorAll('.foto-notif-wa');
                 semuaFotoNotif.forEach(img => {
                     img.src = dataMempelai.media?.fotoNotif || "pengantinWanita.jpg";
