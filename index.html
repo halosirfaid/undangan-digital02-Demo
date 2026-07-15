@@ -761,7 +761,7 @@
                 <h3 class="font-aesthetic text-4xl mb-8 tracking-wide leading-relaxed">Assalamu'alaikum Wr. Wb.</h3>
                 <div class="arabic-container mb-6 px-4">
                     <p class="text-2xl" style="font-family: 'Reem Kufi', sans-serif;" dir="rtl">
-                        وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً ۗاِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ 
+                        وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً ۗاِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ 
                     </p>
                 </div>
                 <p class="text-xs leading-relaxed mb-8 italic">
@@ -785,7 +785,7 @@
                 <div class="w-full max-w-sm mx-auto bg-[#111b21] rounded-2xl overflow-hidden shadow-2xl border border-white/5 reveal">
                    <div class="flex justify-center pt-6 bg-[#111b21]">
     <div class="w-40 h-40 bg-stone-900 relative rounded-full overflow-hidden border-4 border-amber-500/30">
-        <img id="foto-profil-wanita" src="pengantinWanita.jpg" class="w-full h-full object-cover" alt="Rara">
+        <img src="pengantinWanita.jpg" class="w-full h-full object-cover" alt="Rara">
         <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm py-1 text-center text-white text-[9px] font-medium tracking-wide">
             <i class="fa-solid fa-camera text-amber-400"></i> Profil
         </div>
@@ -815,7 +815,7 @@
                 <div class="w-full max-w-sm mx-auto bg-[#111b21] rounded-2xl overflow-hidden shadow-2xl border border-white/5 reveal">
              <div class="flex justify-center pt-6 bg-[#111b21]">
                 <div class="w-40 h-40 bg-stone-900 relative rounded-full overflow-hidden border-4 border-amber-500/30">
-                <img id="foto-profil-pria" src="PengantinPria.jpg" class="w-full h-full object-cover" alt="Adi">
+                <img src="PengantinPria.jpg" class="w-full h-full object-cover" alt="Adi">
                 <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm py-1 text-center text-white text-[9px] font-medium tracking-wide">
                 <i class="fa-solid fa-camera text-amber-400"></i> Profil
                 </div>
@@ -940,7 +940,7 @@
 
                     <div class="wa-bubble wa-bubble-left w-[85%] !bg-[#202c33] !p-0 overflow-hidden rounded-xl shadow-md">
                         <div class="w-full bg-stone-900">
-                            <img id="foto-akad" src="3.jpg" class="w-full h-full object-cover object-center" alt="Ilustrasi Akad">
+                            <img src="3.jpg" class="w-full h-full object-cover object-center" alt="Ilustrasi Akad">
                         </div>
                         <div class="p-4 text-white">
                             <div class="flex items-center gap-2 mb-2">
@@ -966,7 +966,7 @@
 
                     <div class="wa-bubble wa-bubble-right w-[85%] !bg-[#005c4b] !p-0 overflow-hidden rounded-xl shadow-md align-self-end text-right">
                         <div class="w-full bg-stone-900">
-                            <img id="foto-resepsi" src="4.jpg" class="w-full h-full object-cover object-center" alt="Ilustrasi Resepsi">
+                            <img src="4.jpg" class="w-full h-full object-cover object-center" alt="Ilustrasi Resepsi">
                         </div>
                         <div class="p-4 text-left text-white">
                             <div class="flex items-center gap-2 mb-2">
@@ -1260,14 +1260,6 @@
                     document.getElementById('ig-link-pria').href = dataMempelai.pria.linkInstagram;
                 }
 
-                // Foto profil mempelai (memakai field wanita.foto / pria.foto dari Data.js jika diisi)
-                if(document.getElementById('foto-profil-wanita') && dataMempelai.wanita.foto) {
-                    document.getElementById('foto-profil-wanita').src = dataMempelai.wanita.foto;
-                }
-                if(document.getElementById('foto-profil-pria') && dataMempelai.pria.foto) {
-                    document.getElementById('foto-profil-pria').src = dataMempelai.pria.foto;
-                }
-
                 if(document.getElementById('akad-tanggal')) {
                     document.getElementById('akad-tanggal').innerText = dataMempelai.akad.tanggal;
                     document.getElementById('akad-jam').innerText = dataMempelai.akad.jam;
@@ -1278,14 +1270,6 @@
                     document.getElementById('resepsi-jam').innerText = dataMempelai.resepsi.jam;
                     document.getElementById('resepsi-tempat').innerText = dataMempelai.resepsi.tempat;
                     document.getElementById('resepsi-maps-link').href = dataMempelai.resepsi.linkMaps; 
-                }
-
-                // Foto ilustrasi Akad & Resepsi (memakai field akad.foto / resepsi.foto dari Data.js jika diisi)
-                if(document.getElementById('foto-akad') && dataMempelai.akad.foto) {
-                    document.getElementById('foto-akad').src = dataMempelai.akad.foto;
-                }
-                if(document.getElementById('foto-resepsi') && dataMempelai.resepsi.foto) {
-                    document.getElementById('foto-resepsi').src = dataMempelai.resepsi.foto;
                 }
 
                 if(document.getElementById('maps-iframe')) {
