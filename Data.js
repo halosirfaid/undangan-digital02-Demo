@@ -39,7 +39,7 @@ const dataMempelai = {
         tanggal: "Senin, 15 Juli 2026",
         jam: "11.50 - Selesai",
         tempat: "Indomaret, Kuala Kapuas",
-        foto: "2.jpg",
+        foto: "4.jpg",
         linkMaps: "https://maps.app.goo.gl/XaFpSVr2BcCwbbiV7"
     },
 
@@ -88,6 +88,6 @@ const dataMempelai = {
         bulanTahun3: "FEBRUARI 2026",
         pesanWanita2: "Momen paling haru waktu keluarga kita kumpul semua. Hari pertunangan kita... 😍",
         waktuWanita2: "11:42",
-        fotoPertunangan: "1.jpg" // Gambar untuk momen tunangan
+        fotoPertunangan: "2.jpg" // Gambar untuk momen tunangan
     },
 };
