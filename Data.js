@@ -74,7 +74,9 @@ const dataMempelai = {
     // 8. Media Cover & Notifikasi Pop-up
     media: {
         fotoCover: "5.jpg",
-        fotoNotif: "5.jpg"
+        fotoNotif: "5.jpg",
+        fotoAkad: "3.jpg",
+        fotoResepsi: "4.jpg"
     },
       story: {
         bulanTahun1: "JANUARI 2023",
