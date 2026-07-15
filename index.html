@@ -852,7 +852,7 @@
                     <i class="fa-solid fa-arrow-left text-[#8696a0] mr-3"></i>
                     <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic rounded-full object-cover" alt="Story PP">
                     <div class="flex flex-col justify-center">
-                        <h1 class="text-[15px] font-medium leading-tight">Rara</h1>
+                        <h1 id="header-nama-story" class="text-[15px] font-medium leading-tight">Rara</h1>
                         <span id="typing-status">Online</span>
                     </div>
                     <div class="flex ml-auto gap-5 text-[#8696a0]">
@@ -925,7 +925,7 @@
                     <i class="fa-solid fa-arrow-left text-[#8696a0] mr-3"></i>
                     <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic rounded-full object-cover" alt="Acara PP">
                     <div class="flex flex-col justify-center">
-                        <h1 class="text-[15px] font-medium leading-tight">Rara & Adi</h1>
+                        <h1 id="header-nama-acara" class="text-[15px] font-medium leading-tight">Rara & Adi</h1>
                         <span class="text-[11px] text-[#00a884]">Typing...</span>
                     </div>
                     <div class="flex ml-auto gap-5 text-[#8696a0]">
@@ -1009,7 +1009,7 @@
                     <i class="fa-solid fa-arrow-left text-[#8696a0] mr-3"></i>
                     <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic rounded-full object-cover" alt="Maps PP">
                     <div class="flex flex-col justify-center">
-                        <h1 class="text-[15px] font-medium leading-tight">Rara & Adi</h1>
+                        <h1 id="header-nama-lokasi" class="text-[15px] font-medium leading-tight">Rara & Adi</h1>
                         <span class="text-[11px] text-[#00a884]">Live location aktif</span>
                     </div>
                     <div class="flex ml-auto gap-5 text-[#8696a0]">
@@ -1051,7 +1051,7 @@
                 <div class="wa-status-header">
                     <img src="pengantinWanita.jpg" class="wa-status-pp foto-notif-wa" alt="Status PP">
                     <div>
-                        <p class="wa-status-name">Rara & Adi</p>
+                        <p id="header-nama-galeri" class="wa-status-name">Rara & Adi</p>
                         <p class="wa-status-time">Baru saja</p>
                     </div>
                 </div>
@@ -1085,7 +1085,7 @@
                     <i class="fa-solid fa-arrow-left text-[#8696a0] mr-3"></i>
                     <img src="pengantinWanita.jpg" class="foto-notif-wa wa-profile-pic rounded-full object-cover" alt="Kado PP">
                     <div class="flex flex-col justify-center">
-                        <h1 class="text-[15px] font-medium leading-tight">Rara & Adi</h1>
+                        <h1 id="header-nama-kado" class="text-[15px] font-medium leading-tight">Rara & Adi</h1>
                         <span class="text-[11px] text-[#00a884]">Online</span>
                     </div>
                     <div class="flex ml-auto gap-5 text-[#8696a0]">
@@ -1172,7 +1172,7 @@
                         <i class="fa-solid fa-users"></i>
                     </div>
                     <div class="flex flex-col justify-center">
-                        <h1 class="text-[15px] font-medium leading-tight">Keluarga & Sahabat Rara & Adi</h1>
+                        <h1 id="header-nama-rsvp" class="text-[15px] font-medium leading-tight">Keluarga & Sahabat Rara & Adi</h1>
                         <span class="text-[11px] text-[#8696a0] opacity-90">Grup Undangan Pernikahan</span>
                     </div>
                     <div class="flex ml-auto gap-5 text-[#8696a0]">
@@ -1240,7 +1240,14 @@
 
                document.addEventListener("DOMContentLoaded", function() {
     if(typeof dataMempelai !== 'undefined') {
-        
+        // Kode penghubung nama chat header (Sinkronisasi Data.js)
+if(document.getElementById("header-nama-story")) document.getElementById("header-nama-story").innerText = dataMempelai.wanita.panggilan; 
+if(document.getElementById("header-nama-acara")) document.getElementById("header-nama-acara").innerText = dataMempelai.namaChatSingle;
+if(document.getElementById("header-nama-lokasi")) document.getElementById("header-nama-lokasi").innerText = dataMempelai.namaChatSingle;
+if(document.getElementById("header-nama-galeri")) document.getElementById("header-nama-galeri").innerText = dataMempelai.namaChatSingle;
+if(document.getElementById("header-nama-kado")) document.getElementById("header-nama-kado").innerText = dataMempelai.namaChatSingle;
+if(document.getElementById("header-nama-rsvp")) document.getElementById("header-nama-rsvp").innerText = dataMempelai.namaChatGrup;
+
         // ====================================================================
         // LOGIKA OTOMATISASI TANGGAL RESEPSI & COVER DARI tglCountdown
         // ====================================================================
