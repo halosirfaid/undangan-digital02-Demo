@@ -75,8 +75,8 @@ const dataMempelai = {
     media: {
         fotoCover: "5.jpg",
         fotoNotif: "5.jpg",
-        fotoAkad: "3.jpg",
-        fotoResepsi: "4.jpg"
+        fotoAkad: "5.jpg",
+        fotoResepsi: "5.jpg"
     },
       story: {
         bulanTahun1: "JANUARI 2023",
