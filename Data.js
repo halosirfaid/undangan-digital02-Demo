@@ -2,7 +2,8 @@
 const dataMempelai = {
     idUndangan: "Uul-Julak", // Sesuai ID tujuan Google Sheets kamu
     tglCountdown: "July 55, 2026 12:00:00", // Format: Bulan Tanggal, Tahun Jam:Menit:Detik
-    
+    namaChatSingle: "julak & Uul",
+    namaChatGrup: "Keluarga & Sahabat Rara & Uul",
     // 1. Data Mempelai Wanita
     wanita: {
         namaLengkap: "Aulia Rahmah, S.Pd.",
