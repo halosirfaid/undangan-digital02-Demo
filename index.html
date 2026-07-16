@@ -1254,7 +1254,10 @@
         }
         // -------------------------------------------------------------
 
-              // Kode Penghubung Foto Profil & Ilustrasi (Sinkronisasi Data.js)
+        // Panggil fungsi ini agar nama tamu diubah saat halaman dibuka
+        ambilNamaTamu(); 
+    }              
+         // Kode Penghubung Foto Profil & Ilustrasi (Sinkronisasi Data.js)
      // 1. Foto Profil (Sudah Pas)
 if(document.getElementById("foto-profil-wanita") && dataMempelai.wanita.foto) {
     document.getElementById("foto-profil-wanita").src = dataMempelai.wanita.foto;
@@ -1644,13 +1647,28 @@ if(document.getElementById("header-nama-rsvp")) document.getElementById("header-
             return "Baru saja";
         }
 
-        function ambilNamaTamu() {
+      function ambilNamaTamu() {
             const urlParams = new URLSearchParams(window.location.search);
-            let nama = urlParams.get('to') || urlParams.get('nama') || "Tamu Undangan";
-            nama = decodeURIComponent(nama);
+            // 1. Ambil nama dari link (?to= atau ?nama=), jika kosong beri default "Tamu Undangan"
+                    let nama = urlParams.get('to') || urlParams.get('nama') || "Tamu Undangan";
+                    nama = decodeURIComponent(nama);
+            
+            // 2. Sinkronisasi ke Kotak Undangan Utama (Kode Lama Anda)
             const elemenNamaKotak = document.getElementById('nama-tamu') || document.querySelector('.kepada-yth-nama');
-            if (elemenNamaKotak) elemenNamaKotak.innerText = nama;
-        }
+            if (elemenNamaKotak) {
+                elemenNamaKotak.innerText = nama;
+            }
+        
+            // 3. Sinkronisasi ke Kalimat Notifikasi (KODE TAMBAHAN AGAR AKTIF)
+            const elemenNamaNotif = document.getElementById('nama-tamu-notif');
+            if (elemenNamaNotif) {
+                // Jika tidak ada nama di link, ubah "Tamu Undangan" menjadi kata yang lebih halus yaitu "Saudara/i"
+                if (nama === "Tamu Undangan") {
+                    elemenNamaNotif.innerText = "Saudara/i";
+                } else {
+                    elemenNamaNotif.innerText = nama;
+                }
+            }
 
         function toggleMusik() {
             const audio = document.getElementById('musik');
