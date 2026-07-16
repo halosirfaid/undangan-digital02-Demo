@@ -84,7 +84,8 @@ const dataMempelai = {
         fotoCover: "4.jpg",
         fotoNotif: "5.jpg",
         fotoAkad: "2.jpg",
-        fotoResepsi: "3.jpg"
+        fotoResepsi: "3.jpg",
+        audioMusik: "lagupengantin.mp3"
     },
       story: {
         bulanTahun1: "JANUARI 2023",
