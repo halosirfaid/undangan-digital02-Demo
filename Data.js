@@ -37,7 +37,7 @@ const dataMempelai = {
 
     // 4. Data Acara Resepsi
     resepsi: {
-        jam: "11.50 - Selesai",
+        jam: "09.50 - Selesai",
         tempat: "Indomaret, Kuala Kapuas",
         foto: "5.jpg",
         linkMaps: "https://maps.app.goo.gl/XaFpSVr2BcCwbbiV7"
