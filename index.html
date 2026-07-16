@@ -1235,7 +1235,7 @@
         </footer>
       </div>
 
-    <audio id="musik" loop><source src="lagupenganti.mp3" type="audio/mpeg"></audio>
+    <audio id="musik" loop><source src="" type="audio/mpeg"></audio>
     <audio id="notif-sound" preload="auto"><source src="notifundangan.mp3" type="audio/mpeg"></audio>
 
     <script>
@@ -1284,6 +1284,23 @@ if(document.getElementById("foto-resepsi") && dataMempelai.media.fotoResepsi) {
 // 3. Tambahan: Foto Cover & Notif (Jika elemen HTML-nya ada)
 if(document.getElementById("foto-cover") && dataMempelai.media.fotoCover) {
     document.getElementById("foto-cover").src = dataMempelai.media.fotoCover;
+}
+// Tambahkan di dalam document.addEventListener("DOMContentLoaded", ...)
+// Tepat di bawah kode sinkronisasi foto akad/resepsi
+
+// 🎵 Kode Penghubung Musik Pengantin Otomatis dari data.js
+const elemenMusik = document.getElementById("musik");
+if (elemenMusik && dataMempelai.media && dataMempelai.media.audioMusik) {
+    // Mencari tag <source> di dalam elemen <audio id="musik">
+    const sourceMusik = elemenMusik.querySelector("source");
+    if (sourceMusik) {
+        sourceMusik.src = dataMempelai.media.audioMusik;
+    } else {
+        // Jika tag <source> tidak sengaja terhapus, langsung tembak ke elemen utamanya
+        elemenMusik.src = dataMempelai.media.audioMusik;
+    }
+    // Muat ulang audio agar browser mengenali file lagu yang baru dimasukkan
+    elemenMusik.load();
 }
 
         // Kode penghubung nama chat header (Sinkronisasi Data.js)
