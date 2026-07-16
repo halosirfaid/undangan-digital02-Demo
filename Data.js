@@ -1,53 +1,53 @@
 // FILE DATA MEMPELAI (Klien tinggal diganti di sini)
 const dataMempelai = {
-    idUndangan: "Uul-Julak", // Sesuai ID tujuan Google Sheets kamu
-    tglCountdown: "July 19, 2026 09:00:00", // Format: Bulan Tanggal, Tahun Jam:Menit:Detik
-    namaChatSingle: "julak & Uul",
-    namaChatGrup: "Keluarga & Sahabat Rara & Uul",   
+    idUndangan: "Hafizh-Hafizah", // Sesuai ID tujuan Google Sheets kamu
+    tglCountdown: "July 25, 2026 09:00:00", // Format: Bulan Tanggal, Tahun Jam:Menit:Detik
+    namaChatSingle: "Hafizh & Hafizah",
+    namaChatGrup: "Keluarga & Sahabat Hafizh & Hafizah",   
 
       // Data Daftar Foto Latar Belakang Swiper Salam (Ditambahkan di sini secara aman)
     bgSalam: [
-        "5.jpg",
-        "4.jpg",
-        "3.jpg"
+        "1.jpg",
+        "3.jpg",
+        "5.jpg"
     ],
     // 1. Data Mempelai Wanita
     wanita: {
-        namaLengkap: "Aulia Rahmah, S.Pd.",
-        panggilan: "Uul",
-        ayah: "H. Tani",
-        ibu: "Hj. Aslam",
-        foto: "1.jpg", // Nama file foto atau link url foto
-        instagram: "aulrah__",
-        linkInstagram: "https://instagram.com/aulrah__"
+        namaLengkap: "Hafizah, S.H.",
+        panggilan: "Izah",
+        ayah: "H. Izad Maliki",
+        ibu: "Hj. Siti Salamah",
+        foto: "pengantinWanita.jpg", // Nama file foto atau link url foto
+        instagram: "hafiziiieh",
+        linkInstagram: "https://instagram.com/_hazneul"
     },
     
     // 2. Data Mempelai Pria
     pria: {
-        namaLengkap: "Sirajuddin Fajri, S.T.",
-        panggilan: "Julak Anum",
-        ayah: "Asul",
-        ibu: "Arta",
-        foto: "1.jpg", // Nama file foto atau link url foto
-        instagram: "sirfa.id",
-        linkInstagram: "https://instagram.com/sirfa.id"
+        namaLengkap: "Husnul Hafiz, S.T.",
+        panggilan: "si manis",
+        ayah: "H. Husnul Yakin",
+        ibu: "Hj. Hasanul  Hafzah",
+        foto: "PengantinPria.jpg", // Nama file foto atau link url foto
+        instagram: "husnul hafiz",
+        linkInstagram: "https://instagram.com/-hazneul"
     },
 
     // 3. Data Acara Akad Nikah
     akad: {
-        tanggal: "Senin, 15 Juli 2026",
-        jam: "12.00 - 12.10 WITA",
-        tempat: "Alfamart, Kuala Kapuas",
-        foto: "1.jpg",
-        linkMaps: "https://maps.app.goo.gl/YeVJc3Tkg9pM6d7c7"
+        tanggal: "Kamis, 23 Juli 2026",
+        jam: "09.00 - 12.00 WITA",
+        tempat: "Desa Tabunganen, Kapuas Kuala",
+        foto: "5.jpg",
+        linkMaps: "https://maps.app.goo.gl/rgBJiHrocXKDPpLH8"
     },
 
     // 4. Data Acara Resepsi
     resepsi: {
-        jam: "09.50 - Selesai",
-        tempat: "Indomaret, Kuala Kapuas",
-        foto: "1.jpg",
-        linkMaps: "https://maps.app.goo.gl/XaFpSVr2BcCwbbiV7"
+        jam: "07.00 - Selesai",
+        tempat: "Gedung Khusus Pejabat, Kapuas Kuala ",
+        foto: "4.jpg",
+        linkMaps: "https://maps.app.goo.gl/rgBJiHrocXKDPpLH8"
     },
 
     // 5. Data Peta (Maps Embed)
@@ -58,32 +58,32 @@ const dataMempelai = {
 
     // 6. Data Galeri Foto untuk Status WA / Slide
     galeri: [
+        "1.jpg",
+        "2.jpg",
+        "3.jpg",
+        "4.jpg",
         "5.jpg",
-        "5.jpg",
-        "5.jpg",
-        "5.jpg",
-        "5.jpg",
-        "5.jpg",
-        "5.jpg" 
+        "4.jpg",
+        "3.jpg" 
     ],
 
     // 7. Data Kado Digital (Rekening & Alamat)
     kado: {
-        bcaNo: "0987 6543 21",
-        bcaAn: "Uul",
-        mandiriNo: "1234 5678 9012",
-        mandiriAn: "Julak",
-        alamatKirim: "Jl. Trans Kalimantan No. 123, Kuala Kapuas, Kapuas Murung",
-        penerimaPaket: "Uul & Julak",
+        bcaNo: "1234 56788 9101 ",
+        bcaAn: "Hafizh",
+        mandiriNo: "9876 5432 1234",
+        mandiriAn: "Izah",
+        alamatKirim: "Jl. Pulau Kalimantan No. 000, Kapuas KUala, Tabunganen",
+        penerimaPaket: "Hafiz & Hafizah",
         NoWaKonfirmasi: "628875754371"
     },
 
     // 8. Media Cover & Notifikasi Pop-up
     media: {
-        fotoCover: "1.jpg",
-        fotoNotif: "1.jpg",
-        fotoAkad: "1.jpg",
-        fotoResepsi: "1.jpg"
+        fotoCover: "4.jpg",
+        fotoNotif: "5.jpg",
+        fotoAkad: "2.jpg",
+        fotoResepsi: "3.jpg"
     },
       story: {
         bulanTahun1: "JANUARI 2023",
