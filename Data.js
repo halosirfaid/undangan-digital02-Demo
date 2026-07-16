@@ -5,10 +5,11 @@ const dataMempelai = {
     namaChatSingle: "julak & Uul",
     namaChatGrup: "Keluarga & Sahabat Rara & Uul",
     // 👇 INI YANG DITAMBAHKAN (Daftar foto background Anda)
-    bgSalam: [
+    bgSalam: {
         "1.jpg",
         "2.jpg",
         "3.jpg"
+    },    
     // 1. Data Mempelai Wanita
     wanita: {
         namaLengkap: "Aulia Rahmah, S.Pd.",
