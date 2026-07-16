@@ -1483,30 +1483,35 @@ window.addEventListener('load', function() {
 });
 // ====================================================================
 
-        function bukaKunciSidikJari() {
+   function bukaKunciSidikJari() {
     const waNotif = document.getElementById('wa-notif-pop');
     const notifSound = document.getElementById('notif-sound');
     const fpWrapper = document.getElementById('fingerprint-wrapper');
 
-    // 1. DULUAN/PASTIKAN SUARA BERPUTAR INSTAN TANPA MENUNGGU ANIMASI
+    // 1. Pemicu suara instan tingkat tinggi
     if (notifSound) {
-        notifSound.currentTime = 0; // Kembalikan ke detik 0
-        notifSound.volume = 1.0;    // Pastikan suara maksimal
+        // Aktifkan Audio Web API secara paksa untuk memotong jeda sistem
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
         
-        // Paksa browser memutar audio secepat mungkin
+        notifSound.volume = 1.0;
+        notifSound.currentTime = 0.05; // 💡 TRICK: Lewati 0.05 detik pertama jika ada ruang kosong/hening di file audio Anda
+        
         const playPromise = notifSound.play();
         if (playPromise !== undefined) {
             playPromise.catch(err => console.log("Gagal putar suara:", err));
         }
     }
 
-    // 2. ANIMASI NOTIFIKASI MUNCUL
+    // 2. Animasi notifikasi muncul
     if (waNotif) {
         waNotif.classList.remove('opacity-0', '-translate-y-10', 'scale-95', 'pointer-events-none');
         waNotif.classList.add('opacity-100', 'translate-y-0', 'scale-100', 'pointer-events-auto');
     }
 
-    // 3. HILANGKAN TAMPILAN SIDIK JARI
+    // 3. Hilangkan sidik jari
     if (fpWrapper) {
         fpWrapper.style.opacity = '0';
         fpWrapper.style.pointerEvents = 'none';
