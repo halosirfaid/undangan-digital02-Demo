@@ -7,8 +7,8 @@ const dataMempelai = {
 
       // Data Daftar Foto Latar Belakang Swiper Salam (Ditambahkan di sini secara aman)
     bgSalam: [
-        "1.jpg",
-        "2.jpg",
+        "5.jpg",
+        "4.jpg",
         "3.jpg"
     ],
     // 1. Data Mempelai Wanita
