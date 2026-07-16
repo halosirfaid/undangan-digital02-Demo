@@ -52,8 +52,8 @@ const dataMempelai = {
 
     // 5. Data Peta (Maps Embed)
     maps: {
-        iframeUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2914.315757991008!2d114.45293869238287!3d-3.092351775439721!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2de46b100af7e14d%3A0x84b232b9a80765c6!2sKios%20Ningsih!5e0!3m2!1sid!2sid!4v1776149733951!5m2!1sid!2sid",
-        tombolRute: "https://maps.app.goo.gl/TgL9angPRcHxiN238"
+        iframeUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d24424.740322585934!2d114.39576032067937!3d-3.423512263910262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2de6a7b06dd63de1%3A0x686c088a43edcb95!2sMasjid%20Nurul%20Iman!5e0!3m2!1sid!2sid!4v1784176333490!5m2!1sid!2sid",
+        tombolRute: "https://maps.app.goo.gl/rJf5j8u2YViVUt7r5"
     },
 
     // 6. Data Galeri Foto untuk Status WA / Slide
