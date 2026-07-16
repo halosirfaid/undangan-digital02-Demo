@@ -80,6 +80,7 @@ const dataMempelai = {
 
     // 8. Media Cover & Notifikasi Pop-up
     media: {
+        inisialLogo: "U & J",
         fotoCover: "4.jpg",
         fotoNotif: "5.jpg",
         fotoAkad: "2.jpg",
