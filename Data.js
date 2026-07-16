@@ -4,13 +4,7 @@ const dataMempelai = {
     tglCountdown: "July 19, 2026 09:00:00", // Format: Bulan Tanggal, Tahun Jam:Menit:Detik
     namaChatSingle: "julak & Uul",
     namaChatGrup: "Keluarga & Sahabat Rara & Uul", 
-        // 👇 INI YANG DITAMBAHKAN (Daftar foto background Anda)
-    bgSalam: {
-        "1.jpg",
-        "2.jpg",
-        "3.jpg"
-    },
-    // 1. Data Mempelai Wanita
+        // 1. Data Mempelai Wanita
     wanita: {
         namaLengkap: "Aulia Rahmah, S.Pd.",
         panggilan: "Uul",
