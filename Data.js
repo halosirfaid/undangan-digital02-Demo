@@ -1,7 +1,7 @@
 // FILE DATA MEMPELAI (Klien tinggal diganti di sini)
 const dataMempelai = {
     idUndangan: "Uul-Julak", // Sesuai ID tujuan Google Sheets kamu
-    tglCountdown: "July 16, 2026 09:00:00", // Format: Bulan Tanggal, Tahun Jam:Menit:Detik
+    tglCountdown: "July 19, 2026 09:00:00", // Format: Bulan Tanggal, Tahun Jam:Menit:Detik
     namaChatSingle: "julak & Uul",
     namaChatGrup: "Keluarga & Sahabat Rara & Uul", 
         // 👇 INI YANG DITAMBAHKAN (Daftar foto background Anda)
