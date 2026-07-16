@@ -685,7 +685,7 @@
         <div class="text-center flex flex-col items-center animate-pulse"> 
             <div class="w-20 h-20 rounded-full border-2 border-amber-500/30 flex items-center justify-center mb-4 bg-stone-900/50 shadow-lg relative">
                 <div class="absolute inset-0 rounded-full border-2 border-t-amber-400 border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
-                <span class="text-xl font-serif text-amber-400 tracking-wider font-bold">R & A</span>
+                <span id="loading-inisial" class="text-xl font-serif text-amber-400 tracking-wider font-bold">R & A</span>
             </div>
             <p class="text-[10px] tracking-[0.4em] uppercase text-stone-400 animate-pulse">Menyiapkan Undangan</p>
         </div>
@@ -1253,7 +1253,12 @@
             sliderContainer.innerHTML = elemenHtmlSlide;
         }
         // -------------------------------------------------------------
-              
+
+if(document.getElementById("loading-inisial") && dataMempelai.media.inisialLogo) {
+    document.getElementById("loading-inisial").innerText = dataMempelai.media.inisialLogo;
+}
+
+                
          // Kode Penghubung Foto Profil & Ilustrasi (Sinkronisasi Data.js)
      // 1. Foto Profil (Sudah Pas)
 if(document.getElementById("foto-profil-wanita") && dataMempelai.wanita.foto) {
