@@ -1462,13 +1462,22 @@ window.addEventListener('load', function() {
         };
     });
 
-    // Fungsi untuk memperbarui tampilan persentase dan bar loading
+    // 🟢 INI DIA: Fungsi pembungkus yang tadi terputus/hilang pembukanya
     function perbaruiProsesLoading(persen) {
         if (loadingText) loadingText.innerText = persen + "%";
         if (loadingBar) loadingBar.style.width = persen + "%";
 
         // Jika persentase sudah 100%, hilangkan loader
         if (persen >= 100) {
+            // 🟢 TRIK KHUSUS: Pemanasan audio agar instan saat ditekan nanti
+            if (notifSound) {
+                notifSound.volume = 0; // Setel tanpa suara
+                notifSound.play().then(() => {
+                    notifSound.pause(); // Langsung pause kembali
+                    notifSound.currentTime = 0; // Kembalikan ke detik awal
+                }).catch(e => console.log("Pre-warm dikunci browser"));
+            }
+
             setTimeout(() => {
                 if (loader) {
                     loader.style.opacity = '0';
@@ -1477,12 +1486,13 @@ window.addEventListener('load', function() {
                 }
                 // Jalankan fungsi nama tamu setelah loading selesai
                 ambilNamaTamu();
-            }, 800); // Jeda 800ms agar tamu sempat melihat angka 100% yang estetik
+            }, 800); 
         }
-    }
-});
+    } // Penutup fungsi perbaruiProsesLoading
+}); // Penutup window.addEventListener('load')
 // ====================================================================
 
+        
    function bukaKunciSidikJari() {
     const waNotif = document.getElementById('wa-notif-pop');
     const notifSound = document.getElementById('notif-sound');
