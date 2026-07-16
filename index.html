@@ -751,11 +751,8 @@
         <section id="salam">
             <div class="swiper swiper-salam">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide swiper-slide-salam" style="background-image: url('1.jpg');"></div>
-                    <div class="swiper-slide swiper-slide-salam" style="background-image: url('2.jpg');"></div>
-                    <div class="swiper-slide swiper-slide-salam" style="background-image: url('3.jpg');"></div>
+                <div class="swiper-wrapper" id="slider-salam">          
                 </div>
-            </div>
             <div class="overlay-dark"></div>
             <div class="salam-content">
                 <h3 class="font-aesthetic text-4xl mb-8 tracking-wide leading-relaxed">Assalamu'alaikum Wr. Wb.</h3>
@@ -1240,6 +1237,21 @@
 
                document.addEventListener("DOMContentLoaded", function() {
     if(typeof dataMempelai !== 'undefined') {
+        // -------------------------------------------------------------
+        // KODE BARU: Mengisi Foto Background Swiper Otomatis dari data.js
+        // -------------------------------------------------------------
+        const sliderContainer = document.getElementById("slider-salam");
+        if (sliderContainer && dataMempelai.bgSalam && dataMempelai.bgSalam.length > 0) {
+            let elemenHtmlSlide = "";
+            
+            // Loop untuk mengambil setiap foto di dalam daftar bgSalam
+            dataMempelai.bgSalam.forEach(function(foto) {
+                elemenHtmlSlide += `<div class="swiper-slide swiper-slide-salam" style="background-image: url('${foto}');"></div>`;
+            });
+            
+            // Masukkan fotonya ke dalam HTML
+            sliderContainer.innerHTML = elemenHtmlSlide;
+        }
               // Kode Penghubung Foto Profil & Ilustrasi (Sinkronisasi Data.js)
      // 1. Foto Profil (Sudah Pas)
 if(document.getElementById("foto-profil-wanita") && dataMempelai.wanita.foto) {
