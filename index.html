@@ -681,15 +681,20 @@
 <body class="bg-stone-50">
     <div id="music-btn" class="music-control hidden spinning" onclick="toggleMusik()"><i id="music-icon" class="fa-solid fa-music"></i></div>
     
-    <div id="loading-screen" class="fixed inset-0 bg-[#0b141a] z-[9999] flex flex-col items-center justify-center transition-opacity duration-700 ease-in-out">
-        <div class="text-center flex flex-col items-center animate-pulse"> 
-            <div class="w-20 h-20 rounded-full border-2 border-amber-500/30 flex items-center justify-center mb-4 bg-stone-900/50 shadow-lg relative">
-                <div class="absolute inset-0 rounded-full border-2 border-t-amber-400 border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
-                <span id="loading-inisial" class="text-xl font-serif text-amber-400 tracking-wider font-bold">R & A</span>
+    <div id="loading-screen" class="fixed inset-0 bg-[#0b141a] z-[9999] flex flex-col justify-center items-center transition-all duration-700">
+            <div class="text-center">
+            <div id="loading-inisial" class="font-aesthetic text-4xl text-amber-500 mb-2 tracking-widest animate-pulse">U & J</div>        
+            <div class="mt-6 flex flex-col items-center gap-2">
+            <span id="loading-text" class="text-amber-500 font-mono text-sm tracking-widest font-bold">0%</span>
+            <div class="w-48 h-1 bg-stone-800 rounded-full overflow-hidden relative">
+            <div id="loading-bar" class="absolute top-0 left-0 h-full bg-amber-500 transition-all duration-300" style="width: 0%;"></div>
             </div>
-            <p class="text-[10px] tracking-[0.4em] uppercase text-stone-400 animate-pulse">Menyiapkan Undangan</p>
+            
+            <p class="text-[10px] text-stone-500 tracking-widest uppercase mt-1">Mengunduh File Undangan...</p>
         </div>
     </div>
+</div>
+
 
     <section id="cover" class="relative min-h-screen w-full flex flex-col items-center justify-between py-12 px-6 overflow-hidden bg-cover bg-center transition-all duration-1000 ease-in-out" 
              style="background-image: linear-gradient(rgba(11, 20, 26, 0.65), rgba(11, 20, 26, 0.85));">
@@ -1399,21 +1404,86 @@ if(document.getElementById("header-nama-rsvp")) document.getElementById("header-
             } 
         });
 
-        window.addEventListener('load', function() {
-            const loader = document.getElementById('loading-screen');
-            const musik = document.getElementById('musik');
-            const notifSound = document.getElementById('notif-sound');
+    // ====================================================================
+// SYSTEM PRELOADER GAMBAR UTAMA BERBASIS PERSENTASE (0% - 100%)
+// ====================================================================
+window.addEventListener('load', function() {
+    const loader = document.getElementById('loading-screen');
+    const loadingText = document.getElementById('loading-text');
+    const loadingBar = document.getElementById('loading-bar');
+    const musik = document.getElementById('musik');
+    const notifSound = document.getElementById('notif-sound');
 
-            if (musik) musik.load();
-            if (notifSound) notifSound.load();
+    // Pastikan audio siap di latar belakang
+    if (musik) musik.load();
+    if (notifSound) notifSound.load();
 
-            if (loader) {
-                loader.style.opacity = '0';
-                loader.style.pointerEvents = 'none';
-                setTimeout(() => { loader.remove(); }, 700);
-            }
-        });
+    // 1. Kumpulkan semua aset gambar dari data.js secara otomatis
+    let daftarGambar = [];
 
+    if (typeof dataMempelai !== 'undefined') {
+        // Foto Background Swiper (dari bgSalam)
+        if (dataMempelai.bgSalam && Array.isArray(dataMempelai.bgSalam)) {
+            daftarGambar = daftarGambar.concat(dataMempelai.bgSalam);
+        }
+        // Foto profil mempelai
+        if (dataMempelai.wanita?.foto) daftarGambar.push(dataMempelai.wanita.foto);
+        if (dataMempelai.pria?.foto) daftarGambar.push(dataMempelai.pria.foto);
+        // Foto akad & resepsi
+        if (dataMempelai.media?.fotoAkad) daftarGambar.push(dataMempelai.media.fotoAkad);
+        if (dataMempelai.media?.fotoResepsi) daftarGambar.push(dataMempelai.media.fotoResepsi);
+        // Foto cover & notif
+        if (dataMempelai.media?.fotoCover) daftarGambar.push(dataMempelai.media.fotoCover);
+        if (dataMempelai.media?.fotoNotif) daftarGambar.push(dataMempelai.media.fotoNotif);
+    }
+
+    // Filter agar tidak ada nama file gambar yang duplikat atau kosong
+    daftarGambar = [...new Set(daftarGambar)].filter(url => url && url.trim() !== "");
+
+    // Jika tidak ada gambar yang terdeteksi, langsung selesaikan loading ke 100%
+    if (daftarGambar.length === 0) {
+        perbaruiProsesLoading(100);
+        return;
+    }
+
+    let gambarTerunduh = 0;
+    const totalGambar = daftarGambar.length;
+
+    // 2. Lakukan proses unduh di belakang layar (Preloading)
+    daftarGambar.forEach(src => {
+        const img = new Image();
+        img.src = src;
+
+        // Callback ketika satu gambar berhasil terunduh dengan sempurna
+        img.onload = img.onerror = function() {
+            gambarTerunduh++;
+            const persentase = Math.floor((gambarTerunduh / totalGambar) * 100);
+            perbaruiProsesLoading(persentase);
+        };
+    });
+
+    // Fungsi untuk memperbarui tampilan persentase dan bar loading
+    function perbaruiProsesLoading(persen) {
+        if (loadingText) loadingText.innerText = persen + "%";
+        if (loadingBar) loadingBar.style.width = persen + "%";
+
+        // Jika persentase sudah 100%, hilangkan loader
+        if (persen >= 100) {
+            setTimeout(() => {
+                if (loader) {
+                    loader.style.opacity = '0';
+                    loader.style.pointerEvents = 'none';
+                    setTimeout(() => { loader.remove(); }, 700);
+                }
+                // Jalankan fungsi nama tamu setelah loading selesai
+                ambilNamaTamu();
+            }, 800); // Jeda 800ms agar tamu sempat melihat angka 100% yang estetik
+        }
+    }
+});
+// ====================================================================
+
+        
         function bukaKunciSidikJari() {
             const waNotif = document.getElementById('wa-notif-pop');
             const notifSound = document.getElementById('notif-sound');
