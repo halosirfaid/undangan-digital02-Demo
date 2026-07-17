@@ -75,7 +75,7 @@ const dataMempelai = {
         mandiriAn: "Izah",
         alamatKirim: "Jl. Pulau Kalimantan No. 000, Kapuas KUala, Tabunganen",
         penerimaPaket: "Hafiz & Hafizah",
-        NoWaKonfirmasi: "628875754371"
+        NoWaKonfirmasi: "6288242996791"
     },
 
     // 8. Media Cover & Notifikasi Pop-up
