@@ -91,7 +91,8 @@ const dataMempelai = {
         bulanTahun1: "JANUARI 2023",
         pesanWanita1: "Ingat nggak waktu pertama kali kita nggak sengaja duduk sebelahan di cafe? 🥰",
         waktuWanita1: "10:00",
-        
+
+        bulanTahun2 : "JANUARI 2024",  
         pesanPria1: "Ingat banget lah! Waktu itu aku gugup mau ajak kenalan haha. Akhirnya berani juga ya ❤️",
         waktuPria1: "10:05",
         
