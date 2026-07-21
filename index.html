@@ -3,11 +3,11 @@
 <head>
     <script src="Data.js"></script> 
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <meta property="og:title" id="og-title" content="Undangan Pernikahan Uul & Julak">
-    <meta property="og:description" id="og-desc" content="Kami mengundang Anda untuk berbagi kebahagiaan bersama kami.">
-    <meta property="og:image" id="og-image" content="https://halosirfaid.github.io/undangan-digital02-Demo/5.jpg">
+    <meta property="og:title" content="Undangan Pernikahan Julak & Uul">
+    <meta property="og:description" content="Rabu, 15 July 2026 - Kami mengundang Anda untuk berbagi kebahagiaan bersama kami.">
+    <meta property="og:image" content="https://sirfaid.github.io/Undangan-saya/4.jpg">
     <meta property="og:url" content="https://sirfaid.github.io/Undangan-saya/">
 
     <meta charset="UTF-8">
@@ -1243,40 +1243,6 @@
         document.addEventListener("DOMContentLoaded", function() {
             if(typeof dataMempelai !== 'undefined') {
 
-        // 1. Ambil Nama Pasangan (contoh: "Uul & Julak")
-        if (dataMempelai.wanita?.panggilan && dataMempelai.pria?.panggilan) {
-            const namaPasangan = "Undangan Pernikahan " + dataMempelai.wanita.panggilan + " & " + dataMempelai.pria.panggilan;
-            
-            // Ubah Judul Tab Browser
-            document.title = namaPasangan;
-            
-            // Ubah Meta Title untuk WhatsApp / Sosmed
-            const metaTitle = document.getElementById("og-title");
-            if (metaTitle) {
-                metaTitle.setAttribute("content", namaPasangan);
-            }
-        }
-
-        // 2. Ambil Foto Cover dari media.fotoCover
-        if (dataMempelai.media?.fotoCover) {
-            const metaImage = document.getElementById("og-image");
-            if (metaImage) {
-                // Mendapatkan Domain Web Utama Kamu Secara Otomatis
-                const domainUtama = window.location.origin + window.location.pathname;
-                
-                // Menyiapkan URL Lengkap Gambar (Contoh: https://.../5.jpg)
-                let urlGambarLengkap = dataMempelai.media.fotoCover;
-                if (!urlGambarLengkap.startsWith('http')) {
-                    // Jika di data.js hanya tertulis "5.jpg", gabungkan dengan alamat domain web
-                    urlGambarLengkap = domainUtama.substring(0, domainUtama.lastIndexOf('/') + 1) + dataMempelai.media.fotoCover;
-                }
-
-                metaImage.setAttribute("content", urlGambarLengkap);
-            }
-        }
-    }
-
-});
         // -------------------------------------------------------------
         // KODE BARU: Mengisi Foto Background Swiper Otomatis dari data.js
         // -------------------------------------------------------------
